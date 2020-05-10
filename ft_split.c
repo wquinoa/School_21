@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 15:13:34 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/04 23:23:09 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/11 02:15:23 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,7 @@ char			**ft_split(char const *s, char c)
 	if (!s || !(str = ft_strtrim(s, &c)))
 		return (NULL);
 	l = ft_countw(str, c, 0);
-	if (!(dst = (char **)malloc(sizeof(char *) * l + 1)))
+	if (!(dst = (char **)ft_calloc(l + 1, sizeof(char *))))
 		return (NULL);
-	dst[l] = NULL;
 	return (ft_realsplit(str, c, dst));
 }
