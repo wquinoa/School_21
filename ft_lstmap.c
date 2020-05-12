@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 06:20:19 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/08 02:43:53 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/12 01:11:46 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 			ft_lstclear(&new, del);
 			return (NULL);
 		}
-		ft_lstadd_back(&new, curr_elem);
+		next_elem->next = curr_elem;
 		next_elem = next_elem->next;
 		lst = lst->next;
 	}

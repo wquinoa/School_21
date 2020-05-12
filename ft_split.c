@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 15:13:34 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/11 02:15:23 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/12 05:18:05 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,17 @@ static int		ft_len(char const *s, char c)
 	return (i);
 }
 
-static void		ft_deltab(char **tab)
+static void		*ft_deltab(char **tab)
 {
 	if (!tab)
-		return ;
+		return (NULL);
 	while (*tab)
 	{
 		free(*tab);
 		tab++;
 	}
 	free(tab);
+	return (NULL);
 }
 
 static char		**ft_realsplit(char const *s, char c, char **dst)
@@ -68,10 +69,7 @@ static char		**ft_realsplit(char const *s, char c, char **dst)
 			s++;
 		l = ft_len(s, c) + 1;
 		if (!(dst[j] = (char *)ft_calloc(l, sizeof(char))))
-		{
-			ft_deltab(dst);
-			return (NULL);
-		}
+			return (ft_deltab(dst));
 		while (*s != c && *s)
 			dst[j][i++] = *(s++);
 		j++;
@@ -87,8 +85,13 @@ char			**ft_split(char const *s, char c)
 
 	if (!s || !(str = ft_strtrim(s, &c)))
 		return (NULL);
-	l = ft_countw(str, c, 0);
+	l = ft_countw(str, c, 0) + (*str == '\0');
 	if (!(dst = (char **)ft_calloc(l + 1, sizeof(char *))))
 		return (NULL);
+	if (*str == '\0')
+	{
+		dst[0] = ft_strdup("");
+		return (dst);
+	}
 	return (ft_realsplit(str, c, dst));
 }

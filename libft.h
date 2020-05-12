@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 21:05:26 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/07 22:12:37 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/12 09:01:14 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ size_t				ft_nlen(int n);
 int					ft_max(int a, int b);
 int					ft_min(int a, int b);
 int					ft_isspace(int c);
+void				*ft_del(void *content);
+void				ft_putlst(t_list **lst);
 
 /*
 **	char[][] manipulation
@@ -99,5 +101,6 @@ void				ft_tabclear(char **tab, int len);
 char				**ft_tabmap(char **tab, char *(*f)(const char *));
 char				*ft_strjoin_dlm(char *s1, char *s2, char *s3);
 char				*ft_join(char **tab, char *dlm);
+
 
 #endif

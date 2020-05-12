@@ -6,10 +6,24 @@
 #    By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/07 23:33:20 by wquinoa           #+#    #+#              #
-#    Updated: 2020/05/08 03:54:41 by wquinoa          ###   ########.fr        #
+#    Updated: 2020/05/12 09:18:47 by wquinoa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+# Colours and utility
+WHT = \033[0m
+GRN = \033[32m
+RED = \033[31m
+WHT1 = \033[0;1m
+GRN1 = \033[32;1m
+RED1 = \033[31;1m
+DRK = \033[2m
+REPLACE =  2>&1| awk '{sub(/.\//,"  $(WHT) $(DRK)removed $(RED)")}1'
+MADE_MSG = \n	$(WHT1)Created $(GRN1)
+DEL_MSG = \n	$(WHT1)No more $(DRK)$(RED1)
+ERROR_MSG = "\n	$(WHT1)$(DRK)Nothing to $@\n"
+
+# Source files
 SRCS :=			ft_atoi.c					\
 				ft_bzero.c					\
 				ft_calloc.c					\
@@ -45,7 +59,8 @@ SRCS :=			ft_atoi.c					\
 				ft_tolower.c				\
 				ft_toupper.c
 
-BSRCS :=			ft_lstadd_back.c			\
+# Bonus files
+BSRCS :=		ft_lstadd_back.c			\
 				ft_lstadd_front.c			\
 				ft_lstclear.c				\
 				ft_lstdelone.c				\
@@ -55,50 +70,65 @@ BSRCS :=			ft_lstadd_back.c			\
 				ft_lstnew.c					\
 				ft_lstsize.c				\
 				ft_abs_bonus.c				\
+				ft_del_bonus.c				\
 				ft_isspace_bonus.c			\
 				ft_join_bonus.c				\
 				ft_max_bonus.c				\
 				ft_min_bonus.c				\
 				ft_nlen_bonus.c				\
+				ft_putlst_bonus.c			\
 				ft_strjoin_dlm_bonus.c		\
 				ft_tabclear_bonus.c			\
 				ft_tablen_bonus.c			\
 				ft_tabmap_bonus.c
 
-NAME = libft.a
+# Rules
+NAME = ./libft.a
+INCL = /libft.h
 OBJ = $(SRCS:c=o)
 BOBJ = $(BSRCS:c=o)
+BIN = ./bin
 CC = gcc
 CF = -Wall -Wextra -Werror
+.PHONY: all bonus clean fclean re
+
+# Conditional object file list
+ifdef WITH_BONUS
+OBJ_FILES = $(addprefix $(BIN)/, $(OBJ) $(BOBJ))
+else
+OBJ_FILES = $(addprefix $(BIN)/, $(OBJ))
+endif
 
 all: $(NAME)
 
-ifdef WITH_BONUS
-OBJ_FILES = $(OBJ) $(BOBJ)
-else
-OBJ_FILES = $(OBJ)
-endif
-
 bonus:
 	@$(MAKE) 'WITH_BONUS = true' all
-	@echo "		  ...and \033[32mbonus\n"
-
+	@echo "	$(WHT1)...and $(GRN1)bonus$(WHT)\n"
 
 $(NAME): $(OBJ_FILES)
-	@ar rcs $(NAME) $(OBJ_FILES)
-	@ranlib $(NAME)
-	@echo "\n	Made your \033[32mlib\n"
+	@ar rs $(NAME) $^
+	@echo "$(MADE_MSG)lib$(WHT)\n"
 
-%.o: %.c
-	$(CC) $^ -c -Wall -Werror -Wextra -o $@
+$(BIN):
+	@mkdir $(BIN)
+	@echo "$(MADE_MSG) $@$(WHT)\n"
+
+$(BIN)/%.o: %.c | $(BIN)
+	@$(CC) $< -c $(CF) -o $@ -I.$(INCL)
+	@echo "   Adding $(DRK)$(GRN)$@...$(WHT)"
 
 clean:
-	@rm -rf $(OBJ) $(BOBJ)
-	@echo "\n	No more .o\033[32m files\n"
+	@if test -d $(BIN); \
+	then rm -rfvd $(BIN) $(REPLACE); \
+	echo "$(DEL_MSG).o files$(WHT)\n"; \
+	else echo $(ERROR_MSG); \
+	fi
 
 fclean: clean
-	@rm -rf $(NAME)
-	@echo "		   ...and  \033[32mlib\n"
+	@if test -f $(NAME); \
+	then rm -rfv $(NAME) $(REPLACE); \
+	echo "$(DEL_MSG) lib$(WHT)\n"; \
+	else echo $(ERROR_MSG); \
+	fi
 
 re: fclean all
-	@echo "\n	Remade your \033[32mlib\n"

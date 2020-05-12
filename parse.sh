@@ -7,7 +7,7 @@ while getopts ":hbc" opt; do
 		;;
 		b ) cat *bonus.c | grep -v 'static' | egrep '^\w+[^a-zA-Z\d]+ft_' | sed s/\)$/\)\;/
 		;;
-		c ) gcc $1 -L. -lft -Wall -Werror -Wextra
+		c ) cat ft_*.c *.h | egrep -o '\w+\(.*\)' | tr '$' '\n' | egrep -v '(ft_|malloc|sizeof|free|write)'
 		;;
 		\? ) echo "Usage: [-h] [-b] [-c]"
 		;;

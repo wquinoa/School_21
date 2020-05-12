@@ -6,12 +6,11 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 19:54:03 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/01 09:30:20 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/12 03:29:37 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <ctype.h>
 
 int		ft_isalpha(int c)
 {

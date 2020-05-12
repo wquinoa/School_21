@@ -14,5 +14,5 @@
 
 int				ft_max(int a, int b)
 {
-	return ((a * (a > b)) + (b * (b > a)));
+	return ((a * (a >= b)) + (b * (b > a)));
 }
