@@ -6,17 +6,11 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 20:11:16 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/12 06:59:55 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/12 09:49:01 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-void	*ft_del(void *content)
-{
-	free(content);
-	return (NULL);
-}
 
 char		*ft_join(char **tab, char *dlm)
 {

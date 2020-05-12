@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 21:05:26 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/12 09:01:14 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/12 16:47:45 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,5 @@ void				ft_tabclear(char **tab, int len);
 char				**ft_tabmap(char **tab, char *(*f)(const char *));
 char				*ft_strjoin_dlm(char *s1, char *s2, char *s3);
 char				*ft_join(char **tab, char *dlm);
-
 
 #endif

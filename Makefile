@@ -6,7 +6,7 @@
 #    By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/07 23:33:20 by wquinoa           #+#    #+#              #
-#    Updated: 2020/05/12 09:18:47 by wquinoa          ###   ########.fr        #
+#    Updated: 2020/05/12 10:55:13 by wquinoa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,7 @@ BSRCS :=		ft_lstadd_back.c			\
 
 # Rules
 NAME = ./libft.a
-INCL = /libft.h
+INCL = ./
 OBJ = $(SRCS:c=o)
 BOBJ = $(BSRCS:c=o)
 BIN = ./bin
@@ -106,7 +106,7 @@ bonus:
 	@echo "	$(WHT1)...and $(GRN1)bonus$(WHT)\n"
 
 $(NAME): $(OBJ_FILES)
-	@ar rs $(NAME) $^
+	@ar rcs $(NAME) $^
 	@echo "$(MADE_MSG)lib$(WHT)\n"
 
 $(BIN):
@@ -114,7 +114,7 @@ $(BIN):
 	@echo "$(MADE_MSG) $@$(WHT)\n"
 
 $(BIN)/%.o: %.c | $(BIN)
-	@$(CC) $< -c $(CF) -o $@ -I.$(INCL)
+	@$(CC) -I. $< -c $(CF) -o $@ 
 	@echo "   Adding $(DRK)$(GRN)$@...$(WHT)"
 
 clean:
@@ -130,5 +130,9 @@ fclean: clean
 	echo "$(DEL_MSG) lib$(WHT)\n"; \
 	else echo $(ERROR_MSG); \
 	fi
+
+so: fclean
+	gcc -fPIC -c *.c
+	gcc -shared -Wl,-soname,libft.so -o libft.so *.o
 
 re: fclean all

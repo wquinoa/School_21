@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 15:13:34 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/12 05:18:05 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/12 16:13:07 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,13 @@
 
 static int		ft_countw(char const *s, char c, int words)
 {
-	int is_word;
-
-	is_word = 0;
 	while (*s)
 	{
-		if (*s != c)
-		{
-			if (!is_word)
-				words++;
-			is_word = 1;
-		}
-		else
-			is_word = 0;
-		s++;
+		while (*s != c && *s)
+			s++;
+		while (*s == c && *s)
+			s++;
+		words++;
 	}
 	return (words);
 }
@@ -42,36 +35,36 @@ static int		ft_len(char const *s, char c)
 	return (i);
 }
 
-static void		*ft_deltab(char **tab)
+static void		*ft_deltab(char **tab, int l)
 {
-	if (!tab)
+	if (!*tab)
 		return (NULL);
-	while (*tab)
-	{
-		free(*tab);
-		tab++;
-	}
+	while (l >= 0)
+		free(tab[l--]);
 	free(tab);
 	return (NULL);
 }
 
-static char		**ft_realsplit(char const *s, char c, char **dst)
+static char		**ft_realsplit(char *s, char c, char **dst, int words)
 {
 	int		i;
 	int		j;
 	int		l;
 
 	j = 0;
-	while (*s)
+	while (j < words)
 	{
 		i = 0;
 		while (*s == c && *s)
 			s++;
-		l = ft_len(s, c) + 1;
-		if (!(dst[j] = (char *)ft_calloc(l, sizeof(char))))
-			return (ft_deltab(dst));
-		while (*s != c && *s)
-			dst[j][i++] = *(s++);
+		if (*s != c && *s)
+		{
+			l = ft_len(s, c);
+			if (!(dst[j] = (char *)ft_calloc(l + 1, sizeof(char))))
+				return (ft_deltab(dst, j));
+			while (*s != c && *s)
+				dst[j][i++] = *(s++);
+		}
 		j++;
 	}
 	return (dst);
@@ -85,13 +78,8 @@ char			**ft_split(char const *s, char c)
 
 	if (!s || !(str = ft_strtrim(s, &c)))
 		return (NULL);
-	l = ft_countw(str, c, 0) + (*str == '\0');
-	if (!(dst = (char **)ft_calloc(l + 1, sizeof(char *))))
+	l = ft_countw(str, c, 0);
+	if (!(dst = (char **)malloc((l + 1) * sizeof(char *))))
 		return (NULL);
-	if (*str == '\0')
-	{
-		dst[0] = ft_strdup("");
-		return (dst);
-	}
-	return (ft_realsplit(str, c, dst));
+	return (ft_realsplit(str, c, dst, l));
 }

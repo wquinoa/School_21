@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 08:57:41 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/12 09:00:31 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/12 16:42:48 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_putlst(t_list **lst)
 	tmp = *lst;
 	if (!lst)
 	{
-		ft_putendl_fd("[ \033[32;1mnull\033[0m ]\n", 1);
+		ft_putendl_fd("[ \033[31;1mnull\033[0m ]\n", 1);
 		return ;
 	}
 	ft_putstr_fd("\n \033[32;1mnew\033[0m ", 1);
