@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 21:20:02 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/11 02:25:21 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/14 06:38:15 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	if (lst && del)
+	if (lst)
 	{
 		del(lst->content);
 		lst->next = NULL;

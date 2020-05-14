@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 15:13:34 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/14 04:36:18 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/14 06:33:49 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ static char		**ft_realsplit(char *s, char c, char **dst, int words)
 		}
 		j++;
 	}
-	dst[j] = NULL;
 	return (dst);
 }
 
@@ -84,12 +83,11 @@ char			**ft_split(char const *s, char c)
 
 	if (!s || !(str = ft_strtrim(s, &c)))
 		return (NULL);
-	if (!(wrds = ft_countw(str, c, 0)))
-	{
-		free(str);
-		return (NULL);
-	}
+	wrds = ft_countw(str, c, 0);
 	if (!(dst = (char **)malloc((wrds + 1) * sizeof(char *))))
 		return (NULL);
-	return (ft_realsplit(str, c, dst, wrds));
+	dst[wrds] = NULL;
+	dst = ft_realsplit(str, c, dst, wrds);
+	free(str);
+	return (dst);
 }
