@@ -6,13 +6,13 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 22:01:08 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/07 22:02:16 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/13 07:58:10 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int				ft_space(int c)
+int				ft_isspace(int c)
 {
 	return (c == 32 || (c >= 9 && c <= 13));
 }

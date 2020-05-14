@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 21:05:26 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/12 16:47:45 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/13 07:57:48 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,15 @@ void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 											void (*del)(void *));
+
 /*
-**	Utility
+**	Math & Utility
 */
 
 size_t				ft_abs(int n);
 size_t				ft_nlen(int n);
+size_t				ft_sqrt(size_t n);
+int					ft_pow(int n, int pow);
 int					ft_max(int a, int b);
 int					ft_min(int a, int b);
 int					ft_isspace(int c);
@@ -93,7 +96,7 @@ void				*ft_del(void *content);
 void				ft_putlst(t_list **lst);
 
 /*
-**	char[][] manipulation
+**	char ** manipulation
 */
 
 size_t				ft_tablen(char **tab);
