@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/16 15:58:46 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/17 10:13:11 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/18 09:29:01 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
 	const size_t l = ft_strchr(src, '\0') - src;
 
-	while (dstsize-- - 1 && *src)
+	while ((dstsize--) - 1 && *src)
 		*(dst++) = *(src++);
 	*dst = '\0';
 	return (l);

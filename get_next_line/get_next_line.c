@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/16 05:54:10 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/17 16:22:03 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/18 09:36:40 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int		write_next_line(char **line, char **fd_tab)
 /*
 **	Checks for BUFFER_SIZE and fd being less than 0 are not needed
 **	If Buff_size is 0 it's still possible to read the file, it just
-
 **	cant write. If fd is < 0, read will return -1 anyway.
 */
 
@@ -79,10 +78,13 @@ int		check_next_line(int fd, char **line, char **buf)
 {
 	if (!line)
 		return (-1);
-	if ((read(fd, buf[0], 0) < 0))
-		return (-1);
 	if (!(*buf = (char *)malloc(BUFFER_SIZE + 1)))
 		return (-1);
+	if ((read(fd, buf[0], 0) < 0))
+	{
+		free (buf);
+		return (-1);
+	}
 	return (1);
 }
 
@@ -106,8 +108,12 @@ int		get_next_line(int fd, char **line)
 	{
 		buf[flag] = '\0';
 		if (!(tmp = ft_strjoin(fd_tab[fd], buf)))
+		{
+			free (buf);
 			return (-1);
-		free(fd_tab[fd]);
+		}
+		if (fd_tab[fd])
+			free(fd_tab[fd]);
 		fd_tab[fd] = tmp;
 		if (ft_strchr(fd_tab[fd], '\n') || !flag)
 		{
@@ -118,27 +124,27 @@ int		get_next_line(int fd, char **line)
 	return (-1);
 }
 
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include "get_next_line.h"
-int main()
-{
-	int fd, ret;
-	char *str;
-	fd = open("test.txt", O_RDONLY);
-	while ((ret = get_next_line(fd, &str)) > 0)
-	{
-		printf("[%d] - %s\n", ret, str);
-		free(str);
-	}
-	if (ret == 0)
-	{
-		 printf("[%d] - %s\n", ret, str);
-		 free(str);
-	}
-	if (ret == -1)
-		printf("%d", ret);
-	return (0);
-}
+//#include <stdio.h>
+//#include <sys/types.h>
+//#include <sys/stat.h>
+//#include <fcntl.h>
+//#include "get_next_line.h"
+//int main()
+//{
+	//int fd, ret;
+	//char *str;
+	//fd = open("test.txt", O_RDONLY);
+	//while ((ret = get_next_line(fd, &str)) > 0)
+	//{
+		//printf("%s\n", str);
+		//free(str);
+	//}
+	//if (ret == 0)
+	//{
+		//printf("%s", str);
+		//free (str);
+	//}
+	//if (ret == -1)
+		//printf("%d", ret);
+	//return (0);
+//}

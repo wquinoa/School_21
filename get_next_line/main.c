@@ -10,12 +10,12 @@ int main()
     fd = open("test.txt", O_RDONLY);
     while ((ret = get_next_line(fd, str)) > 0)
     {
-        printf("[%d] - %s\n", ret, str[0]);
+        printf("%s\n", str[0]);
         free(str[0]);
     }
     if (ret == 0)
     {
-         printf("[%d] -  %s\n", ret, str[0]);
+         printf("%s", str[0]);
          free(str[0]);
     }
     if (ret == -1)
