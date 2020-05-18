@@ -6,7 +6,7 @@
 int main()
 {
     int fd, ret;
-    char *str[10];
+    char *str[1];
     fd = open("test.txt", O_RDONLY);
     while ((ret = get_next_line(fd, str)) > 0)
     {

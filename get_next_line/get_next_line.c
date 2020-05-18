@@ -57,7 +57,8 @@ int		write_next_line(char **line, char **fd_tab)
 	char			*end;
 
 	if (!(end = ft_strchr(*fd_tab, '\n')))
-		end = **fd_tab + ft_strchr(*fd_tab, '\0');
+		end = ft_strchr(*fd_tab, '\0');
+	res = NULL;
 	if (*end == '\n')
 		if(!(res = ft_strdup(end + 1)))
 			return (-1);
