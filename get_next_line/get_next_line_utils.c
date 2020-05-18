@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/16 15:58:46 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/18 09:29:01 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/18 11:38:01 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
 	const size_t l = ft_strchr(src, '\0') - src;
 
+	if (!dstsize)
+		return (l);
 	while ((dstsize--) - 1 && *src)
 		*(dst++) = *(src++);
 	*dst = '\0';
@@ -49,8 +51,8 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 
 char	*ft_strdup(const char *s)
 {
-	const	size_t l = ft_strchr(s, '\0') - s;
-	char	*dst;
+	const size_t	l = ft_strchr(s, '\0') - s;
+	char			*dst;
 
 	if (!(dst = (char *)malloc((l + 1) * sizeof(char))))
 		return (NULL);

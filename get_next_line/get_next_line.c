@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/16 05:54:10 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/18 09:36:40 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/18 11:37:36 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char		*d;
-	size_t		size = (ft_strchr(s + start, '\0') - (s + start));
+	size_t		size;
 
 	size = (ft_strchr(s + start, '\0') - (s + start));
 	size = (size > len) ? len : size;
@@ -47,8 +47,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 **	the program has reached the end of file. Lots of malloc
 **	checks later the remainder is either written to fd_tab
 **	for later use (n) or written to line (0) before exiting.
-**	Also, in case of \n preceding \0, it's necessary to add
-**
+**	Also, in case of \n preceding \0, it's necessary to add.
+**	If res is not initialized to NULL it will SSEGV on linux.
 */
 
 int		write_next_line(char **line, char **fd_tab)
@@ -60,7 +60,7 @@ int		write_next_line(char **line, char **fd_tab)
 		end = ft_strchr(*fd_tab, '\0');
 	res = NULL;
 	if (*end == '\n')
-		if(!(res = ft_strdup(end + 1)))
+		if (!(res = ft_strdup(end + 1)))
 			return (-1);
 	if (!(*line = ft_substr(*fd_tab, 0, (end - *fd_tab))))
 		return (-1);
@@ -83,7 +83,7 @@ int		check_next_line(int fd, char **line, char **buf)
 		return (-1);
 	if ((read(fd, buf[0], 0) < 0))
 	{
-		free (buf);
+		free(buf);
 		return (-1);
 	}
 	return (1);
@@ -109,10 +109,7 @@ int		get_next_line(int fd, char **line)
 	{
 		buf[flag] = '\0';
 		if (!(tmp = ft_strjoin(fd_tab[fd], buf)))
-		{
-			free (buf);
-			return (-1);
-		}
+			break ;
 		if (fd_tab[fd])
 			free(fd_tab[fd]);
 		fd_tab[fd] = tmp;
@@ -122,30 +119,6 @@ int		get_next_line(int fd, char **line)
 			return (write_next_line(line, &fd_tab[fd]));
 		}
 	}
+	free(buf);
 	return (-1);
 }
-
-//#include <stdio.h>
-//#include <sys/types.h>
-//#include <sys/stat.h>
-//#include <fcntl.h>
-//#include "get_next_line.h"
-//int main()
-//{
-	//int fd, ret;
-	//char *str;
-	//fd = open("test.txt", O_RDONLY);
-	//while ((ret = get_next_line(fd, &str)) > 0)
-	//{
-		//printf("%s\n", str);
-		//free(str);
-	//}
-	//if (ret == 0)
-	//{
-		//printf("%s", str);
-		//free (str);
-	//}
-	//if (ret == -1)
-		//printf("%d", ret);
-	//return (0);
-//}
