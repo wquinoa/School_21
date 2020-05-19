@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pow_bonus.c                                     :+:      :+:    :+:   */
+/*   ft_ulltoa_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/13 07:01:19 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/18 20:57:21 by wquinoa          ###   ########.fr       */
+/*   Created: 2020/05/19 13:06:59 by wquinoa           #+#    #+#             */
+/*   Updated: 2020/05/19 16:29:17 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+# include "libftprintf.h"
 
-uint64_t		ft_pow(size_t n, size_t pow)
+char	*ft_ulltoa_base(uint64_t n, uint8_t base)
 {
-	size_t		res;
+	const uint8_t	len = ft_nlen(n, base);
+	uint64_t		div;
+	uint8_t			num;
+	char			*result;
 
-	res = 1;
-	while (pow--)
-		res *= n;
-	return (res);
+	if (!(result = (char *)malloc((len + 1) * sizeof(char))))
+		return (NULL);
+	result[len] = '\0';
+	div = ft_pow(base, len - 1);
+	while (div != 0)
+	{
+		result[num++] = "0123456789ABCDEF"[n / div];
+		n %= div;
+		div /= base;
+	}
+	return (result);
 }

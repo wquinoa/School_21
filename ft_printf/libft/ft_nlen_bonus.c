@@ -6,20 +6,18 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 21:57:33 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/07 22:00:10 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/19 16:27:46 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t			ft_nlen(int n)
+uint8_t			ft_nlen(uint64_t n, int8_t base)
 {
-	int				i;
+	int8_t		i;
 
-	i = 0;
-	if (n >= 0 && n <= 9)
-		return (1);
+	i = (n == 0);
 	while (n != 0 && ++i)
-		n /= 10;
+		n /= base;
 	return (i);
 }

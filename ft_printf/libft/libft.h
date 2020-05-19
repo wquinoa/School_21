@@ -6,13 +6,18 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 21:05:26 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/13 07:57:48 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/19 13:45:50 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+# define SPECS "cspdiuxX"
+# define FLAGS "-.0*"
+# define DEBUG write(1, "\033[32mcycle\n\033[0m", 17);
 # include <unistd.h>
+# include <stdint.h>
+# include <limits.h>
 # include <stdlib.h>
 
 /*
@@ -59,6 +64,7 @@ void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char const *s, int fd);
 void				ft_putendl_fd(char const *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
+void				ft_putnbr_base(uint64_t n, uint8_t base);
 
 /*
 ** Bonus part
@@ -86,9 +92,9 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 */
 
 size_t				ft_abs(int n);
-size_t				ft_nlen(int n);
 size_t				ft_sqrt(size_t n);
-int					ft_pow(int n, int pow);
+uint8_t				ft_nlen(uint64_t n, int8_t base);
+uint64_t			ft_pow(size_t n, size_t pow);
 int					ft_max(int a, int b);
 int					ft_min(int a, int b);
 int					ft_isspace(int c);
