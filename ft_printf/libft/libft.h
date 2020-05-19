@@ -6,15 +6,12 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 21:05:26 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/19 13:45:50 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/20 00:04:54 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
-# define SPECS "cspdiuxX"
-# define FLAGS "-.0*"
-# define DEBUG write(1, "\033[32mcycle\n\033[0m", 17);
 # include <unistd.h>
 # include <stdint.h>
 # include <limits.h>

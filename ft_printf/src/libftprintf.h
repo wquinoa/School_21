@@ -6,13 +6,13 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/19 14:05:37 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/19 23:24:21 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/20 00:52:08 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFTPRINTF_H
 # define LIBFTPRINTF_H
-# define SPECS "cspdiuxX"
+# define SPECS "cspdiuxX%"
 # define FLAGS "-.0*"
 //# define ADD_FLAG specifier->flag +=
 # define DEBUG write(1, "\033[32mcycle\n\033[0m", 17);
