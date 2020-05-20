@@ -6,17 +6,17 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 18:24:36 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/20 05:02:01 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/20 12:35:53 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "libftprintf.h"
 
-static void	ft_putnbr_base_fd(size_t n, uint8_t base, int fd)
+static void	ft_putnbr_base_fd(size_t n, t_uint8 base, int fd)
 {
-	const uint8_t	len = ft_nlen(n, base);
-	uint64_t		div;
+	const t_uint8	len = ft_nlen(n, base);
+	t_uint64		div;
 
 	div = ft_pow(base, len - 1);
 	while (div != 0)

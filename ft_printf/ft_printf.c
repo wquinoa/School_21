@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 17:55:36 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/20 05:29:29 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/20 18:22:49 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@
 **	flags: ’-0.*’ and minimum field
 **   width with all conversions
 ** • It will be compared with the real printf
+**
+**
+** • If the Mandatory part is not perfect don’t even think about bonuses
+** • You don’t need to do all the bonuses
+** • Manage one or more of the following conversions: nfge
+** • Manage one or more of the following flags: l ll h hh
+** • Manage all the following flags: ’# +’ (yes, one of them is a space)
 */
 
 //printf("\nminus: %d\n", specifier.flags & minus_f);
@@ -35,55 +42,76 @@
 //printf("\nalign: %d\n", specifier.align);
 //printf("width: %d\n\n", specifier.width);
 
-static int			ft_specs(char c, va_list arg)
+static void	ft_print_unsigned(va_list arg, t_spec *specifier)
 {
-	if (c == 's')
+	const t_uint64	number = va_arg(arg, unsigned long long);
+	const t_uint8	*base = &(specifier->base);
+	//const t_uint8	len = ft_nlen(number, *base);
+
+	if (specifier->type == 'X')
+		ft_putnbr_base((t_uint16)number, (*base + upper));
+	else if (specifier->type == 'x')
+		ft_putnbr_base((t_uint16)number, *base);
+	else if (specifier->type == 'p')
+		ft_putnbr_base(number, *base);
+	else if (specifier->type == 'u')
+		ft_putnbr_base((t_uint16)number, *base);
+}
+
+static void	ft_print_signed(va_list arg, t_spec *specifier)
+{
+	const int		number = va_arg(arg, long);
+	const char		type = specifier->type;
+
+	if (type == 'd' || type == 'i')
+		ft_putnbr_base(number, specifier->base);
+	else if (type == 'c' || type == '%')
+		write(1, &number, 1);
+}
+
+static int	ft_specs_padding(char type, va_list arg, t_spec *specifier)
+{
+	t_uint8 *base;
+
+	specifier->width -= specifier->precision;
+	specifier->type = type;
+	base = &(specifier->base);
+	*base = (type == 'x' || type == 'X' || type == 'p') ? 16 : 10;
+	if (*base == 16 || type == 'u')
+		ft_print_unsigned(arg , specifier);
+	if (*base == 10 && type != 's')
+		ft_print_signed(arg, specifier);
+	else if (type == 's')
 		ft_putstr_fd(va_arg(arg, char *), 1);
-	else if (c == 'd' || c == 'i')
-		ft_putnbr_fd(va_arg(arg, int), 1);
-	else if (c == 'c')
-		ft_putchar_fd(va_arg(arg, int), 1);
-	else if (c == 'x')
-		ft_putnbr_base(va_arg(arg, unsigned long long), 16);
-	else if (c == 'X')
-		ft_putnbr_base(va_arg(arg, unsigned long long), (16 + upper));
-	else if (c == 'p')
-	{
-		write(1, "0x", 2);
-		ft_putnbr_base(va_arg(arg, unsigned long long), 16);
-	}
-	else if (c == 'u')
-		ft_putnbr_base(va_arg(arg, unsigned int), 10);
-	else if (c == '%')
-		ft_putchar_fd('%', 1);
 	return (1);
 }
 
-static int			ft_flags(const char *c, uint8_t *flags,
-									int *align, int *width)
+static int	ft_flags(char *c, uint8_t *flags, int *width, int *precisn)
 {
-	const int	size = (ft_isdigit(*c) * (*c > '0')) ? ft_atoi(c) : 0;
+	const int	size = (ft_isdigit(*c)) ? ft_atoi(c) : 0;
 
 	if (*c == '.')
 		*flags += dot_f;
-	if (*c == '0' || *c == '-')
-		*flags += (*c == '0') ? zero_f : minus_f;
+	if (*c == '-')
+		*flags += minus_f;
+	if (*c == '0')
+		*flags += zero_f;
 	if (*c == '*' || size)
 	{
-		*flags += (*flags & align1_f) ? width2_f : align1_f;
+		*flags += (*flags & width1_f) ? precision2_f : width1_f;
 		if (ft_isdigit(*c) && (*flags & dot_f))
-			return (ft_nlen((*width = size), 10));
+			return (ft_nlen((*precisn = size), 10));
 		else if (ft_isdigit(*c))
-			return (ft_nlen((*align = size), 10));
-		return ((*align) ? ft_nlen(*align, 10) : ft_nlen(*width, 10));
+			return (ft_nlen((*width = size), 10));
+		return ((*flags & dot_f) ? ft_nlen(*precisn, 10) : ft_nlen(*width, 10));
 	}
 	return (1);
 }
 
-int		ft_printf(const char *str, ...)
+int			ft_printf(const char *str, ...)
 {
 	const char		*end = str;
-	static t_spec	specifier;
+	static t_spec	s;
 	va_list			ap;
 
 	va_start(ap, str);
@@ -94,11 +122,11 @@ int		ft_printf(const char *str, ...)
 			str += write(1, str, end - str);
 			end++;
 			while (*end && (ft_strchr(FLAGS, *end) || ft_isdigit(*end)))
-				end += ft_flags(end, &(specifier.flags),
-				&(specifier.align), &(specifier.width));
+				end += ft_flags((char *)end, &(s.flags), \
+								&(s.width), &(s.precision));
 			if (ft_strchr(SPECS, *end))
 			{
-				end += ft_specs(*end, ap);
+				end += ft_specs_padding(*end, ap, &s);
 				str = end;
 			}
 		}
@@ -109,11 +137,11 @@ int		ft_printf(const char *str, ...)
 	return (0);
 }
 
-int main(void)
+int			main(void)
 {
-	char const *test = "hello there, %-129837.34615X %-s\n";
-	char *s = "hi";
-	int c = -219837;//'B';
-	ft_printf(test, c, s);
-	//printf(test, c);
+	char const *test = "%023.34x\n";
+	//char *s = "hi";
+	int c = 219837;//'B';
+	ft_printf(test, c);
+	printf(test, c);
 }

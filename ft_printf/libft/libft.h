@@ -6,15 +6,13 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 21:05:26 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/20 00:04:54 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/20 18:15:50 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <unistd.h>
-# include <stdint.h>
-# include <limits.h>
 # include <stdlib.h>
 
 /*
@@ -61,7 +59,6 @@ void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char const *s, int fd);
 void				ft_putendl_fd(char const *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
-void				ft_putnbr_base(uint64_t n, uint8_t base);
 
 /*
 ** Bonus part
