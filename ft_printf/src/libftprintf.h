@@ -6,12 +6,13 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/19 14:05:37 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/20 00:52:08 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/20 05:12:11 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFTPRINTF_H
 # define LIBFTPRINTF_H
+# define BASE "0123456789ABCDEF"
 # define SPECS "cspdiuxX%"
 # define FLAGS "-.0*"
 //# define ADD_FLAG specifier->flag +=
@@ -32,10 +33,11 @@ enum				e_flag
 {
 	minus_f = (1 << 0),
 	zero_f = (1 << 1),
-	jstfy1_f = (1 << 2),
+	align1_f = (1 << 2),
 	dot_f = (1 << 3),
 	width2_f = (1 << 4),
 	prcnt_f = (1 << 5),
+	upper = (1 << 7),
 };
 
 /*
@@ -50,7 +52,7 @@ typedef struct		s_spec
 {
 	char			type;
 	uint8_t			flags;
-	int				jstfy;
+	int				align;
 	int				width;
 }					t_spec;
 

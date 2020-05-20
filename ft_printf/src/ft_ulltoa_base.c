@@ -6,15 +6,15 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/19 13:06:59 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/19 16:29:17 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/20 05:04:55 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "libftprintf.h"
+#include "libftprintf.h"
 
 char	*ft_ulltoa_base(uint64_t n, uint8_t base)
 {
-	const uint8_t	len = ft_nlen(n, base);
+	const uint8_t	len = ft_nlen(n, (base));
 	uint64_t		div;
 	uint8_t			num;
 	char			*result;

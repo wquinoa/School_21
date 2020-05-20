@@ -38,10 +38,11 @@ int main(void)
 	printf("flags is %d\n", specifier.flags);
 	flags = &(specifier.flags);
 	printf("flag is %d\n", specifier.flags);
-	*flags += (minus + zero);
-	if (specifier.flags)
-		printf("flag is %d\n", specifier.flags);
+	*flags += (minus);
+	if (*flags & minus)
+		printf("[%d] - im the minus flag", *flags & minus);
 }
+
 
 //int main(void)
 //{
