@@ -6,15 +6,15 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 21:57:33 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/19 16:27:46 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/20 20:27:47 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libftprintf.h"
 
-uint8_t			ft_nlen(uint64_t n, int8_t base)
+t_uint8			ft_nlen(t_uint64 n, t_uint8 base)
 {
-	int8_t		i;
+	t_uint8		i;
 
 	i = (n == 0);
 	while (n != 0 && ++i)

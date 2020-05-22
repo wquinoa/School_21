@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 21:05:26 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/20 18:15:50 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/20 20:24:18 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 
 size_t				ft_abs(int n);
 size_t				ft_sqrt(size_t n);
-uint8_t				ft_nlen(uint64_t n, int8_t base);
-uint64_t			ft_pow(size_t n, size_t pow);
+//t_uint8				ft_nlen(uint64_t n, int8_t base);
+//t_uint64			ft_pow(size_t n, size_t pow);
 int					ft_max(int a, int b);
 int					ft_min(int a, int b);
 int					ft_isspace(int c);
