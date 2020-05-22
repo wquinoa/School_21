@@ -1,33 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nlen_bonus.c                                    :+:      :+:    :+:   */
+/*   ft_string.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/07 21:57:33 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/21 17:20:01 by wquinoa          ###   ########.fr       */
+/*   Created: 2020/05/22 13:19:17 by wquinoa           #+#    #+#             */
+/*   Updated: 2020/05/22 15:25:22 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "../includes/libftprintf.h"
 
-t_uint8			ft_nlen(t_uint64 n, t_uint8 base)
+int			ft_toupper(int c)
 {
-	t_uint8		i;
-
-	i = (n == 0);
-	while (n != 0 && ++i)
-		n /= base;
-	return (i);
+	return (c -= ('a' <= c && c <= 'z') * 32);
 }
 
-t_uint8			ft_nlen_sig(t_int64 n, t_uint8 base)
+int			ft_isdigit(int c)
 {
-	t_uint8		i;
+	return (c >= '0' && c <= '9');
+}
 
-	i = (n == 0) || (n < 0);
-	while (n != 0 && ++i)
-		n /= base;
-	return (i);
+size_t		ft_strlen(char const *s)
+{
+	const char *start = s;
+
+	while (*s)
+		s++;
+	return (s - start);
+}
+
+char		*ft_strchr(const char *s, int c)
+{
+	while (*s != (char)c && *s)
+		s++;
+	return (*s == (char)c ? (char *)s : NULL);
 }
