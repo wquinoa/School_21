@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/16 05:54:10 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/18 11:37:36 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/20 20:56:43 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int		check_next_line(int fd, char **line, char **buf)
 		return (-1);
 	if ((read(fd, buf[0], 0) < 0))
 	{
-		free(buf);
+		free(*buf);
 		return (-1);
 	}
 	return (1);
