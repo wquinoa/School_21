@@ -6,7 +6,7 @@
 #    By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/22 12:42:07 by wquinoa           #+#    #+#              #
-#    Updated: 2020/05/22 14:52:27 by wquinoa          ###   ########.fr        #
+#    Updated: 2020/05/23 11:42:24 by wquinoa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,6 +69,10 @@ $(NAME): $(OBJ_FILES)
 	@ar rcs $(NAME) $^
 	@echo "$(MADE_MSG)lib$(WHT)\n"
 	@echo "\n  ( \`-.__.-' )\n   \`-.    .-'\n      l  /\n       ||   $(DRK)$(GRN)no malloc $(WHT)-\n       ||  $(DRK)$(GRN)no problem$(WHT)\n      //ll\n     //  ll\n    ||    ||\n    ||____||\n    ||====||\n     ll  //\n      ll//\n       ||\n       ||\n       ||\n       ||\n       ||\n       ||\n       []\n"
+
+main: $(NAME)
+	$(CC) $(CF) main.c -L. -lftprintf
+	./a.out | cat -e
 
 #+----------------------------------------------------------------------------------------------------------------------+#
 #|    Creating bindir and objects                                                                                       |#

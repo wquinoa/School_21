@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/22 12:35:38 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/22 15:35:07 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/23 12:10:39 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,17 @@ static void	ft_print_str(va_list arg, t_spec *s)
 {
 	const char		*str = va_arg(arg, char *);
 	const char		c = (const char)str;
-	const t_uint16	len = (str && s->type == 's') ? ft_strlen(str) : 0;
+	t_uint16		len;
 
-	if (s->type != 's')
-		s->precision = 0;
-	s->width -= (ft_min(s->precision, len) + (s->type != 's'));
+	if (s->flags & dot_f)
+		len = ft_min(s->precision, ft_strlen(str)) * (str && s->type == 's');
+	else
+		len = ft_strlen(str) * (str && s->type == 's');
+	s->width -= len + (s->type != 's');
 	if ((s->flags & minus_f) == 0)
 		ft_pad(' ', s->width);
 	if (s->type == 's')
-	{
-		if (!str)
-			write(1, "(null)", 6);
-		write(1, str, s->precision);
-	}
+		(!str) ? write(1, "(null)", 6) : write(1, str, len);
 	else if (s->type == 'c' || s->type == '%')
 		write(1, (s->type == 'c') ? &c : "%", 1);
 	if (s->flags & minus_f)
