@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/15 10:44:09 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/22 14:32:44 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/23 12:50:45 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void			ft_putull_base(uint64_t n, t_uint8 base, t_spec *s)
 	if ((s->flags & zero_f) && !(s->flags & width1_f))
 		s->precision = s->width;
 	if (base & hex)
-		write(1, "0x", 2);
+		s->length += write(1, "0x", 2);
 	else if (base & is_neg)
-		write(1, "-", 1);
-	ft_pad('0', s->precision);
+		s->length += write(1, "-", 1);
+	ft_pad('0', s->precision, s);
 	i = 0;
 	div = ft_pow((base & base_bits), len - 1);
 	while (i < len)
@@ -44,7 +44,7 @@ void			ft_putull_base(uint64_t n, t_uint8 base, t_spec *s)
 		n %= div;
 		div /= (base & base_bits);
 	}
-	write(1, buf, len);
+	s->length += write(1, buf, len);
 }
 
 void			ft_putnbr_base(t_int64 n, t_uint8 base, t_spec *s)

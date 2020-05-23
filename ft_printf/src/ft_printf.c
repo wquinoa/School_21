@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 17:55:36 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/22 15:33:37 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/23 12:44:42 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,25 +64,23 @@ int				ft_printf(const char *str, ...)
 	static t_spec	s;
 	va_list			ap;
 
+	s.length = ft_strlen(str);
 	va_start(ap, str);
 	while (*str)
 	{
 		ft_clear_struct(&s);
 		if ((end = ft_strchr(str, '%')))
 		{
-			str += write(1, str, end - str);
-			end++;
+			str += write(1, str, (end++) - str);
 			while (*end && (ft_strchr(FLAGS, *end) || ft_isdigit(*end)))
 				end += ft_flags((char *)end, &(s), ap);
-			if (ft_strchr(SPECS, *end))
-			{
-				end += ft_define_type(*end, ap, &s);
-				str = end;
-			}
+			end += ft_define_type(*end, ap, &s);
+			s.length -= (end - str);
+			str = end;
 		}
 		else
 			str += write(1, str, ft_strlen(str));
 	}
 	va_end(ap);
-	return (0);
+	return (s.length);
 }

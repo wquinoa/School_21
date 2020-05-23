@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/19 14:05:37 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/22 15:28:01 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/23 12:51:44 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ enum						e_flag
 };
 
 typedef unsigned char		t_uint8;
-typedef unsigned int		t_uint16;
+typedef unsigned int		t_uint32;
 typedef unsigned long long	t_uint64;
 typedef long long			t_int64;
 
@@ -58,6 +58,7 @@ typedef struct				s_spec
 	t_uint8					flags;
 	int						width;
 	int						precision;
+	size_t					length;
 }							t_spec;
 
 /*
@@ -78,7 +79,7 @@ t_uint64					ft_pow(size_t n, size_t pow);
 int							ft_printf(const char *str, ...);
 int							ft_define_type(const char type, va_list arg, \
 															t_spec *spcfier);
-void						ft_pad(char p_type, int len);
+void						ft_pad(char p_type, int len, t_spec *specifier);
 void						ft_putnbr_base(t_int64 n, t_uint8 base, t_spec *s);
 void						ft_putull_base(t_uint64 n, t_uint8 base, t_spec *s);
 char						*ft_strchr(const char *s, int c);
