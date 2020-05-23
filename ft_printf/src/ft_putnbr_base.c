@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/15 10:44:09 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/23 12:50:45 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/23 15:44:54 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,5 @@ void			ft_putull_base(uint64_t n, t_uint8 base, t_spec *s)
 
 void			ft_putnbr_base(t_int64 n, t_uint8 base, t_spec *s)
 {
-	if (n < LLONG_MIN)
-		write(1, LLONG_MIN_STR, ft_strlen(LLONG_MIN_STR));
 	ft_putull_base((n < 0) ? -n : n, (base + (is_neg * (n < 0))), s);
 }

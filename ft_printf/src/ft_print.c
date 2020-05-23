@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/22 12:35:38 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/23 12:52:27 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/23 13:18:31 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	ft_print_unsigned(va_list arg, t_spec *s)
 	s->width -= (ft_max(s->precision, len) + (is_ptr * 2));
 	s->precision -= len;
 	if (!(s->flags & z_and_m))
-		ft_pad(' ', s->width,s );
+		ft_pad(' ', s->width, s);
 	if (s->type == 'X')
 		ft_putull_base((t_uint32)number, (*base + upper), s);
 	else if (s->type == 'x')

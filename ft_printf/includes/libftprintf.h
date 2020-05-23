@@ -6,14 +6,12 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/19 14:05:37 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/23 12:51:44 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/23 15:45:03 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFTPRINTF_H
 # define LIBFTPRINTF_H
-# define LLONG_MIN -9223372036854775807LL
-# define LLONG_MIN_STR "−9223372036854775808"
 # define BASE "0123456789abcdef"
 # define SPECS "%csuxXpdi"
 # define FLAGS "-.0*# +"
