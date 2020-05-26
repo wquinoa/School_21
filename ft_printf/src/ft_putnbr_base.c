@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/15 10:44:09 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/23 15:44:54 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/25 23:04:26 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,16 @@
 **	the number it as a whole.
 */
 
+static void		ft_alt(t_uint8 base, t_spec *s)
+{
+	if (base & hex)
+		s->length += write(1, "0x", 2);
+	else if (base & is_neg)
+		s->length += write(1, "-", 1);
+	if (s->flags & zero_f)
+		s->precision = s->width;
+}
+
 void			ft_putull_base(uint64_t n, t_uint8 base, t_spec *s)
 {
 	const t_uint8	len = ft_nlen(n, (base & base_bits));
@@ -26,12 +36,12 @@ void			ft_putull_base(uint64_t n, t_uint8 base, t_spec *s)
 	t_uint64		div;
 	t_uint8			i;
 
-	if ((s->flags & zero_f) && !(s->flags & width1_f))
-		s->precision = s->width;
-	if (base & hex)
-		s->length += write(1, "0x", 2);
-	else if (base & is_neg)
-		s->length += write(1, "-", 1);
+	ft_alt(base, s);
+	if ((n == 0) && (s->precision <= 0))
+	{
+		s->length += write(1, " ", 1);
+		return ;
+	}
 	ft_pad('0', s->precision, s);
 	i = 0;
 	div = ft_pow((base & base_bits), len - 1);

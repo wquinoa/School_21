@@ -6,7 +6,7 @@
 #    By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/22 12:42:07 by wquinoa           #+#    #+#              #
-#    Updated: 2020/05/23 12:24:43 by wquinoa          ###   ########.fr        #
+#    Updated: 2020/05/25 21:43:54 by wquinoa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,11 +68,11 @@ all: $(NAME)
 $(NAME): $(OBJ_FILES)
 	@ar rcs $(NAME) $^
 	@echo "$(MADE_MSG)lib$(WHT)\n"
-	@echo "\n  ( \`-.__.-' )\n   \`-.    .-'\n      l  /\n       ||   $(DRK)$(GRN)no malloc $(WHT)-\n       ||  $(DRK)$(GRN)no problem$(WHT)\n      //ll\n     //  ll\n    ||    ||\n    ||____||\n    ||====||\n     ll  //\n      ll//\n       ||\n       ||\n       ||\n       ||\n       ||\n       ||\n       []\n"
+	@echo "\n$(DRK)  ( \`-.__.-' )\n   \`-.    .-'\n      \\  /\n       ||   $(DRK)$(GRN)no malloc $(WHT)$(DRK)-\n       ||  $(DRK)$(GRN)no problem$(WHT)$(DRK)\n      //\\\\\\\\\n     //  \\\\\\\\\n    ||    ||\n    ||____||\n    ||====||\n     \\\\\\\\  //\n      \\\\\\\\//\n       ||\n       ||\n       ||\n       ||\n       ||\n       ||\n       []\n"
 
 main: $(NAME)
-	$(CC) $(CF) main.c -L. -lftprintf
-	./a.out | cat -e
+	$(CC) main.c -L. -lftprintf $(CF)
+	./a.out | tr ' ' '.' | cat -e
 
 #+----------------------------------------------------------------------------------------------------------------------+#
 #|    Creating bindir and objects                                                                                       |#

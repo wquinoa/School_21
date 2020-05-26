@@ -6,13 +6,13 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/22 12:35:38 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/23 13:18:31 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/25 23:24:41 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-void		ft_pad(char p_type, int len, t_spec * specifier)
+void		ft_pad(char p_type, int len, t_spec *specifier)
 {
 	static const char	*type = "        00000000";
 	const t_uint8		i = 8;
@@ -30,13 +30,13 @@ static void	ft_print_signed(va_list arg, t_spec *s)
 {
 	const int		num = va_arg(arg, long);
 	const t_uint8	*base = &(s->base);
-	const t_uint8	len = ft_nlen(num, *base);
+	const t_uint8	len = ft_nlen(ft_abs(num), *base) ;
 
 	s->width -= (ft_max(s->precision, len) + (num < 0));
 	s->precision -= len;
-	if (!(s->flags & z_and_m))
+	if (!(s->flags & minus_f))
 		ft_pad(' ', s->width, s);
-	if (s->type == 'd' || s->type == 'i')
+	if ((s->type == 'd' || s->type == 'i'))
 		ft_putnbr_base(num, *base, s);
 	if (s->flags & minus_f)
 		ft_pad(' ', s->width, s);
@@ -65,23 +65,29 @@ static void	ft_print_unsigned(va_list arg, t_spec *s)
 		ft_pad(' ', s->width, s);
 }
 
-static void	ft_print_str(va_list arg, t_spec *s)
+static void	ft_print_chr(char c, t_spec *s)
 {
-	const char		*str = va_arg(arg, char *);
-	const char		c = (const char)str;
+	s->width -= (c != '\0');
+	if ((s->flags & minus_f) == 0)
+		ft_pad((s->flags & zero_f) ? '0' : ' ', s->width, s);
+	s->length += write(1, (s->type == 'c') ? &c : "%", 1);
+	if (s->flags & minus_f)
+		ft_pad(' ', s->width, s);
+}
+
+static void	ft_print_str(char *arg, t_spec *s)
+{
+	const char		*str = (!arg) ? "(null)" : arg;
 	t_uint32		len;
 
 	if (s->flags & dot_f)
-		len = ft_min(s->precision, ft_strlen(str)) * (str && s->type == 's');
+		len = ft_min(s->precision, ft_strlen(str));
 	else
-		len = ft_strlen(str) * (str && s->type == 's');
-	s->width -= len + (s->type != 's');
+		len = ft_strlen(str);
+	s->width -= len;
 	if ((s->flags & minus_f) == 0)
-		ft_pad(' ', s->width, s);
-	if (s->type == 's')
-		s->length += (!str) ? write(1, "(null)", 6) : write(1, str, len);
-	else if (s->type == 'c' || s->type == '%')
-		s->length += write(1, (s->type == 'c') ? &c : "%", 1);
+		ft_pad((s->flags & zero_f)? '0' : ' ', s->width, s);
+	s->length += write(1, str, len);
 	if (s->flags & minus_f)
 		ft_pad(' ', s->width, s);
 }
@@ -101,7 +107,9 @@ int			ft_define_type(const char type, va_list arg, t_spec *specifier)
 		else if (*base == 10)
 			ft_print_signed(arg, specifier);
 	}
-	else
-		ft_print_str(arg, specifier);
+	else if (type == 's')
+		ft_print_str(va_arg(arg, char *), specifier);
+	else if (type == 'c' || type == '%')
+		ft_print_chr(va_arg(arg, int), specifier);
 	return (1);
 }

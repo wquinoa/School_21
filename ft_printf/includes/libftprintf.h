@@ -6,16 +6,20 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/19 14:05:37 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/23 15:45:03 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/24 21:27:59 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFTPRINTF_H
 # define LIBFTPRINTF_H
+# define INT_MAX 2147483647
+# define LLONG_MAX 9223372036854775807LL
+# define LLONG_MIN_STR "9223372036854775808"
 # define BASE "0123456789abcdef"
 # define SPECS "%csuxXpdi"
 # define FLAGS "-.0*# +"
 # include <stdarg.h>
+# include <stdio.h>
 # include <unistd.h>
 
 /*
@@ -65,7 +69,7 @@ typedef struct				s_spec
 
 int							ft_max(int a, int b);
 int							ft_min(int a, int b);
-size_t						ft_abs(int n);
+t_int64						ft_abs(t_int64 n);
 int							ft_atoi(const char *str);
 t_uint8						ft_nlen(t_uint64 n, t_uint8 base);
 t_uint64					ft_pow(size_t n, size_t pow);

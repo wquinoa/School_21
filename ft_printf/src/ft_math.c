@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 21:57:33 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/22 15:25:31 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/24 21:27:37 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@ int				ft_min(int a, int b)
 	return ((a * (a <= b)) + (b * (b < a)));
 }
 
-size_t			ft_abs(int n)
+t_int64			ft_abs(t_int64 n)
 {
-	if (n == -2147483648)
-		return (2147483647);
 	return ((n < 0) ? -n : n);
 }

@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 17:55:36 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/23 12:44:42 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/26 10:22:00 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,40 +21,30 @@ static void		ft_clear_struct(t_spec *specifier)
 	specifier->width = 0;
 }
 
-static void		is_it_dot(t_spec *s, int size)
-{
-	if (s->flags & dot_f)
-		s->precision = size;
-	else
-		s->width = ft_abs(size);
-}
-
 static int		ft_flags(char *c, t_spec *s, va_list arg)
 {
-	int	size;
+	int size;
 
-	size = (ft_isdigit(*c)) ? ft_atoi(c) : 0;
-	if (*c == '.')
-		s->flags += dot_f;
-	if (*c == '-')
-		s->flags += minus_f;
-	if (*c == '0')
-		s->flags += zero_f * ((s->flags & minus_f) == 0);
-	if (*c == '*' || size)
+	size = 0;
+	if (ft_isdigit(*c) || *c == '*')
 	{
-		if (*c == '*')
-			size = va_arg(arg, int);
-		s->flags += (s->flags & dot_f) ? precision2_f : width1_f;
-		s->flags |= minus_f * ((size < 0) && !(s->flags & dot_f));
-		is_it_dot(s, size);
-		if (*c == '*')
+		if (!s->flags && *c == '0')
+			s->flags |= zero_f;
+		size = (*c == '*') ? va_arg(arg, int) : ft_atoi(c);
+		if (!(s->flags & dot_f))
+			s->width = size;
+		if (s->width < 0)
 		{
-			va_end(arg);
-			return (1);
+			s->width *= -1 * (s->width < 0);
+			s->flags |= minus_f;
 		}
-		return ((s->flags & dot_f) ? \
-				ft_nlen(s->precision, 10) : ft_nlen(s->width, 10));
+		s->precision = size * ((s->flags & dot_f) > 0);
+		return ((*c == '*') ? 1 : ft_nlen(ft_abs(size), 10));
 	}
+	if (*c == '-' && !s->flags)
+		s->flags |= minus_f;
+	if (*c == '.' && (*(c + 1) != '-'))
+		s->flags |= dot_f;
 	return (1);
 }
 
@@ -64,6 +54,8 @@ int				ft_printf(const char *str, ...)
 	static t_spec	s;
 	va_list			ap;
 
+	if (!str)
+		return(-1);
 	s.length = ft_strlen(str);
 	va_start(ap, str);
 	while (*str)
