@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/15 10:44:09 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/25 23:04:26 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/26 11:16:44 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,8 @@ void			ft_putull_base(uint64_t n, t_uint8 base, t_spec *s)
 	t_uint8			i;
 
 	ft_alt(base, s);
-	if ((n == 0) && (s->precision <= 0))
-	{
-		s->length += write(1, " ", 1);
+	if ((n == 0) && (s->precision <= 0) && (s->flags & precision2_f))
 		return ;
-	}
 	ft_pad('0', s->precision, s);
 	i = 0;
 	div = ft_pow((base & base_bits), len - 1);

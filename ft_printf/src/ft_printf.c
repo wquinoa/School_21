@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 17:55:36 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/26 10:22:00 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/26 13:45:05 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,27 @@ static int		ft_flags(char *c, t_spec *s, va_list arg)
 	int size;
 
 	size = 0;
-	if (ft_isdigit(*c) || *c == '*')
+	if (!s->flags && *c == '0')
+		s->flags |= zero_f;
+	else if (ft_isdigit(*c) || *c == '*')
 	{
-		if (!s->flags && *c == '0')
-			s->flags |= zero_f;
 		size = (*c == '*') ? va_arg(arg, int) : ft_atoi(c);
 		if (!(s->flags & dot_f))
-			s->width = size;
-		if (s->width < 0)
 		{
-			s->width *= -1 * (s->width < 0);
-			s->flags |= minus_f;
+			s->flags |= (size < 0) ? minus_f : 0;
+			s->width = ft_abs(size);
 		}
 		s->precision = size * ((s->flags & dot_f) > 0);
-		return ((*c == '*') ? 1 : ft_nlen(ft_abs(size), 10));
+		return ((*c == '*') ? 1 : (ft_nlen(ft_abs(size), 10)));
 	}
-	if (*c == '-' && !s->flags)
+	if (*c == '-' && !(s->flags & dot_f))
 		s->flags |= minus_f;
-	if (*c == '.' && (*(c + 1) != '-'))
+	if (*c == '.')
+	{
 		s->flags |= dot_f;
+		if (*(c + 1) != '-')
+			s->flags |= precision2_f;
+	}
 	return (1);
 }
 
@@ -54,8 +56,6 @@ int				ft_printf(const char *str, ...)
 	static t_spec	s;
 	va_list			ap;
 
-	if (!str)
-		return(-1);
 	s.length = ft_strlen(str);
 	va_start(ap, str);
 	while (*str)
@@ -65,7 +65,7 @@ int				ft_printf(const char *str, ...)
 		{
 			str += write(1, str, (end++) - str);
 			while (*end && (ft_strchr(FLAGS, *end) || ft_isdigit(*end)))
-				end += ft_flags((char *)end, &(s), ap);
+				end += ft_flags((char *)end, &s, ap);
 			end += ft_define_type(*end, ap, &s);
 			s.length -= (end - str);
 			str = end;
