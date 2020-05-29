@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/16 05:54:10 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/20 20:56:43 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/27 04:46:49 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int		check_next_line(int fd, char **line, char **buf)
 
 int		get_next_line(int fd, char **line)
 {
-	static char	*fd_tab[FD_LIMIT];
+	static t_fd	*fd_struct;
 	int			flag;
 	char		*buf;
 	char		*tmp;

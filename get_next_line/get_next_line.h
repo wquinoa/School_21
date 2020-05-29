@@ -6,12 +6,14 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/16 05:45:22 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/17 15:55:00 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/27 05:12:12 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+# ifndef BUFFER_SIZE
+# define BUFFER_SIZE 1
 # define FD_LIMIT 65535
 # include <stdlib.h>
 # include <unistd.h>
