@@ -6,31 +6,17 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/22 12:35:38 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/26 14:13:43 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/26 14:19:27 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-void		ft_pad(char p_type, int len, t_spec *specifier)
-{
-	static const char	*type = "        00000000";
-	const t_uint8		i = 8;
-	char				*padding;
-
-	specifier->length += len * (len > 0);
-	padding = (p_type == '0') ? (char *)&type[i] : (char *)type;
-	while (len > i)
-		len -= write(1, padding, i);
-	if (len > 0)
-		write(1, padding, len);
-}
-
 static void	ft_print_signed(va_list arg, t_spec *s)
 {
 	const int		num = va_arg(arg, long);
 	const t_uint8	*base = &(s->base);
-	const t_uint8	len = ft_nlen(ft_abs(num), *base) ;
+	const t_uint8	len = ft_nlen(ft_abs(num), *base);
 
 	s->width -= (ft_max(s->precision, len) + (num < 0)) - \
 	((num == 0) && (s->precision <= 0) && (s->flags & (precision2_f | dot_f)));
@@ -51,7 +37,7 @@ static void	ft_print_unsigned(va_list arg, t_spec *s)
 	const t_uint8	is_ptr = ((s->type == 'p'));
 
 	s->width -= (ft_max(s->precision, len) + is_ptr * 2 - \
-	((number == 0) && (s->precision <= 0) && (s->flags & (precision2_f | dot_f))));
+	(!number && (s->precision <= 0) && (s->flags & (precision2_f | dot_f))));
 	s->precision -= len;
 	if (!(s->flags & (minus_f | zero_f)))
 		ft_pad(' ', s->width, s);
@@ -88,7 +74,7 @@ static void	ft_print_str(char *arg, t_spec *s)
 		len = ft_strlen(str);
 	s->width -= len;
 	if ((s->flags & minus_f) == 0)
-		ft_pad((s->flags & zero_f)? '0' : ' ', s->width, s);
+		ft_pad((s->flags & zero_f) ? '0' : ' ', s->width, s);
 	s->length += write(1, str, len);
 	if (s->flags & minus_f)
 		ft_pad(' ', s->width, s);

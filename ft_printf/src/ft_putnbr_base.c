@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/15 10:44:09 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/26 11:16:44 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/26 14:19:50 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,20 @@
 **	flags. The two functions use a static buffer to print
 **	the number it as a whole.
 */
+
+void			ft_pad(char p_type, int len, t_spec *specifier)
+{
+	static const char	*type = "        00000000";
+	const t_uint8		i = 8;
+	char				*padding;
+
+	specifier->length += len * (len > 0);
+	padding = (p_type == '0') ? (char *)&type[i] : (char *)type;
+	while (len > i)
+		len -= write(1, padding, i);
+	if (len > 0)
+		write(1, padding, len);
+}
 
 static void		ft_alt(t_uint8 base, t_spec *s)
 {

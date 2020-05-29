@@ -6,7 +6,7 @@
 #    By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/22 12:42:07 by wquinoa           #+#    #+#              #
-#    Updated: 2020/05/25 21:43:54 by wquinoa          ###   ########.fr        #
+#    Updated: 2020/05/26 16:16:50 by wquinoa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,13 +26,13 @@ SRCS :=			ft_atoi.c			\
 #+----------------------------------------------------------------------------------------------------------------------+#
 #
 #																			#
-WHT = \033[0m#																#
-GRN = \033[32m#																#
-RED = \033[31m#																#
-WHT1 = \033[0;1m#															#
-GRN1 = \033[32;1m#															#
-RED1 = \033[31;1m#															#
-DRK = \033[2m#																#
+WHT		= \033[0m#															#
+GRN		= \033[32m#															#
+RED		= \033[31m#															#
+WHT1	= \033[0;1m#														#
+GRN1	= \033[32;1m#														#
+RED1	= \033[31;1m#														#
+DRK		= \033[2m#															#
 MADE_MSG = \n	$(WHT1)Created $(GRN1)#										#
 DEL_MSG = \n	$(WHT1)No more $(DRK)$(RED1)#								#
 ERROR_MSG = "\n	$(WHT1)$(DRK)Nothing to $@\n"#								#
@@ -43,21 +43,22 @@ REPLACE =  2>&1| awk '{sub(/.\//,"  $(WHT) $(DRK)removed $(RED)")}1'
 #|    Good stuff                                                                                                        |#
 #+----------------------------------------------------------------------------------------------------------------------+#
 
-NAME = libftprintf.a
+NAME		= libftprintf.a
 
-BIN = ./obj
-SRC_DIR = ./src
-INCL_DIR = ./includes
+BIN			= ./.obj
+SRC_DIR		= ./src
+INCL_DIR	= ./includes
 
-HEAD = $(NAME:a=h)
-OBJ = $(SRCS:c=o)
-BOBJ = $(BSRCS:c=o)
+HEAD		:= $(NAME:a=h)
+OBJ			:= $(SRCS:c=o)
+BOBJ		:= $(BSRCS:c=o)
 
-INCLUDES = $(addprefix $(INCL_DIR)/, $(HEAD))
-OBJ_FILES = $(addprefix $(BIN)/, $(OBJ))
-SRC_FILES = $(addprefix $(SRC_DIR)/, $(SRCS))
-CC = gcc
-CF = -Wall -Wextra -Werror
+INCLUDES	:= $(addprefix $(INCL_DIR)/, $(HEAD))
+OBJ_FILES	:= $(addprefix $(BIN)/, $(OBJ))
+SRC_FILES	:= $(addprefix $(SRC_DIR)/, $(SRCS))
+
+CC			= gcc
+CF			= -Wall -Wextra -Werror
 
 #+----------------------------------------------------------------------------------------------------------------------+#
 #|    Rules                                                                                                             |#
@@ -69,10 +70,6 @@ $(NAME): $(OBJ_FILES)
 	@ar rcs $(NAME) $^
 	@echo "$(MADE_MSG)lib$(WHT)\n"
 	@echo "\n$(DRK)  ( \`-.__.-' )\n   \`-.    .-'\n      \\  /\n       ||   $(DRK)$(GRN)no malloc $(WHT)$(DRK)-\n       ||  $(DRK)$(GRN)no problem$(WHT)$(DRK)\n      //\\\\\\\\\n     //  \\\\\\\\\n    ||    ||\n    ||____||\n    ||====||\n     \\\\\\\\  //\n      \\\\\\\\//\n       ||\n       ||\n       ||\n       ||\n       ||\n       ||\n       []\n"
-
-main: $(NAME)
-	$(CC) main.c -L. -lftprintf $(CF)
-	./a.out | tr ' ' '.' | cat -e
 
 #+----------------------------------------------------------------------------------------------------------------------+#
 #|    Creating bindir and objects                                                                                       |#

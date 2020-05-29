@@ -6,20 +6,19 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/19 14:05:37 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/24 21:27:59 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/26 14:21:41 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFTPRINTF_H
 # define LIBFTPRINTF_H
-# define INT_MAX 2147483647
-# define LLONG_MAX 9223372036854775807LL
-# define LLONG_MIN_STR "9223372036854775808"
-# define BASE "0123456789abcdef"
-# define SPECS "%csuxXpdi"
-# define FLAGS "-.0*# +"
+# define INT_MAX 		2147483647
+# define LLONG_MAX		9223372036854775807LL
+# define LLONG_MIN_STR	"9223372036854775808"
+# define BASE			"0123456789abcdef"
+# define SPECS			"%csuxXpdi"
+# define FLAGS			"-.0*# +"
 # include <stdarg.h>
-# include <stdio.h>
 # include <unistd.h>
 
 /*
