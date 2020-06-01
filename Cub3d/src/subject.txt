@@ -1,0 +1,29 @@
+◦ The map must be closed/surrounded by walls, if not the program must return
+an error.
+
+◦ Except for the map content, each type of element can be separated by one or
+more empty line(s).
+
+◦ Except for the map content which always has to be the last, each type of
+element can be set in any order in the file.
+
+◦ Except for the map, each type of information from an element can be separated
+by one or more space(s).
+
+◦ The map must be parsed as it looks like in the file. Spaces are a valid part of
+the map, and is up to you to handle. You must be able to parse any kind of
+map, as long as it respects the maps rules.
+
+◦ Each element (except the map) firsts information is the type identifier (composed by one or two character(s)), followed by all specific informations for each
+object in a strict order such as :
+
+∗ Resolution:
+R 1920 1080
+· identifier: R
+· x render size
+· y render size
+
+∗ texture:
+NO ./path_to_the_north_texture
+· identifier: NO, SO, WE, EA, S, F, C
+· path to the north texure
