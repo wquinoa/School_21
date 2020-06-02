@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 20:00:30 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/01 13:58:05 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/03 01:52:04 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,9 @@ char	**ft_lsttab(t_list *list, u_int16_t rows)
 	return (map);
 }
 
-char	**ft_read_map(u_int16_t rows, t_game *g)
+char	**ft_read_map(u_int16_t rows, t_game *g, char *av)
 {
-	const int		fd = open("map.cub", O_RDONLY);
+	const int		fd = open(av, O_RDONLY);
 	t_list			*list;
 	t_list			*tmp;
 	char			*str;
