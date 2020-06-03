@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 13:35:08 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/03 17:06:34 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/03 17:30:51 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,24 +98,21 @@ void	ft_cast_ray(t_game *g, t_player *plr, t_frame *frm)
 	while (k < (plr->dir + plr->fov / 2 ))
 	{
 		i = 0;
-		x = plr->x;
-		y = plr->y;
+		//x = cos(plr->x) - sin(plr->y);
+		//y = sin(plr->x) + cos(plr->y);
 		while (g->map[(int)(y / s)][(int)(x / s)] != '1' && i++ < s)
 		{
-			//ft_paint(frm, x, y, 0xFF00FF);
+			ft_paint(frm, x, y, 0xFF00FF);
 			x += cos(k);
 			y += sin(k);
 		}
 		while (i++ && g->map[(int)(y / s)][(int)(x / s)] != '1')
 		{
-			//ft_paint(frm, x, y, 0x550055);
+			ft_paint(frm, x, y, 0x550055);
 			x += cos(plr->dir);
 			y += sin(plr->dir);
 		}
-		//if (g->map[(int)(y / s)][(int)(x / s)] == '1')
-		ft_draw_rectangle(i, plr->dir - k, g);
-		//ft_draw_rectangle(i,  k, g);
-		//k += (double)(0.001);
+		//ft_draw_rectangle(i, plr->dir - k, g);
 		k += (double)(plr->fov / (g->wnd->width + cbrt(g->wnd->width)));
 	}
 }
@@ -210,8 +207,8 @@ void	ft_draw_map(t_game *g, t_frame * f, t_window *w)
 {
 	f->img = mlx_new_image(w->mlx, w->width, w->height);
 	f->addr = mlx_get_data_addr(f->img, &f->bpp, &f->line_l, &f->en);
-	ft_cast_ray(g, g->plr, g->frm);
 	ft_minimap(g, f);
+	ft_cast_ray(g, g->plr, g->frm);
 	ft_draw_player(g);
 	mlx_put_image_to_window(w->mlx, w->win, f->img, 0, 0);
 	ft_debug_info(g);
