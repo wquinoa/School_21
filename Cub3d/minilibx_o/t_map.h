@@ -6,21 +6,22 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 18:20:40 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/03 02:16:03 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/03 17:07:17 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef T_MAP_H
 # define T_MAP_H
-# define RAYS 0.001
-# define SPEED 2
-# define HEIGHT 20
-# define ROTATION 0.1
-# define SQRT(x) (int)sqrt(x)
-# define SQ(x) (x * x)
-# include "libft.h"
-# include <string.h>
 # include <fcntl.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <math.h>
+# include "libft.h"
+# include "../minilibx_o/mlx.h"
+# include "../minilibx_o/get_next_line.h"
+# define HEIGHT 300
+# define ROTATION 0.08
+# define SQ(x) (x * x)
 
 typedef unsigned short		t_uint16;
 typedef unsigned long long	t_uint64;
@@ -46,6 +47,8 @@ typedef struct 			s_player
 	double				x;
 	double				y;
 	double				dir;
+	double				fov;
+	double				speed;
 }						t_player;
 
 typedef struct			s_texture
@@ -55,8 +58,8 @@ typedef struct			s_texture
 	char				*ea;
 	char				*we;
 	char				*sp;
-	int16_t				*flr;
-	int16_t				*ceil;
+	int					*flr;
+	int					*ceil;
 }						t_texture;
 
 typedef struct			s_frame
@@ -87,5 +90,10 @@ typedef struct			s_game
 	struct s_window		*wnd;
 	struct s_texture	*txr;
 }						t_game;
+
+char					**ft_read_map(u_int16_t rows, t_game *g, char *av);
+void					ft_minimap(t_game *g, t_frame *f);
+void					ft_init_player(char dir, int x_pos, int y_pos, t_game *g);
+void					ft_paint(t_frame *f, int x, int y, int color);
 
 #endif

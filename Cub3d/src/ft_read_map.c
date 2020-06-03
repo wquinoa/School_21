@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 20:00:30 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/03 01:52:04 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/03 14:22:47 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ int		ft_get_link(const char *c, char *str, t_game *g)
 
 static int8_t	ft_get_color(char c, char *str, t_game *g)
 {
-	int16_t	*a;
+	int		*a;
 	uint8_t	i;
 
-	if (!(a = (int16_t *)malloc(sizeof(int16_t) * 3)))
+	if (!(a = (int *)malloc(sizeof(int) * 4)))
 		return (0);
 	i = 0;
-	while (i < 3)
+	while (++i < 4)
 	{
 		a[i] = ft_atoi(str + 1);
 		if (a[i] < 0 || a[i] > 255)
@@ -140,27 +140,3 @@ char	**ft_read_map(u_int16_t rows, t_game *g, char *av)
 	close(fd);
 	return (ft_lsttab(list, rows));
 }
-
-#include <stdio.h>
-#include <unistd.h>
-
-//int		main(void)
-//{
-	//u_int16_t rows = 0;
-	//static t_game g;
-	//static t_window wnd;
-	//static t_texture txr;
-
-	//g.wnd = &wnd;
-	//g.txr = &txr;
-	//char **map = ft_read_map(rows, &g);
-	//printf("%s", txr.no);
-	//printf("%d", wnd.height);
-	//while (*map)
-	//{
-		//write(1, *map, ft_strlen(*map));
-		//write(1, "\n", 1);
-		//map++;
-	//}
-	//return (0);
-//}
