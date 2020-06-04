@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 13:35:08 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/03 17:30:51 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/04 02:00:14 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,9 @@
 #include "../minilibx_o/get_next_line.h"
 #include "../minilibx_o/libft.h"
 
-#include <time.h>
 #include <unistd.h>
 #include <math.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 char	**ft_read_map(u_int16_t rows, t_game *g, char *av);
@@ -33,7 +29,7 @@ void	ft_init_player(char dir, int x_pos, int y_pos, t_game *g)
 	if (!(g->wnd->width % 4) && !(g->wnd->height % 3))
 		g->plr->fov = 85 * M_PI / 180;
 	else
-		g->plr->fov = 66 * M_PI / 180;
+		g->plr->fov = 85 * M_PI / 180;
 	g->plr->speed = sqrt(g->frm->scale);
 
 	if (dir == 'N')
@@ -69,7 +65,7 @@ void	ft_draw_rectangle(uint16_t ray, double k, t_game *g)
 	const double	x0 = g->wnd->width / 2;
 	uint16_t		x;
 	uint16_t		y;
-	const uint64_t	color = 0xEE;//ft_sides(fabs(k));
+	const uint64_t	color = 0x00aa00;
 
 //	y = ray + g->wnd->height / HEIGHT;
 	//while (y < g->wnd->height - (ray + g->wnd->height / HEIGHT))
@@ -78,11 +74,11 @@ void	ft_draw_rectangle(uint16_t ray, double k, t_game *g)
 		//ft_paint(g->frm, x, y, (color - ray * 2 > 0x000EE) ? 0x09 : color - ray * 2);
 		//y++;
 	//}
-	y = ray * g->wnd->height / HEIGHT;
-	while (y < g->wnd->height - (ray * g->wnd->height / HEIGHT))
+	y = ray * cos(k);//+ g->wnd->height / HEIGHT;
+	while (y < g->wnd->height - ray * cos(k)) //+ g->wnd->height / HEIGHT))
 	{
 		x = x0 - k * g->wnd->width / g->plr->fov;
-		ft_paint(g->frm, x, y, (color - ray * 2 > 0x000EE) ? 0x09 : color - ray * 2);
+		ft_paint(g->frm, x, y,  color - ray);
 		y++;
 	}
 }
@@ -91,29 +87,30 @@ void	ft_cast_ray(t_game *g, t_player *plr, t_frame *frm)
 {
 	double x;
 	double y;
-	const double s = frm->scale;
-	double k = plr->dir - plr->fov / 2;
+	const double	s = frm->scale;
+	double			k = plr->dir - plr->fov / 2;
 	uint16_t		i;
 
 	while (k < (plr->dir + plr->fov / 2 ))
 	{
 		i = 0;
-		//x = cos(plr->x) - sin(plr->y);
-		//y = sin(plr->x) + cos(plr->y);
-		while (g->map[(int)(y / s)][(int)(x / s)] != '1' && i++ < s)
+		x = plr->x;
+		y = plr->y;
+		while (g->map[(int)(y / s)][(int)(x / s)] != '1')// && i < s * 2)
 		{
-			ft_paint(frm, x, y, 0xFF00FF);
+			ft_paint(frm, x / 4, y / 4, 0xFF00FF);
 			x += cos(k);
 			y += sin(k);
+			i++;
 		}
-		while (i++ && g->map[(int)(y / s)][(int)(x / s)] != '1')
-		{
-			ft_paint(frm, x, y, 0x550055);
-			x += cos(plr->dir);
-			y += sin(plr->dir);
-		}
-		//ft_draw_rectangle(i, plr->dir - k, g);
-		k += (double)(plr->fov / (g->wnd->width + cbrt(g->wnd->width)));
+		//while (i++ && g->map[(int)(y / s)][(int)(x / s)] != '1')
+		//{
+			//ft_paint(frm, x / 4, y / 4, 0x550055);
+			//x += cos(plr->dir);
+			//y += sin(plr->dir);
+		//}
+		ft_draw_rectangle(i, plr->dir - k, g);
+		k += (double)(plr->fov / (g->wnd->width));
 	}
 }
 
@@ -130,78 +127,10 @@ void	ft_draw_player(t_game *g)
 	{
 		x = x0;
 		while (x <= g->plr->x + sqrt(g->frm->scale))
-			ft_paint(g->frm, x++, y, 0xFF7731);
+			ft_paint(g->frm, x++ / 4, y / 4, 0xFF7731);
 		y++;
 	}
 }
-
-//void	ft_draw_wall(int x_pos, int y_pos, t_frame *f, size_t color)
-//{
-	//int x = x_pos * f->scale;
-	//int y = y_pos * f->scale;
-	//const int x_lim = (x_pos + 1) * f->scale;
-	//const int y_lim = (y_pos + 1) * f->scale;
-
-	//while (y < y_lim)
-	//{
-		//x = x_pos * f->scale;
-		//while (x < x_lim)
-			//ft_paint(f, x++, y, color -= 216 / (int)sqrt(f->scale));
-		//y++;
-	//}
-//}
-
-//void	ft_draw_tile(int x_pos, int y_pos, t_frame *f, size_t color)
-//{
-	//int i = x_pos * f->scale;//f->scale;
-	//int j = y_pos * f->scale;//f->scale;
-	//const int x_lim = (x_pos + 1) * f->scale;
-	//const int y_lim = (y_pos + 1) * f->scale;
-
-	//while (j <= y_lim)
-	//{
-		//i = x_pos * f->scale;
-		//if (j % 2 == 1)
-			//while (i <= x_lim)
-				//ft_paint(f, i++, j, color);
-		//else
-			//while (i <= x_lim)
-				//ft_paint(f, i++, j, color * 2);
-		//color += 512 / (int)sqrt(f->scale);
-		//j++;
-	//}
-//}
-
-//void	ft_minimap(t_game *g, t_frame *f)
-//{
-	//int x_pos = 0;
-	//int y_pos= 0;
-	//char	*str;
-
-	//g->frm->scale = g->wnd->width / 120;
-	//while (g->map[y_pos])
-	//{
-		//str = g->map[y_pos];
-		//x_pos = 0;
-		//while (str[x_pos])
-		//{
-			//if (str[x_pos] == '1')
-				//ft_draw_wall(x_pos, y_pos, f, 0x007ff0);
-			//else if (str[x_pos] == '0')
-				//ft_draw_tile(x_pos, y_pos, f, 0x99cccc);
-			//else if (str[x_pos] == '2')
-				//ft_draw_wall(x_pos, y_pos, f, 0xffff00);
-			//else if (str[x_pos] == 'N')
-			//{
-				//ft_init_player(str[x_pos], x_pos, y_pos, g);
-				//str[x_pos] = '0';
-				//ft_draw_tile(x_pos, y_pos, f, 0x99cccc);
-			//}
-			//x_pos++;
-		//}
-		//y_pos++;
-	//}
-//}
 
 void	ft_draw_map(t_game *g, t_frame * f, t_window *w)
 {
