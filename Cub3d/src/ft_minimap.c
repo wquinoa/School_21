@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 14:22:20 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/04 00:29:18 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/04 12:33:10 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	ft_draw_wall(int x_pos, int y_pos, t_frame *f, size_t color)
 	{
 		x = x_pos * f->scale / 4;
 		while (x < x_lim)
-			ft_paint(f, x++, y, color -= 216 / (int)sqrt(f->scale / 4));
+			ft_paint(f, x++, y, color -= 216 / (int)sqrt(f->scale * 4));
 		y++;
 	}
 }
@@ -44,7 +44,7 @@ static void	ft_draw_tile(int x_pos, int y_pos, t_frame *f, size_t color)
 		else
 			while (i <= x_lim)
 				ft_paint(f, i++, j, color * 2);
-		color += 512 / (int)sqrt(f->scale / 4);
+		color += 512 / (int)sqrt(f->scale * 4);
 		j++;
 	}
 }
