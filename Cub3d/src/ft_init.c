@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 13:35:08 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/03 17:06:34 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/15 22:20:56 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char	**ft_read_map(u_int16_t rows, t_game *g, char *av);
+char	**ft_read_map(uint16_t rows, t_game *g, char *av);
 
 void	ft_init_player(char dir, int x_pos, int y_pos, t_game *g)
 {
