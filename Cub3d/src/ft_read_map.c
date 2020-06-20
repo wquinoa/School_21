@@ -6,16 +6,11 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 20:00:30 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/12 17:14:03 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/20 18:06:20 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <stdio.h>
-#include "../minilibx_o/mlx.h"
-#include "../minilibx_o/t_map.h"
-#include "../minilibx_o/get_next_line.h"
-#include "../minilibx_o/libft.h"
+#include "../includes/cub3d.h"
 
 int		ft_get_link(const char *c, char *str, t_game *g)
 {
@@ -28,8 +23,7 @@ int		ft_get_link(const char *c, char *str, t_game *g)
 		link++;
 	while (link[i] && !(ft_isspace(link[i])))
 		i++;
-	if (link[i])
-		link[i] = '\0';
+	link[i] = '\0';
 	if (*c == 'N')
 		g->txr->no = ft_strdup(link);
 	else if (*c == 'S' && *(c + 1) == 'O')
@@ -77,16 +71,14 @@ static int8_t	ft_strval2(const char *id, char *str, t_game *g)
 		ft_get_link(id, str, g);
 	else if (id[0] == 'R')
 	{
-		g->wnd->width = ft_atoi(str + 2);
+		g->wnd->width = ft_atoi(str + 1);
+		while (ft_isspace(*str))
+			str++;
 		str += ft_nlen(g->wnd->width);
 		g->wnd->height = ft_atoi(str + 2);
-		if (g->wnd->width < 640 || g->wnd->height < 480)
-		{
-			g->wnd->width = 640;
-			g->wnd->height = 480;
-			write(1, "! \033[31mBad resolution\033[0m", 26);
-			write(1, "\n- Setting to 640 x 480", 23);
-		}
+		while (ft_isspace(*str))
+			str++;
+		str += ft_nlen(g->wnd->width);
 		g->x0 = g->wnd->width / 2;
 		g->y0 = g->wnd->height / 2;
 	}
@@ -105,7 +97,7 @@ static int8_t	ft_strval(char *str, t_game *g)
 		return (0);
 	while (id[++i])
 		if ((ft_strncmp(str, id[i], 2)) == 0)
-			return(ft_strval2(id[i], str, g));
+			return (ft_strval2(id[i], str, g));
 	while (*str)
 		if (!(ft_strchr("012 NEWS", *str++)))
 			return (-1);
@@ -118,7 +110,7 @@ void	flood_fill(char **region, uint16_t x, uint16_t y)
 		return ;
 	if (region[y][x] == ' ')
 	{
-				write(1, "lol\n", 4);
+		write(1, "lol\n", 4);
 		exit(0);
 	}
 	region[y][x] = '.';
@@ -132,14 +124,15 @@ void	flood_fill(char **region, uint16_t x, uint16_t y)
 	flood_fill(region, x + 1, y - 1);
 }
 
-void	ft_mapval(char **map, uint16_t rows, uint16_t columns)
+void	ft_mapval(char **map, uint16_t rows)
 {
-	char **test;
-	short i = -1;
-	short j;
+	char	**test;
+	short	i;
+	short	j;
 
 	if (!(test = (char **)malloc(sizeof(char *) * (rows + 1))))
 		return ;
+	i = -1;
 	while (map[++i])
 		test[i] = ft_strdup(map[i]);
 	i = -1;
@@ -156,15 +149,16 @@ void	ft_mapval(char **map, uint16_t rows, uint16_t columns)
 
 char	**ft_lsttab(t_list *list, u_int16_t rows, uint16_t columns)
 {
-	char **map;
-	short i = -1;
+	char	**map;
+	short	i;
 
 	if (!(map = (char **)malloc(sizeof(char *) * ((rows += 2) + 1))))
 		return (NULL);
+	i = -1;
 	columns += 2;
 	while (++i < rows)
 	{
-		map[i] = ft_calloc(1 , columns + 1);
+		map[i] = ft_calloc(1, columns + 1);
 		ft_memset(map[i], ' ', columns);
 		if (i > 0 && list)
 		{
@@ -174,7 +168,7 @@ char	**ft_lsttab(t_list *list, u_int16_t rows, uint16_t columns)
 	}
 	map[i] = NULL;
 	ft_lstclear(&list, &free);
-	ft_mapval(map, rows, columns);
+	ft_mapval(map, rows);
 	return (map);
 }
 
