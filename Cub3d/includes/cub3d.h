@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 18:20:40 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/20 00:15:26 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/21 13:51:24 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include "get_next_line.h"
 # define HEIGHT 64
 # define FISH 8
-# define ROTATION 0.08
+# define ROTATION 0.12
 
 typedef unsigned short		t_uint16;
 typedef unsigned long long	t_uint64;
@@ -79,12 +79,6 @@ typedef struct			s_texture
 	int					ceil;
 }						t_texture;
 
-typedef struct			s_sprite
-{
-	uint16_t			dist;
-
-}						t_sprite;
-
 typedef struct			s_frame
 {
 	void				*img;
@@ -122,6 +116,15 @@ typedef struct			s_ray
 	float				len;
 }						t_ray;
 
+typedef struct			s_vline
+{
+	int					x;
+	int					y;
+	int					tex_x;
+	int					tex_y;
+	float				half;
+}						t_vline;
+
 typedef struct			s_item
 {
 	float				x;
@@ -143,10 +146,10 @@ typedef struct			s_game
 	struct s_texture	*txr;
 	struct s_ray		*rayy;
 	t_item				**sprites;
+	uint16_t			depth[6000];
 	uint16_t			x0;
 	uint16_t			y0;
 	uint16_t			ray;
-	uint16_t			sray;
 	uint32_t			flags;
 	t_frame				*tex;
 	t_frame				*no;

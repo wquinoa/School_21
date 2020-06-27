@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 20:00:30 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/20 18:06:20 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/22 01:40:21 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,6 @@ char	**ft_read_map(uint16_t rows, uint16_t longest, t_game *g, char *av)
 	char			*str;
 	int				flag;
 
-	tmp = NULL;
 	list = NULL;
 	while ((flag = get_next_line(fd, &str)) >= 0)
 	{
@@ -196,6 +195,8 @@ char	**ft_read_map(uint16_t rows, uint16_t longest, t_game *g, char *av)
 		if (flag == 0)
 			break ;
 	}
+	if (flag == -1)
+		return(ft_free_all(&list, &tmp));
 	close(fd);
 	return (ft_lsttab(list, rows, longest));
 }

@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 14:22:20 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/20 17:17:13 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/25 17:32:00 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	ft_minimap(t_game *g)
 		x_pos = 0;
 		while (str[x_pos])
 		{
-			if (str[x_pos] == '1' && g->flags & 4)
+			if (str[x_pos] == '1')
 				ft_draw_wall(x_pos, y_pos, g, 0xFFFFFF);
 			if (ft_strchr("NEWS", str[x_pos]))
 			{

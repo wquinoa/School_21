@@ -6,7 +6,7 @@
 #    By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/17 21:10:46 by wquinoa           #+#    #+#              #
-#    Updated: 2020/06/18 15:18:59 by wquinoa          ###   ########.fr        #
+#    Updated: 2020/06/25 00:07:20 by wquinoa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,8 +73,7 @@ $(NAME): $(OBJ_FILES)
 	@cp minilibx_o/libmlx.a libmlx.a
 	@ar rcs $(NAME) $^
 	@echo "$(MADE_MSG)lib$(WHT)\n"
-	@echo "\n$(DRK)  ( \`-.__.-' )\n   \`-.    .-'\n      \\  /\n       ||   $(DRK)$(GRN)no malloc $(WHT)$(DRK)-\n       ||  $(DRK)$(GRN)no problem$(WHT)$(DRK)\n      //\\\\\\\\\n     //  \\\\\\\\\n    ||    ||\n    ||____||\n    ||====||\n     \\\\\\\\  //\n      \\\\\\\\//\n       ||\n       ||\n       ||\n       ||\n       ||\n       ||\n       []\n"
-	@$(CC) $(CF) main.c  -L. -lcub3d -lft -lmlx -framework OpenGL -framework AppKit
+	@$(CC) $(CF) main.c  -L. -lcub3d -lft -lmlx -framework OpenGL -framework AppKit -o cub3d
 
 #+----------------------------------------------------------------------------------------------------------------------+#
 #|    Creating bindir and objects                                                                                       |#

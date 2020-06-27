@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 15:15:59 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/20 18:04:33 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/21 19:56:15 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,13 @@ void	ft_blend_tex(t_game *g, int x, int y, int offset, int i)
 		win = g->frm->addr + (y * g->frm->line_l + x * (g->frm->bpp / 8));
 		color = ft_blend(g->txr->flr, *((int*)tex),
 				(i < 56) ? (36 + i / 2) : 64);
-		if (g->flags & crt_f)
-			*(int *)win = color | ((g->ray / 8) * 0x01000000);
-		else
-			*(int *)win = color;
+		if (*(int*)tex != 0x010101)
+		{
+			if (g->flags & crt_f)
+				*(int *)win = color | ((g->ray / 8) * 0x01000000);
+			else
+				*(int *)win = color;
+		}
 	}
 }
 
@@ -67,9 +70,12 @@ void	ft_paint_tex(t_game *g, int x, int y, int offset, int i)
 	{
 		tex = g->tex->addr + (int)(i * g->tex->line_l + offset * (g->tex->bpp >> 3));
 		win = g->frm->addr + (y * g->frm->line_l + x * (g->frm->bpp >> 3));
-		if (g->flags & crt_f)
-			*(int *)win = (*(int *)tex | ((g->ray / 8) * 0x01000000));
-		else
-			*(int *)win = *(int *)tex;
+		if (*(int*)tex != 0x010101)
+		{
+			if (g->flags & crt_f)
+				*(int *)win = (*(int *)tex | ((g->ray / 8) * 0x01000000));
+			else
+				*(int *)win = *(int *)tex;
+		}
 	}
 }
