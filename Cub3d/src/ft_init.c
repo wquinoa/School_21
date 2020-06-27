@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 13:35:08 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/15 21:17:14 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/18 15:01:24 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>
 
 int		ft_printf(char *str, ...);
 
@@ -28,16 +27,13 @@ void	ft_init_player(char dir, int x_pos, int y_pos, t_game *g)
 {
 	g->plr->x = (x_pos) * HEIGHT;
 	g->plr->y = (y_pos) * HEIGHT;
-	//if (!(g->wnd->width % 16) && !(g->wnd->height % 9))
-	//if (g->wnd->width <= g->wnd->height)
-	//	g->plr->fov = ((g->wnd->height/g->wnd->width) * 42) * (M_PI / 180);
-	//else
-		//g->plr->fov = ((g->wnd->width/g->wnd->height) * 66) * (M_PI / 180);
-	//else
+	if (!(g->wnd->width % 16) && !(g->wnd->height % 9))
+		g->plr->fov = 84 * M_PI / 180;
+	else
 		g->plr->fov = 66 * M_PI / 180;
 	g->plr->fov_2 = g->plr->fov / 2;
-	g->plr->speed = sqrt(HEIGHT);
-	g->plr->deltaray = (float)(g->plr->fov / (g->wnd->width * 1.1));
+	g->plr->speed = sqrt(HEIGHT) * 2;
+	g->plr->deltaray = (float)(g->plr->fov / (g->wnd->width * 1.2));
 
 	if (dir == 'N')
 		g->plr->dir = 3 * M_PI_2;
@@ -55,27 +51,6 @@ void	ft_paint(t_frame *f, int x, int y, int color)
 
 	dst = f->addr + (y * f->line_l + x * (f->bpp / 8));
 	*(int *)dst = color;
-}
-
-void	ft_crt(t_frame *f, t_window *w)
-{
-	char			*dst;
-	int				x = 0;
-	int				y = 0;
-	const uint8_t	ch = w->width / 160;
-	const uint8_t	cw = ch / 2;
-
-	while (y < w->height)
-	{
-		x = 0;
-		while (x < w->width)
-		{
-			dst = f->addr + (y * f->line_l + x * (f->bpp / 8));
-			*(uint32_t *)dst += 0x20000000 * (!(x % cw) || !(y % ch));
-			x++;
-		}
-		y++;
-	}
 }
 
 int ftBlend(int fg, int bg, uint16_t amount)
@@ -113,7 +88,7 @@ int		ftDarken(int color, int16_t i)
 		//color += (
 		//(i << 16) * ((color & red) < diff) |
 		//(i << 8) * ((color & grn) < diff) |
-		//(i << 0) * ((color & grn) < diffff : i)
+		//(i << 0) * ((color & grn) < diff)
 		//)
 	//);
 //}
@@ -125,58 +100,38 @@ void	ft_mix(t_frame *f, int x, int y, int color)
 	*(int*)dst = ftBlend(*(int*)dst, color, 32);
 }
 
-void	ft_sun(t_game *g)
-{
-	float		x;
-	float		y;
-	float		y0 = 5 * g->wnd->height/ 11;
-	const int	s = g->wnd->height / 8;
-	float		a;
-	uint16_t	i;
-
-	a = 0;
-	while (a <= (M_PI * 2))
-	{
-		i = 0;
-		x = g->wnd->width / 2 + cos(g->plr->dir + M_PI_2);
-		y = y0;
-		while (i < s)
-		{
-			if ((int)y % 6)
-				ft_paint(g->frm, x, y, 0xfc2142 + ((abs((int32_t)(y - y0)) % s)) * (0x0100));
-			x += cos(a);
-			y += sin(a);
-			i++;
-		}
-		a += (float)(M_PI / 180 / 5);
-	}
-}
-
-void	ft_floor(t_game *g, uint32_t floor, uint32_t ceil, int flag)
+void	ftDrawFloor(t_game *g, int x0, int end)
 {
 	int		x;
 	int		y;
+	int		col;
 
-	y = -1;
-	while (++y <= g->y0)
+	col = g->txr->flr;
+	y = g->wnd->height  -1;
+	while (y >= 0 && y > end)
 	{
-		x = -1;
-		while (++x < g->wnd->width)
-			ft_paint(g->frm, x, y, ceil );
+		ft_paint(g->frm, x0, y, col);
 		if (g->flags & crt_f && !(y % 6))
-			ceil = ftDarken(ceil, 1);
+			col = ftDarken(col, 1);
+		y--;
 	}
-	ft_sun(g);
-	if (g->flags & ref_f)
-		floor = ftBlend(floor, ceil, 48);
-	y = g->wnd->height;
-	while (--y > g->y0)
+}
+
+void	ftDrawCeil(t_game *g, int x0, int end)
+{
+	int		y;
+	int		col;
+
+	if (end > g->wnd->height)
+		end = g->wnd->height;
+	col = g->txr->ceil;
+	y = 1;
+	while ( y < end)
 	{
-		x = -1;
-		while (++x < g->wnd->width)
-			ft_paint(g->frm, x, y, floor);
+			ft_paint(g->frm, x0, y, col);
 		if (g->flags & crt_f && !(y % 6))
-			floor = ftDarken(floor, 1);
+			col = ftDarken(col, 1);
+		y++;
 	}
 }
 
@@ -267,7 +222,7 @@ void	ft_paint_tex(t_game *g, int x, int y, int offset, int i)
 		tex = g->tex->addr + (int)(i * g->tex->line_l + offset * (g->tex->bpp >> 3));
 		win = g->frm->addr + (y * g->frm->line_l + x * (g->frm->bpp >> 3));
 		if (g->flags & crt_f)
-			*(int *)win = *(int *)tex | ((g->ray / 8) * 0x01000000);
+			*(int *)win = (*(int *)tex | ((g->ray / 8) * 0x01000000));
 		else
 			*(int *)win = *(int *)tex;
 	}
@@ -297,52 +252,77 @@ void	ft_revpaint_tex(t_game *g, int x, int y, int offset, int i)
 			offset * (g->tex->bpp >> 3));
 		win = g->frm->addr + (y * g->frm->line_l + x * (g->frm->bpp >> 3));
 		if (g->flags & crt_f)
-			*(int *)win = *(int *)tex | ((g->ray / 6) * 0x01000000);
+			*(int *)win = (*(int *)tex | ((g->ray / 6) * 0x01000000));
 		else
 			*(int *)win = *(int *)tex;
 	}
 }
 
+int8_t	ft_add_fisheye(uint16_t ray, float k, t_game *g, int offset)
+{
+	uint16_t		y;
+	int				i;
+	const uint16_t	x0 = g->x0 - g->wnd->width / g->plr->fov * k;
+	const uint16_t	ppu = ((g->wnd->height / FISH * 2) / HEIGHT);
+
+	i = 0;
+	y = ray + g->wnd->height / FISH;
+	ftDrawCeil(g, x0, y);
+	while (y < g->wnd->height - (ray + g->wnd->height / FISH))
+	{
+		if (i > 255)
+			i = 0;
+		ft_paint_tex(g, x0, y++, offset, i++ / ppu);
+	}
+	ftDrawFloor(g, x0, y);
+	if (g->flags & ref_f)
+		while (y < g->wnd->height - 2 * ray / 3)
+		{
+			if (i > 255)
+				i = 0;
+			ftBlendTex(g, x0, y++, offset, i++ / ppu);
+		}
+	return (0);
+}
+
 void	ft_add_texture(uint16_t ray, float k, t_game *g, int offset)
 {
-	uint16_t		x;
 	int				y;
 	uint16_t		x0 = (g->x0 - k * g->wnd->width / g->plr->fov);
 	const float		halfwall = HEIGHT / 2 * g->wnd->height / (ray * cos(k));
 	int i;
 
 	i = 0;
-	x = x0;
 	y = g->y0 - halfwall;
-	while (y <= g->y0 + halfwall - 1)
-		ft_paint_tex(g, x, y++, offset, i++ / ((halfwall * 2) / HEIGHT));
-	if (!(g->flags & ref_f))
-		return;
-	i = 0;
-	x = x0;
-	while (y < g->y0 + 3 * halfwall - 2)
-		ftBlendTex(g, x, y++, offset, i++ / ((halfwall * 2) / HEIGHT));
+	ftDrawCeil(g, x0, y);
+	if (g->flags & hal_f)
+	{
+		ft_add_fisheye(ray, k, g, offset);
+		return ;
+	}
+	while (y < g->y0 + halfwall)
+		ft_paint_tex(g, x0, y++, offset, i++ / ((halfwall * 2) / HEIGHT));
+	if (g->flags & ref_f)
+	{
+		i = 0;
+		while (y < g->y0 + 3 * halfwall - 2)
+			ftBlendTex(g, x0, y++, offset, i++ / ((halfwall * 2) / HEIGHT));
+	}
+	ftDrawFloor(g, x0, y - 5);
 }
 
 void	ft_add_sprite(uint16_t ray, float k, t_game *g, int offset)
 {
-	uint16_t		x;
 	int				y;
-	uint16_t		x0 = g->x0 - k * g->wnd->width / g->plr->fov;
-	const float		half = HEIGHT / 2 * g->wnd->height / (ray * cos(k));
+	uint16_t		x0 = g->x0 - sin(k) * ray; //g->wnd->width / g->plr->fov;
+	const float		half = HEIGHT / 2 ;//* g->wnd->height / (ray * cos(k)) - 1;
 	int i;
 
 	i = 0;
-	x = x0;
-	y = g->y0 - half;
-	while (y <= g->y0 + half - 1)
-		ft_paint_tex(g, x, y++, offset, i++ / ((half * 2) / HEIGHT));
-	if (!(g->flags & ref_f))
-		return;
-	i = 0;
-	x = x0;
-	while (y < g->y0 + 3 * half - 2)
-		ftBlendTex(g, x, y++, offset, i++ / ((half * 2) / HEIGHT));
+	y = g->y0 + half;
+	g->tex = g->no;
+	while (y <= g->y0 + 3 * half)
+		ft_paint_tex(g, x0, y++, offset, i++ / ((half * 2) / HEIGHT));
 }
 
 void	ft_drawing_handler(uint16_t ray, float k, t_game *g, float x, float y)
@@ -371,6 +351,11 @@ void	ft_drawing_handler(uint16_t ray, float k, t_game *g, float x, float y)
 		ft_add_texture(ray, g->plr->dir - k, g, (int)x % HEIGHT);
 	else
 		ft_add_texture(ray, g->plr->dir - k, g, (int)y % HEIGHT);
+	if (g->flags & 128)
+	{
+		ft_add_sprite(ray, g->plr->dir - k, g, (int)x % HEIGHT);
+		g->flags -= 128;
+	}
 }
 
 void	ft_cast_ray(t_game *g, t_player *plr, t_frame *frm)
@@ -393,6 +378,11 @@ void	ft_cast_ray(t_game *g, t_player *plr, t_frame *frm)
 				ft_mix(frm, x / HEIGHT * (g->wnd->width / (HEIGHT * 2)),
 				y / HEIGHT * (g->wnd->width / (HEIGHT * 2)), 0xff7f);
 			}
+			if (g->map[(int)(y / HEIGHT)][(int)(x / HEIGHT)] == '2' && !(g->flags & 128))
+			{
+				g->sray = i;
+				g->flags |= 128;
+			}
 			x += cos(k);
 			y += sin(k);
 			i++;
@@ -409,10 +399,7 @@ void	ft_draw_scene(t_game *g, t_frame *f, t_window *w)
 	f->addr = mlx_get_data_addr(f->img, &f->bpp, &f->line_l, &f->en);
 	if (!g->flags)
 		ft_minimap(g, f);
-	ft_floor(g, g->txr->flr, g->txr->ceil, 3);
 	ft_cast_ray(g, g->plr, g->frm);
-	//if (g->flags & 1)
-		//ft_crt(f, w);
 	if (g->flags)
 		ft_minimap(g, f);
 	mlx_put_image_to_window(w->mlx, w->win, f->img, 0, 0);
@@ -511,7 +498,7 @@ int		key_press(int key, t_game *g)
 	return (0);
 }
 
-void	ft_load_textures(t_game *g, t_texture *t)
+static void	ft_load_textures(t_game *g, t_texture *t)
 {
 	t_frame	*tex;
 	t_frame	**tab[5] = {&g->no, &g->so, &g->ea, &g->we, NULL};
@@ -533,7 +520,7 @@ void	ft_load_textures(t_game *g, t_texture *t)
 	}
 }
 
-void	ft_init(char *av)
+void		ft_init(char *av)
 {
 	t_game				scene;
 	static t_window		window;
