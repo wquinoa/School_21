@@ -6,11 +6,12 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 20:00:30 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/03 14:22:47 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/12 17:14:03 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
+#include <stdio.h>
 #include "../minilibx_o/mlx.h"
 #include "../minilibx_o/t_map.h"
 #include "../minilibx_o/get_next_line.h"
@@ -23,41 +24,43 @@ int		ft_get_link(const char *c, char *str, t_game *g)
 
 	i = 0;
 	link = str + 2;
-	while (ft_isspace(*link))
+	while (*link && ft_isspace(*link))
 		link++;
-	while (!(ft_isspace(link[i])))
+	while (link[i] && !(ft_isspace(link[i])))
 		i++;
-	link[i] = '\0';
+	if (link[i])
+		link[i] = '\0';
 	if (*c == 'N')
-		g->txr->no = link;
+		g->txr->no = ft_strdup(link);
 	else if (*c == 'S' && *(c + 1) == 'O')
-		g->txr->so = link;
+		g->txr->so = ft_strdup(link);
 	else if (*c == 'S' && *(c + 1) == ' ')
-		g->txr->sp = link;
+		g->txr->sp = ft_strdup(link);
 	else if (*c == 'E')
-		g->txr->ea = link;
+		g->txr->ea = ft_strdup(link);
 	else if (*c == 'W')
-		g->txr->we = link;
+		g->txr->we = ft_strdup(link);
 	return (1);
 }
 
 static int8_t	ft_get_color(char c, char *str, t_game *g)
 {
-	int		*a;
-	uint8_t	i;
+	int			tmp;
+	int			a;
+	uint8_t		i;
 
-	if (!(a = (int *)malloc(sizeof(int) * 4)))
-		return (0);
 	i = 0;
-	while (++i < 4)
+	a = 0;
+	while (i < 3)
 	{
-		a[i] = ft_atoi(str + 1);
-		if (a[i] < 0 || a[i] > 255)
-		{
-			ft_bzero(a, 3);
-			return(0);
-		}
-		str = ft_strchr(str, ',');
+		str++;
+		tmp = ft_atoi(str);
+		if (tmp < 0 || tmp > 255)
+			exit(0);
+		a |= tmp << (2 - i) * 8;
+		while (*str != ',' && *str)
+			str++;
+		i++;
 	}
 	if (c == 'F')
 		g->txr->flr = a;
@@ -66,10 +69,34 @@ static int8_t	ft_get_color(char c, char *str, t_game *g)
 	return (1);
 }
 
+static int8_t	ft_strval2(const char *id, char *str, t_game *g)
+{
+	if (id[0] == 'C' || id[0] == 'F')
+		ft_get_color(id[0], str, g);
+	else if (ft_strchr("NSWE", id[0]))
+		ft_get_link(id, str, g);
+	else if (id[0] == 'R')
+	{
+		g->wnd->width = ft_atoi(str + 2);
+		str += ft_nlen(g->wnd->width);
+		g->wnd->height = ft_atoi(str + 2);
+		if (g->wnd->width < 640 || g->wnd->height < 480)
+		{
+			g->wnd->width = 640;
+			g->wnd->height = 480;
+			write(1, "! \033[31mBad resolution\033[0m", 26);
+			write(1, "\n- Setting to 640 x 480", 23);
+		}
+		g->x0 = g->wnd->width / 2;
+		g->y0 = g->wnd->height / 2;
+	}
+	return (id[0]);
+}
+
 static int8_t	ft_strval(char *str, t_game *g)
 {
-	const char		*id[9] = {"NO", "SO", "WE", "EA", "S ", "F ", "C ", "R ", NULL};
-	int8_t		i;
+	const char	*id[9] = {"NO", "SO", "WE", "EA", "S ", "F ", "C ", "R ", NULL};
+	short		i;
 
 	i = -1;
 	while (ft_isspace(*str))
@@ -78,43 +105,80 @@ static int8_t	ft_strval(char *str, t_game *g)
 		return (0);
 	while (id[++i])
 		if ((ft_strncmp(str, id[i], 2)) == 0)
-		{
-			if (id[i][0] == 'C' || id[i][0] == 'F')
-				ft_get_color(id[i][0], str, g);
-			else if (ft_strchr("NSWE", id[i][0]))
-				ft_get_link(id[i], str, g);
-			else if (id[i][0] == 'R')
-			{
-				g->wnd->width = ft_atoi(str + 2);
-				str += ft_nlen(g->wnd->width);
-				g->wnd->height = ft_atoi(str + 2);
-			}
-			return (id[i][0]);
-		}
+			return(ft_strval2(id[i], str, g));
 	while (*str)
 		if (!(ft_strchr("012 NEWS", *str++)))
 			return (-1);
 	return (1);
 }
 
-char	**ft_lsttab(t_list *list, u_int16_t rows)
+void	flood_fill(char **region, uint16_t x, uint16_t y)
+{
+	if (region[y][x] == '1' || region[y][x] == '.')
+		return ;
+	if (region[y][x] == ' ')
+	{
+				write(1, "lol\n", 4);
+		exit(0);
+	}
+	region[y][x] = '.';
+	flood_fill(region, x + 1, y);
+	flood_fill(region, x - 1, y);
+	flood_fill(region, x, y + 1);
+	flood_fill(region, x, y - 1);
+	flood_fill(region, x - 1, y - 1);
+	flood_fill(region, x + 1, y + 1);
+	flood_fill(region, x - 1, y + 1);
+	flood_fill(region, x + 1, y - 1);
+}
+
+void	ft_mapval(char **map, uint16_t rows, uint16_t columns)
+{
+	char **test;
+	short i = -1;
+	short j;
+
+	if (!(test = (char **)malloc(sizeof(char *) * (rows + 1))))
+		return ;
+	while (map[++i])
+		test[i] = ft_strdup(map[i]);
+	i = -1;
+	while (test[++i])
+	{
+		j = -1;
+		while (test[i][++j])
+		{
+			if (ft_strchr("NEWS", test[i][j]))
+				flood_fill(test, j, i);
+		}
+	}
+}
+
+char	**ft_lsttab(t_list *list, u_int16_t rows, uint16_t columns)
 {
 	char **map;
+	short i = -1;
 
-	if (!(map = (char **)malloc(sizeof(char *) * (rows + 1))))
+	if (!(map = (char **)malloc(sizeof(char *) * ((rows += 2) + 1))))
 		return (NULL);
-	rows = 0;
-	while (list)
+	columns += 2;
+	while (++i < rows)
 	{
-		map[rows++] = list->content;
-		list = list->next;
+		map[i] = ft_calloc(1 , columns + 1);
+		ft_memset(map[i], ' ', columns);
+		if (i > 0 && list)
+		{
+			ft_strlcpy(map[i] + 1, list->content, columns - 1);
+			list = list->next;
+		}
 	}
-	map[rows] = NULL;
+	map[i] = NULL;
 	ft_lstclear(&list, &free);
+	ft_mapval(map, rows, columns);
 	return (map);
 }
 
-char	**ft_read_map(u_int16_t rows, t_game *g, char *av)
+char	**ft_read_map(uint16_t rows, uint16_t longest, t_game *g, char *av)
 {
 	const int		fd = open(av, O_RDONLY);
 	t_list			*list;
@@ -131,6 +195,7 @@ char	**ft_read_map(u_int16_t rows, t_game *g, char *av)
 		if (ft_strval(str, g) == 1)
 		{
 			rows++;
+			longest = longest > ft_strlen(str) ? longest : ft_strlen(str);
 			ft_lstadd_back(&list, tmp);
 		}
 		free(str);
@@ -138,5 +203,5 @@ char	**ft_read_map(u_int16_t rows, t_game *g, char *av)
 			break ;
 	}
 	close(fd);
-	return (ft_lsttab(list, rows));
+	return (ft_lsttab(list, rows, longest));
 }

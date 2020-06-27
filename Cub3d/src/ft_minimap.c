@@ -6,45 +6,51 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 14:22:20 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/03 14:28:52 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/12 16:42:46 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minilibx_o/t_map.h"
 
-static void	ft_draw_wall(int x_pos, int y_pos, t_frame *f, size_t color)
+static void	ft_draw_wall(int x_pos, int y_pos, t_game *g, int color)
 {
-	int x = x_pos * f->scale;
-	int y = y_pos * f->scale;
-	const int x_lim = (x_pos + 1) * f->scale;
-	const int y_lim = (y_pos + 1) * f->scale;
+	const uint16_t	mod = g->wnd->width / (HEIGHT * 2);
+	const uint16_t	x_lim = (x_pos + 1) * mod;
+	const uint16_t	y_lim = (y_pos + 1) * mod;
+	uint16_t		i;
+	uint16_t		j;
 
-	while (y < y_lim)
+	j = y_pos * mod;
+	while (j < y_lim)
 	{
-		x = x_pos * f->scale;
-		while (x < x_lim)
-			ft_paint(f, x++, y, color -= 216 / (int)sqrt(f->scale));
-		y++;
+		i = x_pos * mod;
+		while (i < x_lim)
+		{
+			ft_mix(g->frm, i, j, color);
+			i++;
+		}
+		j++;
 	}
 }
 
-static void	ft_draw_tile(int x_pos, int y_pos, t_frame *f, size_t color)
+static void	ft_draw_tile(int x_pos, int y_pos, t_game *g, int color)
 {
-	int i = x_pos * f->scale;//f->scale;
-	int j = y_pos * f->scale;//f->scale;
-	const int x_lim = (x_pos + 1) * f->scale;
-	const int y_lim = (y_pos + 1) * f->scale;
+	const uint16_t	mod = g->wnd->width / (HEIGHT * 2);
+	const uint16_t	x_lim = (x_pos + 1) * mod;
+	const uint16_t	y_lim = (y_pos + 1) * mod;
+	uint16_t		i;
+	uint16_t		j;
 
+	j = y_pos * mod;
 	while (j <= y_lim)
 	{
-		i = x_pos * f->scale;
-		if (j % 2 == 1)
+		i = x_pos * mod;
+		if (j % (HEIGHT / 4) == 1)
 			while (i <= x_lim)
-				ft_paint(f, i++, j, color);
+				ft_mix(g->frm, i++, j, color + 64);
 		else
 			while (i <= x_lim)
-				ft_paint(f, i++, j, color * 2);
-		color += 512 / (int)sqrt(f->scale);
+				ft_mix(g->frm, i++, j, color);
 		j++;
 	}
 }
@@ -55,24 +61,20 @@ void	ft_minimap(t_game *g, t_frame *f)
 	int y_pos= 0;
 	char	*str;
 
-	g->frm->scale = g->wnd->width / 120;
 	while (g->map[y_pos])
 	{
 		str = g->map[y_pos];
 		x_pos = 0;
 		while (str[x_pos])
 		{
-			if (str[x_pos] == '1')
-				ft_draw_wall(x_pos, y_pos, f, 0x007ff0);
-			else if (str[x_pos] == '0')
-				ft_draw_tile(x_pos, y_pos, f, 0x99cccc);
-			else if (str[x_pos] == '2')
-				ft_draw_wall(x_pos, y_pos, f, 0xffff00);
-			else if (str[x_pos] == 'N')
+			if (str[x_pos] == '1' && g->flags & 4)
+				ft_draw_wall(x_pos, y_pos, g, 0x992400);
+			else if (str[x_pos] == '2' && g->flags & 4)
+				ft_draw_tile(x_pos, y_pos, g, 0xffff00);
+			if (str[x_pos] == 'N')
 			{
 				ft_init_player(str[x_pos], x_pos, y_pos, g);
 				str[x_pos] = '0';
-				ft_draw_tile(x_pos, y_pos, f, 0x99cccc);
 			}
 			x_pos++;
 		}
