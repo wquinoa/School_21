@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/16 05:54:10 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/27 04:46:49 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/27 19:19:00 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int		check_next_line(int fd, char **line, char **buf)
 		return (-1);
 	if (!(*buf = (char *)malloc(BUFFER_SIZE + 1)))
 		return (-1);
-	if ((read(fd, buf[0], 0) < 0))
+	if (read(fd, *buf, 0) < 0)
 	{
 		free(*buf);
 		return (-1);
@@ -98,7 +98,7 @@ int		check_next_line(int fd, char **line, char **buf)
 
 int		get_next_line(int fd, char **line)
 {
-	static t_fd	*fd_struct;
+	static char	*fd_tab[FD_LIMIT];
 	int			flag;
 	char		*buf;
 	char		*tmp;
@@ -109,7 +109,10 @@ int		get_next_line(int fd, char **line)
 	{
 		buf[flag] = '\0';
 		if (!(tmp = ft_strjoin(fd_tab[fd], buf)))
-			break ;
+		{
+			free(buf);
+			return (-1);
+		}
 		if (fd_tab[fd])
 			free(fd_tab[fd]);
 		fd_tab[fd] = tmp;

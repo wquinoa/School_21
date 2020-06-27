@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 21:05:26 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/17 18:08:32 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/17 15:19:19 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void					ft_putlst(t_list *lst);
 */
 
 size_t					ft_tablen(char **tab);
-void					ft_tabclear(char **tab, int len);
+void					ft_tabclear(char **tab);
 char					**ft_tabmap(char **tab, char *(*f)(const char *));
 char					*ft_strjoin_dlm(char *s1, char *s2, char *s3);
 char					*ft_join(char **tab, char *dlm);

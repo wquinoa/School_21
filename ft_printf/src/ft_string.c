@@ -6,18 +6,18 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/22 13:19:17 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/22 15:25:22 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/05/31 20:34:37 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-int			ft_toupper(int c)
+inline int	ft_toupper(int c)
 {
 	return (c -= ('a' <= c && c <= 'z') * 32);
 }
 
-int			ft_isdigit(int c)
+inline int	ft_isdigit(int c)
 {
 	return (c >= '0' && c <= '9');
 }

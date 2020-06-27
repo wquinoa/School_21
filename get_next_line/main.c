@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/18 11:40:09 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/20 20:51:01 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/04 13:21:33 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int main()
     int fd, ret;
     char *str;
     fd = open("test.txt", O_RDONLY);
-    while ((ret = get_next_line(0, &str)) > 0)
+    while ((ret = get_next_line(fd, &str)) > 0)
     {
         printf("%s\n", str);
         free(str);
