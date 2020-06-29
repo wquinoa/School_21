@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 16:55:15 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/29 20:51:48 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/29 23:54:47 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,31 +87,31 @@ static void	ft_paint_sprite(t_item item, t_game *g)
 			}
 		}
 	}
-	if (g->flags & crt_f)
-		ft_blend_sprite(item, g, x, y);
+	g->items++;
+	(g->flags & crt_f) ? ft_blend_sprite(item, g, x, y) : 0;
 }
 
 void		ft_add_sprite(t_item **items, t_game *g)
 {
-	t_item		*curr;
+	t_item		*cur;
 	int			i;
 
 	i = -1;
 	while (items[++i])
 	{
-		curr = items[i];
-		curr->dist = ft_max(hypot(g->plr->x - curr->x, g->plr->y - curr->y), 24);
-		if (curr->dist == 24)
-			curr->ex = 0;
-		curr->dir = atan2f(curr->y - g->plr->y, curr->x - g->plr->x);
-		while (curr->dir - g->plr->dir > M_PI)
-			curr->dir -= 2 * M_PI;
-		while (curr->dir - g->plr->dir < -M_PI)
-			curr->dir += 2 * M_PI;
-		curr->size = g->wnd->width / curr->dist * 16;
-		curr->x_off = (curr->dir - g->plr->dir) * (g->x0 * 2) / g->plr->fov +
-						(g->x0) - (curr->size >> 1);
-		curr->y_off = g->y0 - (curr->size >> 1);
+		cur = items[i];
+		cur->dist = ft_max(hypot(g->plr->x - cur->x, g->plr->y - cur->y), 24);
+		if (cur->dist == 24)
+			cur->ex = 0;
+		cur->dir = atan2f(cur->y - g->plr->y, cur->x - g->plr->x);
+		while (cur->dir - g->plr->dir > M_PI)
+			cur->dir -= 2 * M_PI;
+		while (cur->dir - g->plr->dir < -M_PI)
+			cur->dir += 2 * M_PI;
+		cur->size = g->wnd->width / cur->dist * 16;
+		cur->x_off = (cur->dir - g->plr->dir) * (g->x0 * 2) / g->plr->fov +
+						(g->x0) - (cur->size >> 1);
+		cur->y_off = g->y0 - (cur->size >> 1);
 	}
 	ft_bubble_sort(items);
 	while (--i >= 0)

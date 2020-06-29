@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 13:35:08 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/29 20:07:39 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/29 23:51:35 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,27 @@
 
 void		ft_draw_scene(t_game *g, t_frame *f, t_window *w)
 {
+	static char n[2];
+
 	f->img = mlx_new_image(w->mlx, w->width, w->height);
 	f->addr = mlx_get_data_addr(f->img, &f->bpp, &f->line_l, &f->en);
 	ft_cast_ray(g, g->plr);
 	if (g->sprites)
+	{
+		g->items = 0;
 		ft_add_sprite(g->sprites, g);
+		n[0] = g->items + '0';
+		if (!g->items)
+			write(1, "you win\n", 8);
+	}
 	if (g->flags & sav_f)
 	{
 		ft_bmp(g, f);
+		write(1, "Saving img...\n", 14);
 		exit(0);
 	}
 	mlx_put_image_to_window(w->mlx, w->win, f->img, 0, 0);
+	g->items ? mlx_string_put(w->mlx, w->win, 5, 15, 0x8888, n) : 0;
 	mlx_destroy_image(w->mlx, f->img);
 }
 

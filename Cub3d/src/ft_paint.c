@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 15:15:59 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/25 15:13:57 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/29 23:56:06 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void		ft_blend_tex(t_game *g, t_ray pt, int offset, int i)
 		color = ft_blend(g->txr->flr, *((int*)tex),
 				(i < 56) ? (36 + i / 2) : 64);
 		*(int *)win = color |
-		((g->ray / 7) * 0x01000000 * (g->flags & crt_f));
+		((g->ray / 6) * 0x01000000 * (g->flags & crt_f));
 	}
 }
 
@@ -70,6 +70,6 @@ void		ft_paint_tex(t_game *g, t_ray pt, int offset, int i)
 		win = g->frm->addr + ((int)pt.y * g->frm->line_l +
 			(int)pt.x * (g->frm->bpp >> 3));
 		*(int *)win = (*(int*)tex |
-		((g->ray / 7) * 0x01000000 * (g->flags & crt_f)));
+		((g->ray / 6) * 0x01000000 * (g->flags & crt_f)));
 	}
 }
