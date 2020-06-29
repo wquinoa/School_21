@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 16:40:33 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/29 11:51:35 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/29 17:15:22 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void			ft_mapval(char **map, uint16_t rows, t_game *g)
 	i = -1;
 	while (map[++i])
 		!(test[i] = ft_strdup(map[i])) ? ft_errors(bad_malloc) : 0;
+	test[i] = NULL;
 	ft_bzero(&pos, sizeof(t_ray));
 	ft_find_plr(test, &pos, g);
 	flood_fill(test, pos.x, pos.y);

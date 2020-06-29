@@ -6,7 +6,7 @@
 #    By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/17 21:10:46 by wquinoa           #+#    #+#              #
-#    Updated: 2020/06/29 12:00:27 by wquinoa          ###   ########.fr        #
+#    Updated: 2020/06/29 17:01:02 by wquinoa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ OBJ_FILES	:= $(addprefix $(BIN)/, $(OBJ))
 SRC_FILES	:= $(addprefix $(SRC_DIR)/, $(SRCS))
 
 CC			= gcc
-CF			= -Wall -Wextra -Werror -O2
+CF			= -Wall -Wextra -Werror
 
 .PHONY: run, libs, clean, clibs, fclean, fclibs, re
 #+----------------------------------------------------------------------------------------------------------------------+#
