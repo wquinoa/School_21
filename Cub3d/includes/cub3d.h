@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 18:20:40 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/29 17:23:19 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/29 18:15:24 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct			s_game
 	uint16_t			x0;
 	uint16_t			xcur;
 	uint16_t			y0;
+	uint8_t				items;
 	uint16_t			ray;
 	uint32_t			flags;
 	t_frame				*tex;

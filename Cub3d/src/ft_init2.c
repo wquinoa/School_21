@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 13:35:08 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/29 11:52:21 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/29 20:07:39 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void		ft_draw_scene(t_game *g, t_frame *f, t_window *w)
 	f->img = mlx_new_image(w->mlx, w->width, w->height);
 	f->addr = mlx_get_data_addr(f->img, &f->bpp, &f->line_l, &f->en);
 	ft_cast_ray(g, g->plr);
-	ft_add_sprite(g->sprites, g);
+	if (g->sprites)
+		ft_add_sprite(g->sprites, g);
 	if (g->flags & sav_f)
 	{
 		ft_bmp(g, f);

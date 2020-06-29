@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 16:28:08 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/23 23:09:44 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/29 20:07:10 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static int		ft_init_item(uint16_t x, uint16_t y, t_item **items)
 	ft_bzero(new, sizeof(t_item));
 	new->x = x * HEIGHT + (HEIGHT >> 1);
 	new->y = y * HEIGHT + (HEIGHT >> 1);
+	new->ex = 1;
 	if (!(*items))
 		*items = new;
 	else

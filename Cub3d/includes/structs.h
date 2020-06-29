@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/25 15:01:02 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/25 15:03:30 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/29 18:16:16 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct			s_item
 	uint16_t			size;
 	uint16_t			x_off;
 	uint16_t			y_off;
+	uint8_t				ex;
 	struct s_item		*next;
 }						t_item;
 

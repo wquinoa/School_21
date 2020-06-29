@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 16:55:15 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/25 01:20:58 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/29 20:51:48 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	ft_bubble_sort(t_item **array)
 		i = -1;
 		while (++i < passes)
 		{
-			if (array[i]->dist < array[i + 1]->dist)
+			if (array[i]->dist > array[i + 1]->dist)
 			{
 				tmp = array[i];
 				array[i] = array[i + 1];
@@ -94,27 +94,26 @@ static void	ft_paint_sprite(t_item item, t_game *g)
 void		ft_add_sprite(t_item **items, t_game *g)
 {
 	t_item		*curr;
-	t_player	*plr;
 	int			i;
 
-	plr = g->plr;
 	i = -1;
 	while (items[++i])
 	{
 		curr = items[i];
-		curr->dist = ft_max(hypot(plr->x - curr->x, plr->y - curr->y), 8);
-		curr->dir = atan2f(curr->y - plr->y, curr->x - plr->x);
-		while (curr->dir - plr->dir > M_PI)
+		curr->dist = ft_max(hypot(g->plr->x - curr->x, g->plr->y - curr->y), 24);
+		if (curr->dist == 24)
+			curr->ex = 0;
+		curr->dir = atan2f(curr->y - g->plr->y, curr->x - g->plr->x);
+		while (curr->dir - g->plr->dir > M_PI)
 			curr->dir -= 2 * M_PI;
-		while (curr->dir - plr->dir < -M_PI)
+		while (curr->dir - g->plr->dir < -M_PI)
 			curr->dir += 2 * M_PI;
 		curr->size = g->wnd->width / curr->dist * 16;
-		curr->x_off = (curr->dir - plr->dir) * (g->x0 * 2) / plr->fov +
+		curr->x_off = (curr->dir - g->plr->dir) * (g->x0 * 2) / g->plr->fov +
 						(g->x0) - (curr->size >> 1);
 		curr->y_off = g->y0 - (curr->size >> 1);
 	}
 	ft_bubble_sort(items);
-	i = -1;
-	while (items[++i])
-		ft_paint_sprite(*items[i], g);
+	while (--i >= 0)
+		items[i]->ex ? ft_paint_sprite(*items[i], g) : 0;
 }
