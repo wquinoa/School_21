@@ -6,69 +6,46 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 14:22:20 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/25 17:32:00 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/29 11:58:54 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static void	ft_draw_wall(int x_pos, int y_pos, t_game *g, int color)
+static void	ft_init_player(char dir, int x_pos, int y_pos, t_game *g)
 {
-	const uint16_t	mod = g->wnd->width / (HEIGHT * 2);
-	const uint16_t	x_lim = (x_pos + 1) * mod;
-	const uint16_t	y_lim = (y_pos + 1) * mod;
-	uint16_t		i;
-	uint16_t		j;
-
-	j = y_pos * mod;
-	while (j < y_lim)
-	{
-		i = x_pos * mod;
-		while (i < x_lim)
-		{
-			ft_mix(g->frm, i, j, color);
-			i++;
-		}
-		j++;
-	}
+	g->plr->x = (x_pos) * HEIGHT + (HEIGHT >> 1);
+	g->plr->y = (y_pos) * HEIGHT + (HEIGHT >> 1);
+	if (!(g->wnd->width % 16) && !(g->wnd->height % 9))
+		g->plr->fov = 84 * M_PI / 180;
+	else
+		g->plr->fov = 66 * M_PI / 180;
+	g->plr->fov_2 = g->plr->fov / 2;
+	g->plr->speed = sqrt(HEIGHT) * 2;
+	g->plr->deltaray = (float)(g->plr->fov / (g->wnd->width * 1.2));
+	if (dir == 'N')
+		g->plr->dir = 3 * M_PI_2;
+	else if (dir == 'E')
+		g->plr->dir = 0;
+	else if (dir == 'S')
+		g->plr->dir = M_PI_2;
+	else if (dir == 'W')
+		g->plr->dir = M_PI;
 }
 
-//static void	ft_draw_tile(int x_pos, int y_pos, t_game *g, int color)
-//{
-	//const uint16_t	mod = g->wnd->width / (HEIGHT * 2);
-	//const uint16_t	x_lim = (x_pos + 1) * mod;
-	//const uint16_t	y_lim = (y_pos + 1) * mod;
-	//uint16_t		i;
-	//uint16_t		j;
-
-	//j = y_pos * mod;
-	//while (j <= y_lim)
-	//{
-		//i = x_pos * mod;
-		//if (j % (HEIGHT / 4) == 1)
-			//while (i <= x_lim)
-				//ft_mix(g->frm, i++, j, color + 64);
-		//else
-			//while (i <= x_lim)
-				//ft_mix(g->frm, i++, j, color);
-		//j++;
-	//}
-//}
-
-void	ft_minimap(t_game *g)
+void		ft_minimap(t_game *g)
 {
-	int x_pos = 0;
-	int y_pos = 0;
+	int		x_pos;
+	int		y_pos;
 	char	*str;
 
+	y_pos = 0;
 	while (g->map[y_pos])
 	{
 		str = g->map[y_pos];
 		x_pos = 0;
 		while (str[x_pos])
 		{
-			if (str[x_pos] == '1')
-				ft_draw_wall(x_pos, y_pos, g, 0xFFFFFF);
 			if (ft_strchr("NEWS", str[x_pos]))
 			{
 				ft_init_player(str[x_pos], x_pos, y_pos, g);

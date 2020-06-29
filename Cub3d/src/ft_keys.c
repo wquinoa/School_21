@@ -6,28 +6,18 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 15:12:59 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/20 20:01:48 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/29 12:03:44 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static inline char	ft_direction(int key)
+static void			ft_wasd(t_game *g, const int8_t dir, int8_t flag,
+					t_trig wasd)
 {
-	const char keys[8] = {s_key, dn, d_key, lf};
-
-	if (ft_memchr(keys, key, 4))
-		return (-1);
-	else
-		return (1);
-}
-
-
-static void	ft_wasd(t_game *g, const int8_t dir, int8_t flag, t_trig wasd)
-{
-	int			i;
-	float		*x_pos = &g->plr->x;
-	float		*y_pos = &g->plr->y;
+	int				i;
+	const float		*x_pos = &g->plr->x;
+	const float		*y_pos = &g->plr->y;
 
 	i = -1;
 	if (flag == 0)
@@ -48,7 +38,17 @@ static void	ft_wasd(t_game *g, const int8_t dir, int8_t flag, t_trig wasd)
 		}
 }
 
-static void	key_press2(int key, t_game *g, char dir)
+static inline char	ft_direction(int key)
+{
+	const char keys[8] = {s_key, dn, d_key, lf};
+
+	if (ft_memchr(keys, key, 4))
+		return (-1);
+	else
+		return (1);
+}
+
+static void			key_press2(int key, t_game *g, char dir)
 {
 	if (key == rt || key == lf || key == d_key || key == a_key)
 	{
@@ -56,36 +56,26 @@ static void	key_press2(int key, t_game *g, char dir)
 		g->plr->dir -= (g->plr->dir > 2 * M_PI) * 2 * M_PI;
 		g->plr->dir += (g->plr->dir < 0) * 2 * M_PI;
 	}
-	if (key == c_key)
+	else if (key == c_key)
 		g->flags ^= crt_f;
-	else if (key == h_key)
-	{
-		g->flags ^= hal_f;
-		g->flags |= crt_f;
-	}
-	else if (key == m_key)
-		g->flags ^= map_f;
-	else if (key == t_key)
-		g->flags ^= tex_f;
-	else if (key == pl_key && g->plr->speed < 48)
-		g->plr->speed += 4;
-	else if (key == mi_key && g->plr->speed > 12)
-		g->plr->speed -= 4;
-	else if (key == r_key)
-		g->flags ^= ref_f;
 }
 
-int		key_press(int key, t_game *g)
+int					ft_exit(void)
+{
+	exit(0);
+}
+
+int					key_press(int key, t_game *g)
 {
 	int			i;
 	t_trig		wasd;
 	const char	dir = ft_direction(key);
 
+	if (key == esc)
+		exit(0);
 	i = 0;
 	ft_bzero(&wasd, sizeof(wasd));
 	mlx_clear_window(g->wnd->mlx, g->wnd->win);
-	if (key == esc)
-		exit(0);
 	if (key == w_key || key == up || key == s_key || key == dn)
 	{
 		wasd.cos_v = cos(g->plr->dir);
