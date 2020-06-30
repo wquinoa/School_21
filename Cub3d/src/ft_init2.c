@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: wquinoa <wquinoa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 13:35:08 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/29 23:51:35 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/30 05:43:17 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+#include <time.h>
 
 void		ft_draw_scene(t_game *g, t_frame *f, t_window *w)
 {
@@ -25,7 +26,12 @@ void		ft_draw_scene(t_game *g, t_frame *f, t_window *w)
 		ft_add_sprite(g->sprites, g);
 		n[0] = g->items + '0';
 		if (!g->items)
-			write(1, "you win\n", 8);
+		{	
+			mlx_put_image_to_window(g->wnd->mlx, g->wnd->win, g->es->img, 0, 0);
+			mlx_destroy_image(w->mlx, f->img);
+			sleep(3);
+			exit (0);
+		}
 	}
 	if (g->flags & sav_f)
 	{
@@ -42,6 +48,11 @@ static void	ft_fill_tab(t_game *g, t_frame ****tap, char ***lnk)
 {
 	t_frame	***tab;
 	char	**link;
+
+	if (!(g->es = (t_frame *)malloc(sizeof(t_frame))))
+		ft_errors(bad_malloc);
+	g->es->img = mlx_xpm_file_to_image(g->wnd->mlx, "./yd.xpm", &g->es->width, &g->es->height);
+	g->es->addr = mlx_get_data_addr(g->es->img, &g->es->bpp, &g->es->line_l, &g->es->en);
 
 	tab = *tap;
 	link = *lnk;
@@ -109,6 +120,7 @@ static void	ft_init2(char *av, int save)
 	ft_load_textures(&scene);
 	ft_draw_scene(&scene, &f, &window);
 	mlx_hook(window.win, 17, (1L << 5), &ft_exit, NULL);
+	mlx_hook(window.win, 6, (1L << 6), &ft_move_mouse, &scene);
 	mlx_hook(window.win, 2, (1L << 0), &key_press, &scene);
 	mlx_loop(window.mlx);
 }

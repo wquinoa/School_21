@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: wquinoa <wquinoa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 18:20:40 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/29 23:49:48 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/30 04:52:25 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include "get_next_line.h"
 # include "../minilibx_mms/mlx.h"
 # define HEIGHT 64
-# define ROTATION 0.12
+# define ROTATION 0.06
 
 enum					e_key
 {
@@ -54,6 +54,7 @@ typedef struct			s_game
 	uint16_t			depth[6000];
 	uint16_t			x0;
 	uint16_t			xcur;
+	uint16_t			mcur;
 	uint16_t			y0;
 	uint8_t				items;
 	uint16_t			ray;
@@ -63,6 +64,7 @@ typedef struct			s_game
 	t_frame				*so;
 	t_frame				*ea;
 	t_frame				*we;
+	t_frame				*es;
 	t_frame				*sp;
 }						t_game;
 
@@ -88,6 +90,7 @@ int8_t					ft_strval(char *str, t_game *g);
 void					ft_draw_scene(t_game *g, t_frame *f, t_window *w);
 void					ft_cast_ray(t_game *g, t_player *plr);
 int						key_press(int key, t_game *g);
+int						ft_move_mouse(int x, int y, t_game *g);
 
 /*
 **	Drawing package

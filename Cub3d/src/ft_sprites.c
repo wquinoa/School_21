@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sprites.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: wquinoa <wquinoa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 16:28:08 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/29 20:07:10 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/30 00:59:44 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static t_item	**ft_itemtab(t_item *ilist, uint8_t amt)
 	t_item		**items;
 	int			i;
 
+	if (!amt)
+		return (NULL);
 	if (!(items = (t_item**)malloc(sizeof(t_item *) * (amt + 1))))
 		ft_errors(bad_malloc);
 	i = -1;

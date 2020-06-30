@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_castndraw.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: wquinoa <wquinoa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 16:50:21 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/25 15:09:29 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/30 06:35:20 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	ft_drawing_handler(float k, t_game *g, t_ray ray)
 		else if ((int)(ray.y - sin(k)) / HEIGHT > (int)(ray.y / HEIGHT))
 			g->tex = g->no;
 	}
-	else if ((int)(ray.y - sin(k)) / HEIGHT == (int)(ray.y / HEIGHT))
+	else if ((int)(ray.y - sin(k)) / HEIGHT == ((int)ray.y >> 6))
 	{
 		if ((int)(ray.x - cos(k)) / HEIGHT < (int)(ray.x / HEIGHT))
 			g->tex = g->ea;
@@ -52,9 +52,9 @@ static void	ft_drawing_handler(float k, t_game *g, t_ray ray)
 			g->tex = g->we;
 	}
 	if ((int)(ray.x - cos(k)) / HEIGHT == (int)(ray.x / HEIGHT))
-		ft_add_texture(ray.len, g->plr->dir - k, g, (int)ray.x % HEIGHT);
+		ft_add_texture(ray.len, g->plr->dir - k, g, (int)ray.x & 63);
 	else
-		ft_add_texture(ray.len, g->plr->dir - k, g, (int)ray.y % HEIGHT);
+		ft_add_texture(ray.len, g->plr->dir - k, g, (int)ray.y & 63);
 }
 
 void		ft_cast_ray(t_game *g, t_player *plr)

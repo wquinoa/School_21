@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: wquinoa <wquinoa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/25 15:01:02 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/29 18:16:16 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/30 04:11:18 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct			s_player
 	float				fov;
 	float				fov_2;
 	float				deltaray;
+	uint8_t				dm;
 	uint8_t				speed;
 }						t_player;
 

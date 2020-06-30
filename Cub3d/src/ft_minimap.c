@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minimap.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: wquinoa <wquinoa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 14:22:20 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/29 17:21:09 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/30 06:24:23 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,13 @@ static void	ft_init_player(char dir, int x_pos, int y_pos, t_game *g)
 		g->plr->fov = 84 * M_PI / 180;
 	else
 		g->plr->fov = 66 * M_PI / 180;
+	g->xcur = g->x0;
+	g->mcur = g->x0;
+	mlx_mouse_move(g->wnd->win, g->x0, g->y0);
 	g->plr->fov_2 = g->plr->fov / 2;
 	g->plr->speed = sqrt(HEIGHT) * 2;
 	g->plr->deltaray = (float)(g->plr->fov / (g->wnd->width * 1.2));
+	g->plr->dm = g->wnd->width >> 4;
 	if (dir == 'N')
 		g->plr->dir = 3 * M_PI_2;
 	else if (dir == 'E')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_keys.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: wquinoa <wquinoa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 15:12:59 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/29 23:49:33 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/30 06:36:53 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,29 @@ static void			ft_wasd(t_game *g, const int8_t dir, int8_t flag,
 
 static inline char	ft_direction(int key)
 {
-	const char keys[8] = {s_key, dn, d_key, lf};
+	const char	keys[8] = {s_key, dn, d_key, lf, w_key, up, a_key, rt};
 
 	if (ft_memchr(keys, key, 4))
 		return (-1);
-	else
-		return (1);
+	return (ft_memchr(&keys[4], key, 4) ? 1 : 0);
+		
 }
 
 static void			key_press2(int key, t_game *g, char dir)
 {
-	if (key == rt || key == lf || key == d_key || key == a_key)
+	if (key == rt || key == lf)
 	{
 		g->plr->dir += (ROTATION * dir);
 		g->plr->dir -= (g->plr->dir > 2 * M_PI) * 2 * M_PI;
 		g->plr->dir += (g->plr->dir < 0) * 2 * M_PI;
+	}
+	if (g->mcur != g->xcur && abs(g->xcur - g->mcur) > g->plr->dm)// && key != a_key && key != d_key)
+	{
+		if (g->mcur > g->xcur)
+			g->plr->dir += g->plr->deltaray * abs(g->xcur - g->mcur);
+		if (g->mcur < g->xcur)
+			g->plr->dir -= g->plr->deltaray * abs(g->xcur - g->mcur);
+		g->xcur += (g->mcur > g->xcur) ? (g->plr->dm) : -(g->plr->dm);
 	}
 	else if (key == c_key)
 		g->flags ^= crt_f;
@@ -71,7 +79,7 @@ int					key_press(int key, t_game *g)
 	t_trig		wasd;
 	const char	dir = ft_direction(key);
 
-	if (key == esc)
+	if (key == esc || (g->flags & 512))
 		exit(0);
 	i = 0;
 	ft_bzero(&wasd, sizeof(wasd));
@@ -82,14 +90,30 @@ int					key_press(int key, t_game *g)
 		wasd.sin_v = sin(g->plr->dir);
 		ft_wasd(g, dir, 0, wasd);
 	}
-	else if (key == a_key || key == d_key)
+	if (key == a_key || key == d_key)
 	{
 		wasd.cos_v_pi_2 = cos(g->plr->dir - dir * M_PI_2);
 		wasd.sin_v_pi_2 = sin(g->plr->dir - dir * M_PI_2);
 		ft_wasd(g, dir, 1, wasd);
 	}
-	else
-		key_press2(key, g, dir);
+	key_press2(key, g, dir);
 	ft_draw_scene(g, g->frm, g->wnd);
+	return (0);
+}
+
+int					ft_move_mouse(int x, int y, t_game *g)
+{
+	if (g->flags & 512)
+		return (0);
+	if (x < 0 || x > g->wnd->width)
+	{
+		g->xcur = g->x0;
+		g->mcur = g->x0;
+		mlx_mouse_move(g->wnd->win, g->x0, g->y0);
+	}
+	else
+		g->mcur = x;
+	y = 0;
+	g->mcur != g->xcur ? key_press(-1, g) : 0;
 	return (0);
 }

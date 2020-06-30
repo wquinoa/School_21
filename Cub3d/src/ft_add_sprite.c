@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_add_sprite.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: wquinoa <wquinoa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 16:55:15 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/29 23:54:47 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/30 06:43:09 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ void		ft_add_sprite(t_item **items, t_game *g)
 	while (items[++i])
 	{
 		cur = items[i];
-		cur->dist = ft_max(hypot(g->plr->x - cur->x, g->plr->y - cur->y), 24);
-		if (cur->dist == 24)
+		cur->dist = ft_max(hypot(g->plr->x - cur->x, g->plr->y - cur->y), 32);
+		if (cur->dist == 32)
 			cur->ex = 0;
 		cur->dir = atan2f(cur->y - g->plr->y, cur->x - g->plr->x);
 		while (cur->dir - g->plr->dir > M_PI)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+         #
+#    By: wquinoa <wquinoa@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/17 21:10:46 by wquinoa           #+#    #+#              #
-#    Updated: 2020/06/29 17:01:02 by wquinoa          ###   ########.fr        #
+#    Updated: 2020/06/30 04:20:04 by wquinoa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ OBJ_FILES	:= $(addprefix $(BIN)/, $(OBJ))
 SRC_FILES	:= $(addprefix $(SRC_DIR)/, $(SRCS))
 
 CC			= gcc
-CF			= -Wall -Wextra -Werror
+CF			= -Wall -Wextra -Werror -O3
 
 .PHONY: run, libs, clean, clibs, fclean, fclibs, re
 #+----------------------------------------------------------------------------------------------------------------------+#
@@ -73,14 +73,14 @@ all: $(NAME)
 $(NAME): $(OBJ_FILES) | libs
 	@ar rcs $(NAME) $^
 	@echo "$(MADE_MSG)cub3d$(WHT)\n"
-	@$(CC) $(CF) main.c -L. -lcub3d -lft -lmlx -framework OpenGL -framework AppKit -o cub3d
+	@$(CC) $(CF) main.c -L. -lcub3d -lmlx -framework OpenGL -framework AppKit -o cub3d
 
 run: $(NAME)
 	@./cub3d map.cub
 
 libs:
 	@cd libft && make bonus
-	@cp libft/libft.a libft.a
+	@cp libft/libft.a libcub3d.a
 	@cd minilibx_mms && make
 	@cp minilibx_mms/libmlx.dylib .
 
@@ -102,7 +102,7 @@ $(BIN)/%.o: $(SRC_DIR)/%.c $(INCLUDES) | $(BIN)
 
 clean: clibs
 	@if test -d $(BIN); \
-	then rm -rfvd $(BIN) $(REPLACE) && rm libft.a libmlx.dylib; \
+	then rm -rfvd $(BIN) $(REPLACE) && rm libmlx.dylib; \
 	echo "$(DEL_MSG).o files$(WHT)\n"; \
 	else echo $(ERROR_MSG); \
 	fi
