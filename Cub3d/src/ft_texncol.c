@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_texncol.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wquinoa <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 16:31:25 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/24 16:50:43 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/01 16:03:29 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,20 +70,26 @@ static void	ft_write_color(char c, int a, t_game *g)
 int8_t		ft_get_color(char c, char *str, t_game *g)
 {
 	int			tmp;
+	char		*tmps;
 	int			a;
 	int8_t		i;
+	char		**channels;
 
+	!(channels = ft_split(str, ',')) ? ft_errors(bad_malloc) : 0;
 	i = -1;
 	a = 0;
-	while (++i < 3)
+	while (channels[++i])
 	{
-		str++;
-		tmp = ft_atoi(str);
+		tmp = ft_atoi(channels[i]);
+		if (!(tmps = ft_strtrim(channels[i], " 0123456789")))
+			ft_errors(bad_malloc);
+		tmps[0] != '\0' ? ft_errors(bad_color) : 0;
+		free(tmps);
 		(tmp < 0 || tmp > 255) ? ft_errors(bad_color) : 0;
 		a |= tmp << (2 - i) * 8;
-		while (*str != ',' && *str)
-			str++;
 	}
+	i != 3 ? ft_errors(bad_color) : 0;
+	ft_tabclear(channels);
 	ft_write_color(c, a, g);
 	return (1);
 }

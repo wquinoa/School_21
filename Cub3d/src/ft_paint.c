@@ -6,25 +6,25 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 15:15:59 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/29 23:56:06 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/01 16:03:26 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static int	ft_blend(int fg, int bg, uint16_t amount)
+static int	ft_blend(int fg, int bg, uint16_t amt)
 {
 	int r;
 	int g;
 	int b;
+	int res;
 
-	r = (((fg & red) >> 16) / 64 * amount) +
-	(((bg & red) >> 16) / 64 * (64 - amount));
-	g = (((fg & grn) >> 8) / 64 * amount) +
-	(((bg & grn) >> 8) / 64 * (64 - amount));
-	b = (((fg & blu) >> 0) / 64 * amount) +
-	(((bg & blu) >> 0) / 64 * (64 - amount));
-	return (((r << 16) & red) | ((g << 8) & grn) | (b & blu));
+	r = (((fg & red) >> 16) / 64 * amt)
+	+ (((bg & red) >> 16) / 64 * (64 - amt));
+	g = (((fg & grn) >> 8) / 64 * amt) + (((bg & grn) >> 8) / 64 * (64 - amt));
+	b = (((fg & blu) >> 0) / 64 * amt) + (((bg & blu) >> 0) / 64 * (64 - amt));
+	res = (r + g + b) / 3;
+	return (60 * res / 64 << 16 | 48 * res / 64 << 8 | 60 * res / 64);
 }
 
 void		ft_paint(t_frame *f, int x, int y, int color)

@@ -3,20 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wquinoa <wquinoa@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 13:35:08 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/30 05:43:17 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/01 16:03:22 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-#include <time.h>
 
 void		ft_draw_scene(t_game *g, t_frame *f, t_window *w)
 {
-	static char n[2];
-
 	f->img = mlx_new_image(w->mlx, w->width, w->height);
 	f->addr = mlx_get_data_addr(f->img, &f->bpp, &f->line_l, &f->en);
 	ft_cast_ray(g, g->plr);
@@ -24,23 +21,9 @@ void		ft_draw_scene(t_game *g, t_frame *f, t_window *w)
 	{
 		g->items = 0;
 		ft_add_sprite(g->sprites, g);
-		n[0] = g->items + '0';
-		if (!g->items)
-		{	
-			mlx_put_image_to_window(g->wnd->mlx, g->wnd->win, g->es->img, 0, 0);
-			mlx_destroy_image(w->mlx, f->img);
-			sleep(3);
-			exit (0);
-		}
 	}
-	if (g->flags & sav_f)
-	{
-		ft_bmp(g, f);
-		write(1, "Saving img...\n", 14);
-		exit(0);
-	}
+	(g->flags & sav_f) ? ft_bmp(g, f) : 0;
 	mlx_put_image_to_window(w->mlx, w->win, f->img, 0, 0);
-	g->items ? mlx_string_put(w->mlx, w->win, 5, 15, 0x8888, n) : 0;
 	mlx_destroy_image(w->mlx, f->img);
 }
 
@@ -51,9 +34,6 @@ static void	ft_fill_tab(t_game *g, t_frame ****tap, char ***lnk)
 
 	if (!(g->es = (t_frame *)malloc(sizeof(t_frame))))
 		ft_errors(bad_malloc);
-	g->es->img = mlx_xpm_file_to_image(g->wnd->mlx, "./yd.xpm", &g->es->width, &g->es->height);
-	g->es->addr = mlx_get_data_addr(g->es->img, &g->es->bpp, &g->es->line_l, &g->es->en);
-
 	tab = *tap;
 	link = *lnk;
 	tab[0] = &g->no;
@@ -120,8 +100,8 @@ static void	ft_init2(char *av, int save)
 	ft_load_textures(&scene);
 	ft_draw_scene(&scene, &f, &window);
 	mlx_hook(window.win, 17, (1L << 5), &ft_exit, NULL);
-	mlx_hook(window.win, 6, (1L << 6), &ft_move_mouse, &scene);
 	mlx_hook(window.win, 2, (1L << 0), &key_press, &scene);
+	mlx_mouse_show();
 	mlx_loop(window.mlx);
 }
 

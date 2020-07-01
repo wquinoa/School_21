@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wquinoa <wquinoa@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 18:20:40 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/30 04:52:25 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/01 16:10:45 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 # include "get_next_line.h"
 # include "../minilibx_mms/mlx.h"
 # define HEIGHT 64
-# define ROTATION 0.06
+# define BONUS 0
+# define ROTATION 0.12
 
 enum					e_key
 {
@@ -100,7 +101,6 @@ void					ft_add_sprite(t_item **items, t_game *g);
 void					ft_paint(t_frame *f, int x, int y, int color);
 void					ft_paint_tex(t_game *g, t_ray pt, int offset, int i);
 void					ft_blend_tex(t_game *g, t_ray pt, int offset, int i);
-
 void					ft_draw_floor(t_game *g, int x0, int end);
 void					ft_draw_ceil(t_game *g, int x0, int end);
 

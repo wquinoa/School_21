@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sprites.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wquinoa <wquinoa@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 16:28:08 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/30 00:59:44 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/01 16:03:28 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ t_item			**ft_init_sprites(char **map)
 		while (map[y][++x])
 		{
 			if (map[y][x] == '2')
+			{
 				amt += ft_init_item(x, y, &ilist);
+				map[y][x] = '0';
+			}
 		}
 	}
 	return (ft_itemtab(ilist, amt));

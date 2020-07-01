@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 16:40:33 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/29 18:16:27 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/01 16:03:25 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int8_t	ft_strval2(const char *id, char *str, t_game *g)
 {
 	if (id[0] == 'C' || id[0] == 'F')
-		ft_get_color(id[0], str, g);
+		ft_get_color(id[0], str + 2, g);
 	else if (ft_strchr("NSWE", id[0]))
 		ft_get_link(id, str, g);
 	else if (id[0] == 'R' && !(g->flags & res_f))
@@ -34,6 +34,8 @@ static int8_t	ft_strval2(const char *id, char *str, t_game *g)
 	}
 	else
 		ft_errors(dup_res);
+	if (g->wnd->height < 0 || g->wnd->width < 0)
+		ft_errors(bad_sym);
 	return (id[0]);
 }
 

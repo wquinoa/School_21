@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_castndraw.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wquinoa <wquinoa@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 16:50:21 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/30 06:35:20 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/01 16:03:19 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ static void	ft_add_texture(uint16_t ray, float k, t_game *g, int tex_x)
 static void	ft_drawing_handler(float k, t_game *g, t_ray ray)
 {
 	g->ray = ray.len;
-	if ((int)(ray.x - cos(k)) / HEIGHT == (int)(ray.x / HEIGHT))
+	if ((int)(ray.x - cos(k)) >> 6 == (int)ray.x >> 6)
 	{
 		if ((int)(ray.y - sin(k)) / HEIGHT < (int)(ray.y / HEIGHT))
 			g->tex = g->so;
 		else if ((int)(ray.y - sin(k)) / HEIGHT > (int)(ray.y / HEIGHT))
 			g->tex = g->no;
 	}
-	else if ((int)(ray.y - sin(k)) / HEIGHT == ((int)ray.y >> 6))
+	else if ((int)(ray.y - sin(k)) >> 6 == ((int)ray.y >> 6))
 	{
 		if ((int)(ray.x - cos(k)) / HEIGHT < (int)(ray.x / HEIGHT))
 			g->tex = g->ea;

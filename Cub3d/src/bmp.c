@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 16:48:13 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/29 23:05:55 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/01 16:03:15 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,5 @@ void	ft_bmp(t_game *g, t_frame *f)
 	(write(num, bmp, size)) < 0 ? ft_errors(bad_fd) : 0;
 	free(bmp);
 	close(num);
+	ft_errors(bmp_arg);
 }

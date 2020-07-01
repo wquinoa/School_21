@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 14:52:15 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/25 14:57:17 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/30 08:58:07 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ enum		e_parse
 	dup_tex = -4,
 	dup_res = -7,
 	dup_col = -8,
+	bmp_arg = -9,
 	res_f = 1,
 	cel_f = 2,
 	flo_f = 4,

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wquinoa <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 17:24:20 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/29 17:24:53 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/01 16:03:05 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/cub3d.h"
+#include "includes/cub3d_bonus.h"
 
 int		main(int argc, char **argv)
 {

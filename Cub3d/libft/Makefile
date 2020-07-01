@@ -6,7 +6,7 @@
 #    By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/07 23:33:20 by wquinoa           #+#    #+#              #
-#    Updated: 2020/06/29 16:52:25 by wquinoa          ###   ########.fr        #
+#    Updated: 2020/07/01 11:48:00 by wquinoa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,9 +85,6 @@ bonus:
 $(NAME): $(OBJ_FILES)
 	@ar rcs $(NAME) $^
 	@echo "$(MADE_MSG)$(NAME)$(WHT)\n"
-ifeq ($(WITH_BONUS),true)
-	@echo "	$(WHT1)...and $(GRN1)bonus$(WHT)\n"
-endif
 
 #+----------------------------------------------------------------------------------------------------------------------+#
 #|    Creating bindir and objects                                                                                       |#
