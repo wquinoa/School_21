@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 08:25:33 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/07 19:52:33 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/06/29 16:46:33 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char		**ft_tabmap(char **tab, char *(*f)(const char *))
 		res[i] = (char *)ft_calloc(l + 1, sizeof(char));
 		if (!(res[i]))
 		{
-			ft_tabclear(res, i + 1);
+			ft_tabclear(res);
 			return (NULL);
 		}
 		res[i] = ft_strdup(tab[i]);

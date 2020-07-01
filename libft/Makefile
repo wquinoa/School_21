@@ -6,7 +6,7 @@
 #    By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/07 23:33:20 by wquinoa           #+#    #+#              #
-#    Updated: 2020/05/17 18:18:48 by wquinoa          ###   ########.fr        #
+#    Updated: 2020/07/01 11:48:00 by wquinoa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,8 @@ SRCS :=			ft_atoi.c			ft_bzero.c			ft_calloc.c			ft_isalnum.c		ft_isalpha.c			\
 BSRCS :=		ft_lstadd_back.c	ft_lstadd_front.c	ft_lstclear.c		ft_lstdelone.c		ft_lstiter.c			\
 				ft_lstlast.c		ft_lstmap.c			ft_lstnew.c			ft_lstsize.c		ft_abs_bonus.c			\
 				ft_del_bonus.c		ft_isspace_bonus.c	ft_join_bonus.c		ft_max_bonus.c		ft_min_bonus.c			\
-				ft_nlen_bonus.c		ft_pow_bonus.c		ft_putlst_bonus.c	ft_sqrt_bonus.c		ft_strjoin_dlm_bonus.c	\
-				ft_tabclear_bonus.c	ft_tablen_bonus.c	ft_tabmap_bonus.c
+				ft_nlen_bonus.c		ft_pow_bonus.c		ft_sqrt_bonus.c		ft_strjoin_dlm_bonus.c						\
+				ft_tabclear_bonus.c	ft_tablen_bonus.c	ft_tabmap_bonus.c	get_next_line.c
 
 #+----------------------------------------------------------------------------------------------------------------------+#
 #|    Utilities                                                                                                         |#
@@ -84,10 +84,7 @@ bonus:
 
 $(NAME): $(OBJ_FILES)
 	@ar rcs $(NAME) $^
-	@echo "$(MADE_MSG)lib$(WHT)\n"
-ifeq ($(WITH_BONUS),true)
-	@echo "	$(WHT1)...and $(GRN1)bonus$(WHT)\n"
-endif
+	@echo "$(MADE_MSG)$(NAME)$(WHT)\n"
 
 #+----------------------------------------------------------------------------------------------------------------------+#
 #|    Creating bindir and objects                                                                                       |#

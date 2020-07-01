@@ -6,13 +6,13 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 21:51:27 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/14 22:10:37 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/01 17:22:38 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t			ft_min(size_t a, size_t b)
+int		ft_min(int a, int b)
 {
-	return ((a * (a <= b)) + (b * (b < a)));
+	return ((a < b) ? a : b);
 }

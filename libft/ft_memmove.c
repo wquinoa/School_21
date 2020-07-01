@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 18:34:42 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/31 21:09:16 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/01 17:32:06 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	unsigned char	*a;
-	unsigned char	*b;
-	size_t			i;
+	uint8_t	*a;
+	uint8_t	*b;
+	size_t	i;
 
 	a = (unsigned char *)dst;
 	b = (unsigned char *)src;

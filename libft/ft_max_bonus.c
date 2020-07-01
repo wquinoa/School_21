@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 21:53:47 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/07 21:54:17 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/01 01:15:01 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 int				ft_max(int a, int b)
 {
-	return ((a * (a >= b)) + (b * (b > a)));
+	return (b > a ? b : a);
 }
