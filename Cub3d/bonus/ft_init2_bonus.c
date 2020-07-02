@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 13:35:08 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/01 16:03:08 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/02 03:50:14 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		ft_draw_scene(t_game *g, t_frame *f, t_window *w)
 {
-	static char n[14];
+	static char n[15];
 
 	f->img = mlx_new_image(w->mlx, w->width, w->height);
 	f->addr = mlx_get_data_addr(f->img, &f->bpp, &f->line_l, &f->en);
@@ -23,19 +23,19 @@ void		ft_draw_scene(t_game *g, t_frame *f, t_window *w)
 	{
 		g->items = 0;
 		ft_add_sprite(g->sprites, g);
-		ft_strlcpy(n, "Items left:   ", 13);
-		n[12] = g->items / 10 + '0';
-		n[13] = g->items % 10 + '0';
+		ft_strlcpy(n, "Items left:   ", 15);
+		n[12] = g->items / 100 + '0';
+		n[13] = (g->items - g->items / 100 * 100) / 10 + '0';
+		n[14] = g->items % 10 + '0';
 		if (!g->items)
 		{
 			mlx_put_image_to_window(w->mlx, w->win, g->es->img,
 			(w->width - g->es->width) >> 1, (w->height - g->es->height) >> 2);
 			mlx_destroy_image(w->mlx, g->es->img);
-			sleep(3);
+			sleep(5);
 			exit(0);
 		}
 	}
-	(g->flags & sav_f) ? ft_bmp(g, f) : 0;
 	mlx_put_image_to_window(w->mlx, w->win, f->img, 0, 0);
 	g->items ? mlx_string_put(w->mlx, w->win, g->x0 - 75, 25, 0x9090, n) : 0;
 	mlx_destroy_image(w->mlx, f->img);
@@ -102,7 +102,6 @@ void		ft_init2(char *av, int save)
 	static t_frame		f;
 
 	ft_bzero(&scene, sizeof(scene));
-	ft_bzero(&window, sizeof(window));
 	scene.wnd = &window;
 	scene.txr = &texture;
 	scene.plr = &player;
@@ -115,6 +114,7 @@ void		ft_init2(char *av, int save)
 	av);
 	ft_minimap(&scene);
 	ft_load_textures(&scene);
+	usleep(5500000);
 	ft_draw_scene(&scene, &f, &window);
 	mlx_hook(window.win, 17, (1L << 5), &ft_exit, NULL);
 	mlx_hook(window.win, 6, (1L << 6), &ft_move_mouse, &scene);

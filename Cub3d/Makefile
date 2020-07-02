@@ -6,7 +6,7 @@
 #    By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/17 21:10:46 by wquinoa           #+#    #+#              #
-#    Updated: 2020/07/01 16:49:49 by wquinoa          ###   ########.fr        #
+#    Updated: 2020/07/02 04:12:12 by wquinoa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRCS :=			ft_sprites.c		ft_minimap.c		ft_castndraw.c		\
 				ft_errors.c			ft_mapval.c			ft_read_map.c		\
 				ft_add_sprite.c		draw_untextured.c
 
-BSRC :=			ft_keys_bonus.c		ft_init2_bonus.c	 ft_init_sound_bonus.c
+BSRC :=			ft_keys_bonus.c		ft_init2_bonus.c	ft_init_sound_bonus.c
 
 VRBL :=			ft_keys.c			ft_init2.c
 
@@ -29,16 +29,18 @@ VRBL :=			ft_keys.c			ft_init2.c
 #
 #																			#
 WHT		= \033[0m#															#
-GRN		= \033[32m#															#
 RED		= \033[31m#															#
+GRN		= \033[32m#															#
+BLU		= \033[34m#															#
 WHT1	= \033[0;1m#														#
-GRN1	= \033[32;1m#														#
 RED1	= \033[31;1m#														#
 DRK		= \033[2m#															#
+GRN1	= \033[32;1m#														#
+BLU1	= \033[34;1m#														#
 MADE_MSG = \n	$(WHT1)Created $(GRN1)#										#
-SELF_MSG = \t$(DRK)by wquinoa#												#
-DEL_MSG = \n	$(WHT1)Removed $(DRK)$(RED1)#								#
-ERROR_MSG = "\n	$(WHT1)$(DRK)Nothing to $@\n"#								#
+SELF_MSG = \t$(DRK)by wquinoa$(WHT)#										#
+DEL_MSG = \n\t$(WHT1)Removed $(DRK)$(RED1)#									#
+ERROR_MSG = "\n\t$(WHT1)$(DRK)Nothing to $@\n"#								#
 #																			#
 REPLACE =  2>&1| awk '{sub(/.\//,"  $(WHT) $(DRK)removed $(RED)")}1'
 NORME = norminette *.c *.h | awk '{sub(/Norme/,"$(GRN)Norme$(WHT)")}1' | awk '{sub(/Error/,"$(RED)Error$(WHT)")}1'
@@ -74,6 +76,7 @@ $(VERBOSE).SILENT:
 SRC_FILES	:= $(addprefix $(SRC_DIR)/, $(SRCS)) $(BNS_FILES)
 OBJ_FILES	:= $(addprefix $(BIN)/, $(OBJ) $(BOBJ))
 INCLUDES	:= $(addprefix $(INCL_DIR)/, cub3d_bonus.h)
+CF +=
 else
 SRC_FILES	:= $(addprefix $(SRC_DIR)/, $(SRCS)) $(VAR_FILES)
 OBJ_FILES	:= $(addprefix $(BIN)/, $(OBJ) $(VOBJ))
@@ -95,7 +98,7 @@ $(NAME): $(OBJ_FILES) | libs
 	@ar rcs $(NAME) $^
 ifeq ($(WITH_BONUS),true)
 	@$(CC) $(CF) main.c SDL2-A/src/audio.c -L. -lcub3d -lmlx -framework OpenGL \
-	-framework AppKit `sdl2-config --cflags --libs` -D BONUS=1 -O3 -o cub3D
+	-framework AppKit `sdl2-config --cflags --libs` -D BONUS=1 -O1 -o cub3D
 	@echo "	$(WHT1)$(MADE_MSG)cub3D\n	$(WHT1)    and $(GRN1)bonus$(WHT)\n"
 else
 	@$(CC) $(CF) main.c -L. -lcub3d -lmlx -framework OpenGL -framework AppKit -o cub3D
@@ -109,13 +112,15 @@ libs:
 	@cp minilibx_mms/libmlx.dylib .
 
 run: bonus
+	@echo "\n$(WHT1)Shh.. \033[35mIt's about to \033[36mGET \033[35mWILD$(WHT)\n"
 	./cub3D ./bonus/map1.cub
 
 norme:
-	@echo "$(WHT1)\nlibft$(WHT)\n" && cd libft && $(NORME)
-	@echo "$(WHT1)\nsrc$(WHT)\n" && cd src && $(NORME)
-	@echo "$(WHT1)\nbonus$(WHT)\n" && cd bonus && $(NORME)
-	@echo "$(WHT1)\nincludes$(WHT)\n" && cd includes && $(NORME)
+	@echo "$(BLU1)\n\tlibft$(WHT)\n" && cd libft && $(NORME)
+	@echo "$(BLU1)\n\tsrc$(WHT)\n" && cd src && $(NORME)
+	@echo "$(BLU1)\n\tbonus$(WHT)\n" && cd bonus && $(NORME)
+	@echo "$(BLU1)\n\tincludes$(WHT)\n" && cd includes && $(NORME)
+	@echo "$(WHT1)"
 
 #+----------------------------------------------------------------------------------------------------------------------+#
 #|    Creating bindir and objects                                                                                       |#

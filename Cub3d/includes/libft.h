@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 21:05:26 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/30 22:53:50 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/02 02:00:13 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void					ft_putchar_fd(char c, int fd);
 void					ft_putstr_fd(char const *s, int fd);
 void					ft_putendl_fd(char const *s, int fd);
 void					ft_putnbr_fd(int n, int fd);
+char					*ft_strswap(char *str, char from, char to);
 
 /*
 ** Bonus part

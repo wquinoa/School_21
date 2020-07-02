@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 14:16:13 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/01 16:03:21 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/02 01:09:27 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	ft_errors(char error_code)
 	(error_code == bad_color) ? write(2, "Bad color format.\n", 18) : 0;
 	(error_code == bad_sym) ? write(2, "Some keys are invalid.\n", 24) : 0;
 	(error_code == bad_args) ? write(2, "Invalid main arguments.\n", 25) : 0;
+	(error_code == bad_res) ? write(2, "Invalid resolution.\n", 20) : 0;
 	(error_code == bmp_arg) ? write(2, "Saving img...\n", 14) : 0;
 	write(2, "Exiting cub3d...\n", 17);
 	exit(0);

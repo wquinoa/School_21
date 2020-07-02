@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 15:12:59 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/01 16:03:10 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/02 03:07:59 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@ static void			ft_wasd(t_game *g, const int8_t dir, int8_t flag,
 	i = -1;
 	if (flag == 0)
 		while (++i <= g->plr->speed &&
-		g->map[((int)(*y_pos + dir * 8 * wasd.sin_v)) / HEIGHT]
-		[((int)(*x_pos + dir * 8 * wasd.cos_v)) / HEIGHT] != '1')
+		g->map[((int)(*y_pos + dir * 8 * wasd.sin_v)) >> 6]
+		[((int)(*x_pos + dir * 8 * wasd.cos_v)) >> 6] != '1')
 		{
 			g->plr->x += wasd.cos_v * dir;
 			g->plr->y += wasd.sin_v * dir;
 		}
 	else
 		while (++i < g->plr->speed &&
-		g->map[((int)(*y_pos + 8 * wasd.sin_v_pi_2)) / HEIGHT]
-		[((int)(*x_pos + 8 * wasd.cos_v_pi_2)) / HEIGHT] != '1')
+		g->map[((int)(*y_pos + 8 * wasd.sin_v_pi_2)) >> 6]
+		[((int)(*x_pos + 8 * wasd.cos_v_pi_2)) >> 6] != '1')
 		{
 			g->plr->x += wasd.cos_v_pi_2;
 			g->plr->y += wasd.sin_v_pi_2;
@@ -58,9 +58,9 @@ static void			key_press2(int key, t_game *g, char dir)
 	if (g->mcur != g->xcur && abs(g->xcur - g->mcur) > g->plr->dm)
 	{
 		if (g->mcur > g->xcur)
-			g->plr->dir += g->plr->deltaray * abs(g->xcur - g->mcur) / 2;
+			g->plr->dir += g->plr->deltaray * (abs(g->xcur - g->mcur) >> 1);
 		if (g->mcur < g->xcur)
-			g->plr->dir -= g->plr->deltaray * abs(g->xcur - g->mcur) / 2;
+			g->plr->dir -= g->plr->deltaray * (abs(g->xcur - g->mcur) >> 1);
 		g->xcur += (g->mcur > g->xcur) ? (g->plr->dm) : -(g->plr->dm);
 	}
 }

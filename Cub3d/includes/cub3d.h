@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 18:20:40 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/01 16:10:45 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/02 02:19:55 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct			s_game
 void					ft_init(char **av, int ac);
 char					**ft_read_map(uint16_t rows, uint16_t longest,
 												t_game *g, char *av);
-void					ft_check_res(t_window *wnd);
+void					ft_check_res(t_window *wnd, char *str);
 t_item					**ft_init_sprites(char **map);
 void					ft_minimap(t_game *g);
 int8_t					ft_get_color(char c, char *str, t_game *g);

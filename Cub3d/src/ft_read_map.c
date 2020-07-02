@@ -6,17 +6,34 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 20:00:30 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/01 16:03:28 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/02 02:31:43 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void		ft_check_res(t_window *wnd)
+void		ft_check_res(t_window *wnd, char *str)
 {
-	int sx;
-	int sy;
+	int		sx;
+	int		sy;
+	int		i;
+	int		j;
+	char	**tmp;
 
+	!(tmp = ft_split(str, ' ')) ? ft_errors(bad_malloc) : 0;
+	i = -1;
+	while (tmp[++i])
+	{
+		j = -1;
+		while (tmp[i][++j])
+			!(ft_isdigit(tmp[i][j])) ? ft_errors(bad_res) : 0;
+		i == 0 ? wnd->width = ft_atoi(tmp[i]) : 0;
+		i == 1 ? wnd->height = ft_atoi(tmp[i]) : 0;
+		i >= 2 ? ft_errors(bad_res) : 0;
+	}
+	free(tmp);
+	if (wnd->height <= 0 || wnd->width <= 0)
+		ft_errors(bad_res);
 	mlx_get_screen_size(wnd->mlx, &sx, &sy);
 	wnd->width = (wnd->width < sx) ? wnd->width : sx;
 	wnd->height = (wnd->height < sy) ? wnd->height : sy;

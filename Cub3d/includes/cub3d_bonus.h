@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 18:20:40 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/01 16:11:03 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/02 04:14:28 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,17 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <math.h>
-# include <time.h>
 # include "libft.h"
 # include "p_flags.h"
 # include "structs.h"
 # include "get_next_line.h"
 # include "../SDL2-A/src/audio.h"
 # include "../minilibx_mms/mlx.h"
-# define BONUS 1
 # define HEIGHT 64
 # define ROTATION 0.12
+# ifndef BONUS
+#  define BONUS 1
+# endif
 
 enum					e_key
 {
@@ -79,7 +80,7 @@ void					ft_init(char **av, int ac);
 void					ft_init2(char *av, int save);
 char					**ft_read_map(uint16_t rows, uint16_t longest,
 												t_game *g, char *av);
-void					ft_check_res(t_window *wnd);
+void					ft_check_res(t_window *wnd, char *str);
 t_item					**ft_init_sprites(char **map);
 void					ft_minimap(t_game *g);
 int8_t					ft_get_color(char c, char *str, t_game *g);
