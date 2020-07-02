@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 16:31:25 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/02 02:05:35 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/02 04:44:38 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int8_t		ft_get_color(char c, char *str, t_game *g)
 
 	str = ft_strswap(str, ',', ' ');
 	!(channels = ft_split(str, ' ')) ? ft_errors(bad_malloc) : 0;
-	i = -1;
+	i = 0;
 	a = 0;
 	while (channels[++i])
 	{
@@ -87,9 +87,9 @@ int8_t		ft_get_color(char c, char *str, t_game *g)
 		tmps[0] != '\0' ? ft_errors(bad_color) : 0;
 		free(tmps);
 		(tmp < 0 || tmp > 255) ? ft_errors(bad_color) : 0;
-		a |= tmp << (2 - i) * 8;
+		a |= tmp << (3 - i) * 8;
 	}
-	i != 3 ? ft_errors(bad_color) : 0;
+	i != 4 ? ft_errors(bad_color) : 0;
 	ft_write_color(c, a, g);
 	ft_tabclear(channels);
 	return (1);

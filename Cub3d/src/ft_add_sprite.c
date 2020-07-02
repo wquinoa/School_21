@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 16:55:15 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/01 16:03:17 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/02 05:49:09 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ static void	ft_paint_sprite(t_item item, t_game *g)
 
 	y = -1;
 	g->tex = g->sp;
+	g->ray = ((int)item.dist >> 2) * 3;
 	while (++y < item.size)
 	{
 		x = -1;

@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 18:20:40 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/02 02:19:55 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/02 06:00:03 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@
 # include "libft.h"
 # include "p_flags.h"
 # include "structs.h"
-# include "get_next_line.h"
 # include "../minilibx_mms/mlx.h"
 # define HEIGHT 64
-# define BONUS 0
+# ifndef BONUS
+#  define BONUS 0
+# endif
 # define ROTATION 0.12
 
 enum					e_key
@@ -38,6 +39,8 @@ enum					e_key
 	lf = 123,
 	rt = 124,
 	alp = (255 << 24),
+	alp_1 = 0x01000000,
+	dalp = alp - 0x1b000000,
 	red = (255 << 16),
 	grn = (255 << 8),
 	blu = 255,
@@ -103,6 +106,7 @@ void					ft_paint_tex(t_game *g, t_ray pt, int offset, int i);
 void					ft_blend_tex(t_game *g, t_ray pt, int offset, int i);
 void					ft_draw_floor(t_game *g, int x0, int end);
 void					ft_draw_ceil(t_game *g, int x0, int end);
+int						ft_darken(int color, int16_t i);
 
 /*
 **	Utilities

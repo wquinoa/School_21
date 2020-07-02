@@ -1,13 +1,13 @@
-R 1920 1080
+R    1920 1080
 
-C 180, 25, 180
-F 20, 99, 108
+C  50,    050, 50
+F 25, 25,   25
 
-NO    ./textures/wwood.xpm
-SO    ./textures/wstone.xpm
-EA    ./textures/wbricks.xpm
+NO ./textures/wwood.xpm
+SO  ./textures/wstone.xpm
+EA   ./textures/wbricks.xpm
 WE    ./textures/widk.xpm
-S     ./textures/sphere.xpm
+S      ./textures/sphere.xpm
 
         1111111111111111111111111
         1000200000110000000000001

@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 21:05:26 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/02 02:00:13 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/02 02:01:01 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define LIBFT_H
 # include <unistd.h>
 # include <stdlib.h>
+# define FD_LIMIT 1024
+# define BUFFER_SIZE 1024
 
 /*
 ** Part 1 - Libc functions
@@ -29,7 +31,8 @@ int						ft_tolower(int c);
 void					*ft_memset(void *b, int c, size_t len);
 void					ft_bzero(void *s, size_t n);
 void					*ft_memcpy(void *dst, const void *src, size_t n);
-void					*ft_memccpy(void *dst, const void *s, int c, size_t n);
+void					*ft_memccpy(void *dst, const void *src, int c,
+							size_t n);
 void					*ft_memmove(void *dst, const void *src, size_t len);
 void					*ft_memchr(const void *s, int c, size_t n);
 int						ft_memcmp(const void *s1, const void *s2, size_t n);
@@ -49,18 +52,20 @@ char					*ft_strdup(char const *s);
 ** Part 2 - Additional functions
 */
 
-char					*ft_substr(char const *s, unsigned int st, size_t len);
+char					*ft_substr(char const *s,
+							unsigned int start, size_t len);
 char					*ft_strjoin(char const *s1, char const *s2);
 char					*ft_strtrim(char const *s1, char const *set);
 char					**ft_split(char const *s, char c);
 char					*ft_itoa(int n);
-char					*ft_strmapi(char const *s, char
-									(*f)(unsigned int, char));
+char					*ft_strmapi(char const *s,
+									char (*f)(unsigned int, char));
 void					ft_putchar_fd(char c, int fd);
 void					ft_putstr_fd(char const *s, int fd);
 void					ft_putendl_fd(char const *s, int fd);
 void					ft_putnbr_fd(int n, int fd);
 char					*ft_strswap(char *str, char from, char to);
+int						get_next_line(int fd, char **line);
 
 /*
 ** Bonus part
@@ -95,7 +100,6 @@ int						ft_max(int a, int b);
 size_t					ft_min(size_t a, size_t b);
 int						ft_isspace(int c);
 void					*ft_del(void *content);
-void					ft_putlst(t_list **lst);
 
 /*
 **		char ** manipulation

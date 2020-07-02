@@ -6,7 +6,7 @@
 #    By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/17 21:10:46 by wquinoa           #+#    #+#              #
-#    Updated: 2020/07/02 04:12:12 by wquinoa          ###   ########.fr        #
+#    Updated: 2020/07/02 04:52:58 by wquinoa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,8 @@ SRCS :=			ft_sprites.c		ft_minimap.c		ft_castndraw.c		\
 BSRC :=			ft_keys_bonus.c		ft_init2_bonus.c	ft_init_sound_bonus.c
 
 VRBL :=			ft_keys.c			ft_init2.c
+
+INCL :=			p_flags.h			structs.h			libft.h
 
 #+----------------------------------------------------------------------------------------------------------------------+#
 #|    Utilities                                                                                                         |#
@@ -54,13 +56,14 @@ NAME		= libcub3d.a
 BIN			= ./.obj
 SRC_DIR		= ./src
 BNS_DIR		= ./bonus
-INCL_DIR	= ./includes
+INC_DIR	= ./includes
 
 OBJ			:= $(SRCS:c=o)
 BOBJ		:= $(BSRC:c=o)
 VOBJ		:= $(VRBL:c=o)
 
-VAR_FILES	:= $(addprefix $(SRC)/, $(VSRC))
+VAR_FILES	:= $(addprefix $(SRC_DIR)/, $(VSRC))
+INC_FILES	:= $(addprefix $(INC_DIR)/, $(INC))
 BNS_FILES	:= $(addprefix $(BNS_DIR)/, $(BSRC))
 
 CC			= gcc
@@ -75,12 +78,12 @@ ifdef WITH_BONUS
 $(VERBOSE).SILENT:
 SRC_FILES	:= $(addprefix $(SRC_DIR)/, $(SRCS)) $(BNS_FILES)
 OBJ_FILES	:= $(addprefix $(BIN)/, $(OBJ) $(BOBJ))
-INCLUDES	:= $(addprefix $(INCL_DIR)/, cub3d_bonus.h)
+INCLUDES	:= $(addprefix $(INC_DIR)/, cub3d_bonus.h) $(INC_FILES)
 CF +=
 else
 SRC_FILES	:= $(addprefix $(SRC_DIR)/, $(SRCS)) $(VAR_FILES)
 OBJ_FILES	:= $(addprefix $(BIN)/, $(OBJ) $(VOBJ))
-INCLUDES	:= $(addprefix $(INCL_DIR)/, cub3d.h)
+INCLUDES	:= $(addprefix $(INC_DIR)/, cub3d.h) $(INC_FILES)
 endif
 
 .PHONY: run, libs, bonus, clean, clibs, fclean, fclibs, re

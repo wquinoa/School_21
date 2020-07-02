@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 20:00:30 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/02 02:31:43 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/02 04:40:25 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ void		ft_check_res(t_window *wnd, char *str)
 	char	**tmp;
 
 	!(tmp = ft_split(str, ' ')) ? ft_errors(bad_malloc) : 0;
-	i = -1;
+	i = 0;
 	while (tmp[++i])
 	{
 		j = -1;
 		while (tmp[i][++j])
 			!(ft_isdigit(tmp[i][j])) ? ft_errors(bad_res) : 0;
-		i == 0 ? wnd->width = ft_atoi(tmp[i]) : 0;
-		i == 1 ? wnd->height = ft_atoi(tmp[i]) : 0;
-		i >= 2 ? ft_errors(bad_res) : 0;
+		i == 1 ? wnd->width = ft_atoi(tmp[i]) : 0;
+		i == 2 ? wnd->height = ft_atoi(tmp[i]) : 0;
+		i >= 3 ? ft_errors(bad_res) : 0;
 	}
-	free(tmp);
+	ft_tabclear(tmp);
 	if (wnd->height <= 0 || wnd->width <= 0)
 		ft_errors(bad_res);
 	mlx_get_screen_size(wnd->mlx, &sx, &sy);

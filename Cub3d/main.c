@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/cub3d_bonus.h"
+#include "includes/cub3d.h"
 
 int		main(int argc, char **argv)
 {

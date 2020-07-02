@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 18:20:40 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/02 04:14:28 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/02 05:59:32 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include "libft.h"
 # include "p_flags.h"
 # include "structs.h"
-# include "get_next_line.h"
 # include "../SDL2-A/src/audio.h"
 # include "../minilibx_mms/mlx.h"
 # define HEIGHT 64
@@ -105,6 +104,7 @@ void					ft_add_sprite(t_item **items, t_game *g);
 void					ft_paint(t_frame *f, int x, int y, int color);
 void					ft_paint_tex(t_game *g, t_ray pt, int offset, int i);
 void					ft_blend_tex(t_game *g, t_ray pt, int offset, int i);
+int						ft_darken(int color, int16_t i);
 
 void					ft_draw_floor(t_game *g, int x0, int end);
 void					ft_draw_ceil(t_game *g, int x0, int end);

@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 15:15:59 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/01 16:03:26 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/02 06:04:24 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ void		ft_blend_tex(t_game *g, t_ray pt, int offset, int i)
 	char	*win;
 	char	*tex;
 	int		color;
+	int64_t	shade;
 
+	shade = g->ray >> 2;
 	if (pt.y >= 0 && pt.y < (int)g->wnd->height)
 	{
 		tex = g->tex->addr + (int)((HEIGHT - i - 1) * g->tex->line_l +
@@ -51,8 +53,9 @@ void		ft_blend_tex(t_game *g, t_ray pt, int offset, int i)
 			(int)pt.x * (g->frm->bpp >> 3));
 		color = ft_blend(g->txr->flr, *((int*)tex),
 				(i < 56) ? (36 + i / 2) : 64);
-		*(int *)win = color |
-		((g->ray / 6) * 0x01000000 * (g->flags & crt_f));
+		*(int *)win = color;
+		if (g->flags & crt_f)
+			*(int*)win |= shade < 230 ? shade * alp_1 : dalp;
 	}
 }
 
@@ -60,7 +63,9 @@ void		ft_paint_tex(t_game *g, t_ray pt, int offset, int i)
 {
 	char	*win;
 	char	*tex;
+	int64_t	shade;
 
+	shade = g->ray >> 2;
 	if (pt.y >= 0 && pt.y < (int)g->wnd->height)
 	{
 		tex = g->tex->addr + (int)(i * g->tex->line_l
@@ -69,7 +74,8 @@ void		ft_paint_tex(t_game *g, t_ray pt, int offset, int i)
 			return ;
 		win = g->frm->addr + ((int)pt.y * g->frm->line_l +
 			(int)pt.x * (g->frm->bpp >> 3));
-		*(int *)win = (*(int*)tex |
-		((g->ray / 6) * 0x01000000 * (g->flags & crt_f)));
+		*(int *)win = (*(int*)tex);
+		if (g->flags & crt_f)
+			*(int*)win |= shade < 230 ? shade * alp_1 : dalp;
 	}
 }
