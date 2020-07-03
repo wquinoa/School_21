@@ -6,88 +6,71 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 15:13:34 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/15 11:57:27 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/02 08:27:36 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_countw(char const *s, char c, int words)
+static int	count_words(char const *s, char c)
 {
+	size_t	words;
+
+	words = 0;
 	while (*s)
 	{
-		while (*s != c && *s)
+		while (*s == c)
 			s++;
-		while (*s == c && *s)
+		if (!*s)
+			break ;
+		while (*s && *s != c)
 			s++;
 		words++;
 	}
 	return (words);
 }
 
-static int		ft_len(char const *s, char c)
+static int	add_words(char **tab, char const *s, char c)
 {
-	int		i;
+	char	*st;
+	char	**tmp;
+	size_t	i;
 
 	i = 0;
-	while (s[i] != c && s[i])
-		i++;
-	return (i);
-}
-
-static void		*ft_deltab(char **tab, int l)
-{
-	if (!*tab)
-		return (NULL);
-	while (l >= 0)
+	tmp = NULL;
+	tmp = tab;
+	while (*s)
 	{
-		free(tab[l]);
-		tab[l--] = NULL;
-	}
-	free(tab);
-	tab = NULL;
-	return (NULL);
-}
-
-static char		**ft_realsplit(char *s, char c, char **dst, int words)
-{
-	int		i;
-	int		j;
-	int		l;
-
-	j = 0;
-	while (j < words)
-	{
-		i = 0;
-		while (*s == c && *s)
+		while (*s == c)
 			s++;
-		if (*s != c && *s)
+		st = (char *)s;
+		while (*s && *s != c)
+			s++;
+		i++;
+		if (!(*tab++ = ft_substr(st, 0, s - st)))
 		{
-			l = ft_len(s, c);
-			if (!(dst[j] = (char *)malloc((l + 1) * sizeof(char))))
-				return (ft_deltab(dst, j));
-			while (*s != c && *s)
-				dst[j][i++] = *(s++);
-			dst[j][i] = '\0';
+			ft_tabclear(tmp);
+			return (0);
 		}
-		j++;
 	}
-	return (dst);
+	*tab = NULL;
+	return (1);
 }
 
-char			**ft_split(char const *s, char c)
+char		**ft_split(char const *s, char c)
 {
-	int		wrds;
-	char	*str;
-	char	**dst;
+	size_t	n;
+	char	**words;
 
-	if (!s || !(str = ft_strtrim(s, &c)))
+	if (!s)
 		return (NULL);
-	wrds = ft_countw(str, c, 0);
-	if (!(dst = (char **)malloc((wrds + 1) * sizeof(char *))))
+	n = count_words(s, c);
+	if (!(words = (char **)malloc(sizeof(char *) * (n + 1))))
 		return (NULL);
-	dst[wrds] = NULL;
-	dst = ft_realsplit(str, c, dst, wrds);
-	free(str);
-	return (dst);
+	if (!add_words(words, s, c))
+	{
+		free(words);
+		return (NULL);
+	}
+	return (words);
 }

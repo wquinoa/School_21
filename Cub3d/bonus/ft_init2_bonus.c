@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 13:35:08 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/02 03:50:14 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/02 08:33:17 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void		ft_init2(char *av, int save)
 	av);
 	ft_minimap(&scene);
 	ft_load_textures(&scene);
-	usleep(5500000);
+	ft_countdown();
 	ft_draw_scene(&scene, &f, &window);
 	mlx_hook(window.win, 17, (1L << 5), &ft_exit, NULL);
 	mlx_hook(window.win, 6, (1L << 6), &ft_move_mouse, &scene);

@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 16:40:33 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/02 04:42:43 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/02 21:15:35 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int8_t	ft_strval2(const char *id, char *str, t_game *g)
 	else
 		ft_errors(dup_res);
 	if (g->wnd->height < 0 || g->wnd->width < 0)
-		ft_errors(bad_sym);
+		ft_errors(bad_res);
 	return (id[0]);
 }
 
@@ -50,15 +50,15 @@ int8_t			ft_strval(char *str, t_game *g)
 	return (1);
 }
 
-static void		flood_fill(char **region, uint16_t x, uint16_t y)
+static void		flood_fill(char **region, int x, int y)
 {
-	if (region[y][x] == '1' || region[y][x] == '.')
-		return ;
-	if (region[y][x] == ' ')
+	if (x < 0 || y < 0 || region[y][x] == ' ')
 	{
 		write(1, "Map not enclosed.\n", 18);
 		exit(0);
 	}
+	if (region[y][x] == '1' || region[y][x] == '.')
+		return ;
 	region[y][x] = '.';
 	flood_fill(region, x + 1, y);
 	flood_fill(region, x - 1, y);
@@ -93,7 +93,7 @@ static void		ft_find_plr(char **test, t_ray *pos, t_game *g)
 	!(g->flags & pla_f) ? ft_errors(bad_map) : 0;
 }
 
-void			ft_mapval(char **map, uint16_t rows, t_game *g)
+void			ft_mapval(char **map, int rows, t_game *g)
 {
 	char	**test;
 	short	i;

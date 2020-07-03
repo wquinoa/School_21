@@ -6,7 +6,7 @@
 #    By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/07 23:33:20 by wquinoa           #+#    #+#              #
-#    Updated: 2020/07/02 01:55:50 by wquinoa          ###   ########.fr        #
+#    Updated: 2020/07/02 16:14:36 by wquinoa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,11 +65,11 @@ CF = -Wall -Wextra -Werror
 #|    Conditionals                                                                                                      |#
 #+----------------------------------------------------------------------------------------------------------------------+#
 
-$(VERBOSE).SILENT:
 #.ONESHELL:
 ifdef WITH_BONUS
 OBJ_FILES = $(addprefix $(BIN)/, $(OBJ) $(BOBJ))
 else
+$(VERBOSE).SILENT:
 OBJ_FILES = $(addprefix $(BIN)/, $(OBJ))
 endif
 
@@ -106,7 +106,6 @@ clean:
 	@if test -d $(BIN); \
 	then rm -rfvd $(BIN) $(REPLACE); \
 	echo "$(DEL_MSG).o files$(WHT)\n"; \
-	else echo $(ERROR_MSG); \
 	fi
 
 fclean: clean
@@ -114,7 +113,6 @@ fclean: clean
 	then rm -rfv ./$(NAME) $(REPLACE); \
 	rm -rf a.out; \
 	echo "$(DEL_MSG) lib$(WHT)\n"; \
-	else echo $(ERROR_MSG); \
 	fi
 
 re: fclean all

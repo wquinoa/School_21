@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 13:35:08 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/01 16:03:22 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/02 21:13:47 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ static void	ft_fill_tab(t_game *g, t_frame ****tap, char ***lnk)
 	t_frame	***tab;
 	char	**link;
 
-	if (!(g->es = (t_frame *)malloc(sizeof(t_frame))))
-		ft_errors(bad_malloc);
 	tab = *tap;
 	link = *lnk;
 	tab[0] = &g->no;
@@ -52,57 +50,56 @@ static void	ft_load_textures(t_game *g)
 {
 	t_frame	*tex;
 	t_frame	***tab;
-	char	**link;
+	char	**ln;
 	int8_t	i;
 
 	i = 0;
 	if (!(tab = (t_frame***)malloc(sizeof(t_frame**) * 5)))
 		ft_errors(bad_malloc);
-	if (!(link = (char**)malloc(sizeof(char*) * 5)))
-		ft_errors(bad_malloc);
-	ft_fill_tab(g, &tab, &link);
+	!(ln = (char**)malloc(sizeof(char*) * 5)) ? ft_errors(bad_malloc) : 0;
+	ft_fill_tab(g, &tab, &ln);
 	while (i < 5)
 	{
 		if (!(tex = (t_frame *)malloc(sizeof(t_frame))))
 			ft_errors(bad_malloc);
-		tex->img = mlx_xpm_file_to_image(g->wnd->mlx, link[i], &tex->width,
-		&tex->height);
-		free(link[i]);
+		if (!(tex->img = mlx_xpm_file_to_image(g->wnd->mlx, ln[i], &tex->width,
+		&tex->height)))
+			ft_errors(bad_tex);
+		free(ln[i]);
 		tex->addr = mlx_get_data_addr(tex->img, &tex->bpp, &tex->line_l,
 		&tex->en);
 		*tab[i] = tex;
 		i++;
 	}
-	free(link);
+	free(ln);
 	free(tab);
 }
 
 static void	ft_init2(char *av, int save)
 {
 	t_game				scene;
-	static t_window		window;
+	static t_window		win;
 	static t_texture	texture;
 	static t_player		player;
 	static t_frame		f;
 
 	ft_bzero(&scene, sizeof(scene));
-	scene.wnd = &window;
+	scene.wnd = &win;
 	scene.txr = &texture;
 	scene.plr = &player;
 	scene.frm = &f;
 	scene.map = ft_read_map(0, 0, &scene, av);
 	scene.flags = (save == 3) ? 32 : 0;
 	scene.sprites = ft_init_sprites(scene.map);
-	window.mlx = mlx_init();
-	window.win = mlx_new_window(window.mlx, window.width, window.height, \
-	av);
+	win.mlx = mlx_init();
+	win.win = mlx_new_window(win.mlx, win.width, win.height, av);
 	ft_minimap(&scene);
 	ft_load_textures(&scene);
-	ft_draw_scene(&scene, &f, &window);
-	mlx_hook(window.win, 17, (1L << 5), &ft_exit, NULL);
-	mlx_hook(window.win, 2, (1L << 0), &key_press, &scene);
+	ft_draw_scene(&scene, &f, &win);
+	mlx_hook(win.win, 17, (1L << 5), &ft_exit, NULL);
+	mlx_hook(win.win, 2, (1L << 0), &key_press, &scene);
 	mlx_mouse_show();
-	mlx_loop(window.mlx);
+	mlx_loop(win.mlx);
 }
 
 void		ft_init(char **av, int ac)

@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 18:20:40 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/02 06:00:03 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/02 20:35:17 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ t_item					**ft_init_sprites(char **map);
 void					ft_minimap(t_game *g);
 int8_t					ft_get_color(char c, char *str, t_game *g);
 int8_t					ft_get_link(const char *c, char *str, t_game *g);
-void					ft_mapval(char **map, uint16_t rows, t_game *g);
+void					ft_mapval(char **map, int rows, t_game *g);
 int8_t					ft_strval(char *str, t_game *g);
 
 /*

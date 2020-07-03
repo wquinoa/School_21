@@ -6,7 +6,7 @@
 #    By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/17 21:10:46 by wquinoa           #+#    #+#              #
-#    Updated: 2020/07/02 04:52:58 by wquinoa          ###   ########.fr        #
+#    Updated: 2020/07/03 12:00:48 by wquinoa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,10 +31,13 @@ INCL :=			p_flags.h			structs.h			libft.h
 #
 #																			#
 WHT		= \033[0m#															#
+ITA		= \033[3m#															#
 RED		= \033[31m#															#
 GRN		= \033[32m#															#
-BLU		= \033[34m#															#
 WHT1	= \033[0;1m#														#
+BLU		= \033[34m#															#
+MGT		= \033[35m#															#
+CYA		= \033[36m#															#
 RED1	= \033[31;1m#														#
 DRK		= \033[2m#															#
 GRN1	= \033[32;1m#														#
@@ -56,7 +59,7 @@ NAME		= libcub3d.a
 BIN			= ./.obj
 SRC_DIR		= ./src
 BNS_DIR		= ./bonus
-INC_DIR	= ./includes
+INC_DIR		= ./includes
 
 OBJ			:= $(SRCS:c=o)
 BOBJ		:= $(BSRC:c=o)
@@ -86,7 +89,7 @@ OBJ_FILES	:= $(addprefix $(BIN)/, $(OBJ) $(VOBJ))
 INCLUDES	:= $(addprefix $(INC_DIR)/, cub3d.h) $(INC_FILES)
 endif
 
-.PHONY: run, libs, bonus, clean, clibs, fclean, fclibs, re
+.PHONY: run, libs, bonus, clean, clibs, fclean, fclibs, norme, re
 #+----------------------------------------------------------------------------------------------------------------------+#
 #|    Rules                                                                                                             |#
 #+----------------------------------------------------------------------------------------------------------------------+#
@@ -100,11 +103,12 @@ bonus: $(OBJ_FILES)
 $(NAME): $(OBJ_FILES) | libs
 	@ar rcs $(NAME) $^
 ifeq ($(WITH_BONUS),true)
+	@brew install sdl2 sdl2_mixer
 	@$(CC) $(CF) main.c SDL2-A/src/audio.c -L. -lcub3d -lmlx -framework OpenGL \
-	-framework AppKit `sdl2-config --cflags --libs` -D BONUS=1 -O1 -o cub3D
+	-framework AppKit `sdl2-config --cflags --libs` -D BONUS=1 -O3 -o cub3D
 	@echo "	$(WHT1)$(MADE_MSG)cub3D\n	$(WHT1)    and $(GRN1)bonus$(WHT)\n"
 else
-	@$(CC) $(CF) main.c -L. -lcub3d -lmlx -framework OpenGL -framework AppKit -o cub3D
+	@$(CC) $(CF) main.c -L. -lcub3d -lmlx -framework OpenGL -framework AppKit -O2 -o cub3D
 	@echo "$(MADE_MSG)cub3D$(WHT)\n"
 endif
 
@@ -115,14 +119,14 @@ libs:
 	@cp minilibx_mms/libmlx.dylib .
 
 run: bonus
-	@echo "\n$(WHT1)Shh.. \033[35mIt's about to \033[36mGET \033[35mWILD$(WHT)\n"
-	./cub3D ./bonus/map1.cub
+	@echo "\n$(WHT1)Shh.. It's about to $(ITA)$(CYA)GET $(MGT)WILD$(WHT1) in here\n"
+	@./cub3D ./bonus/map1.cub
 
 norme:
-	@echo "$(BLU1)\n\tlibft$(WHT)\n" && cd libft && $(NORME)
-	@echo "$(BLU1)\n\tsrc$(WHT)\n" && cd src && $(NORME)
-	@echo "$(BLU1)\n\tbonus$(WHT)\n" && cd bonus && $(NORME)
-	@echo "$(BLU1)\n\tincludes$(WHT)\n" && cd includes && $(NORME)
+	@echo "$(DRK)$(BLU1)\n\tlibft$(WHT)\n" && cd libft && $(NORME)
+	@echo "$(DRK)$(BLU1)\n\tsrc$(WHT)\n" && cd src && $(NORME)
+	@echo "$(DRK)$(BLU1)\n\tbonus$(WHT)\n" && cd bonus && $(NORME)
+	@echo "$(DRK)$(BLU1)\n\tincludes$(WHT)\n" && cd includes && $(NORME)
 	@echo "$(WHT1)"
 
 #+----------------------------------------------------------------------------------------------------------------------+#

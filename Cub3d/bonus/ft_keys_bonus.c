@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 15:12:59 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/02 05:23:04 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/02 17:44:31 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,14 @@ int					key_press(int key, t_game *g)
 	ft_bzero(&wasd, sizeof(wasd));
 	if (key == w_key || key == up || key == s_key || key == dn)
 	{
-		wasd.cos_v = cos(g->plr->dir);
-		wasd.sin_v = sin(g->plr->dir);
+		wasd.cos_v = cosf(g->plr->dir);
+		wasd.sin_v = sinf(g->plr->dir);
 		ft_wasd(g, dir, 0, wasd);
 	}
 	if (key == a_key || key == d_key)
 	{
-		wasd.cos_v_pi_2 = cos(g->plr->dir - dir * M_PI_2);
-		wasd.sin_v_pi_2 = sin(g->plr->dir - dir * M_PI_2);
+		wasd.cos_v_pi_2 = cosf(g->plr->dir - dir * M_PI_2);
+		wasd.sin_v_pi_2 = sinf(g->plr->dir - dir * M_PI_2);
 		ft_wasd(g, dir, 1, wasd);
 	}
 	key_press2(key, g, dir);

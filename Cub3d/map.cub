@@ -1,7 +1,7 @@
-R    1920 1080
+R 1230 1230
 
 C  50,    050, 50
-F 25, 25,   25
+F  50,    050, 50
 
 NO ./textures/wwood.xpm
 SO  ./textures/wstone.xpm

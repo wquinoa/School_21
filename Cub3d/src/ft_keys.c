@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 15:12:59 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/02 04:59:49 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/02 17:44:56 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static void			ft_wasd(t_game *g, const int8_t dir, int8_t flag,
 
 	i = -1 + flag;
 	while (++i <= g->plr->speed &&
-	g->map[((int)(*y_pos + dir * 8 * wasd.sin_v)) / HEIGHT]
-	[((int)(*x_pos + dir * 8 * wasd.cos_v)) / HEIGHT] != '1')
+	g->map[((int)(*y_pos + dir * 8 * wasd.sin_v)) >> 6]
+	[((int)(*x_pos + dir * 8 * wasd.cos_v)) >> 6] != '1')
 	{
 		g->plr->x += wasd.cos_v * dir;
 		g->plr->y += wasd.sin_v * dir;
@@ -69,8 +69,8 @@ int					key_press(int key, t_game *g)
 	ft_bzero(&wasd, sizeof(wasd));
 	if (key == w_key || key == up || key == s_key || key == dn)
 	{
-		wasd.cos_v = cos(g->plr->dir);
-		wasd.sin_v = sin(g->plr->dir);
+		wasd.cos_v = cosf(g->plr->dir);
+		wasd.sin_v = sinf(g->plr->dir);
 		ft_wasd(g, dir, 0, wasd);
 	}
 	key_press2(key, g, dir);

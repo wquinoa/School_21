@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 16:55:15 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/02 05:49:09 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/02 08:14:20 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,32 +64,31 @@ static void	ft_blend_sprite(t_item item, t_game *g, short x, short y)
 
 static void	ft_paint_sprite(t_item item, t_game *g)
 {
-	short y;
-	short x;
+	t_ray p2;
 	t_ray pt;
 
-	y = -1;
+	p2.y = -1;
 	g->tex = g->sp;
 	g->ray = ((int)item.dist >> 2) * 3;
-	while (++y < item.size)
+	while (++p2.y < item.size)
 	{
-		x = -1;
-		if (item.y_off + y < 0 && item.y_off + y > (short)g->wnd->height)
+		p2.x = -1;
+		if (item.y_off + p2.y < 0 && item.y_off + p2.y > g->wnd->height)
 			continue ;
-		while (++x < item.size)
+		while (++p2.x < item.size)
 		{
-			if (item.x_off + x >= 0 && item.x_off + x < (short)g->wnd->width
-								&& g->depth[item.x_off + x] > item.dist)
+			if (item.x_off + p2.x >= 0 && item.x_off + p2.x <
+			g->wnd->width && g->depth[item.x_off + (int)p2.x] > item.dist)
 			{
-				pt.x = x + item.x_off;
-				pt.y = y + item.y_off;
+				pt.x = p2.x + item.x_off;
+				pt.y = p2.y + item.y_off;
 				ft_paint_tex(g, pt,
-				x * HEIGHT / item.size, y * HEIGHT / item.size);
+				p2.x * HEIGHT / item.size, p2.y * HEIGHT / item.size);
 			}
 		}
 	}
 	g->items++;
-	(g->flags & crt_f) ? ft_blend_sprite(item, g, x, y) : 0;
+	(g->flags & crt_f) ? ft_blend_sprite(item, g, p2.x, p2.y) : 0;
 }
 
 void		ft_add_sprite(t_item **items, t_game *g)
