@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 16:48:13 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/01 16:03:15 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/03 12:25:28 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_bmp(t_game *g, t_frame *f)
 {
 	char			*bmp;
 	int32_t			num;
-	const uint32_t	size = g->wnd->height * g->wnd->width * (f->bpp / 8) + 54;
+	const uint32_t	size = g->wnd->height * g->wnd->width * (f->bpp >> 3) + 54;
 
 	!(bmp = (char*)malloc(size)) ? ft_errors(bad_malloc) : 0;
 	ft_bzero(bmp, size);

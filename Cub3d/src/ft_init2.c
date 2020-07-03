@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 13:35:08 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/02 21:13:47 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/03 12:22:51 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ static void	ft_init2(char *av, int save)
 	scene.plr = &player;
 	scene.frm = &f;
 	scene.map = ft_read_map(0, 0, &scene, av);
+	win.height < 0 ? ft_errors(bad_res) : 0;
 	scene.flags = (save == 3) ? 32 : 0;
 	scene.sprites = ft_init_sprites(scene.map);
 	win.mlx = mlx_init();

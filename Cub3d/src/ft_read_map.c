@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 20:00:30 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/02 21:40:25 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/03 12:21:27 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char		**ft_read_map(uint16_t rows, uint16_t lng, t_game *g, char *av)
 	{
 		if (ft_strval(str, g) == 1)
 		{
-			if !(tmp = ft_lstnew(ft_strdup(str))) ? ft_errors(bad_malloc) : 0;
+			!(tmp = ft_lstnew(ft_strdup(str))) ? ft_errors(bad_malloc) : 0;
 			rows++;
 			lng = lng > ft_strlen(str) ? lng : ft_strlen(str);
 			ft_lstadd_back(&list, tmp);
