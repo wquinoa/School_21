@@ -1,3 +1,3 @@
 
 
-[cub3D](shimata.github.com/School_21/cub3D/cub3d.png)
+[cub3D](https://github.com/Shimata/School_21/textures/cub3d.png)
