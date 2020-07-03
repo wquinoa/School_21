@@ -4,7 +4,8 @@
 
 This is my first raycasting engine. It uses the school-provided minilibX<br>
 to draw on screen and is completely written in C. To check out the demo<br>
-type make run in the terminal.
+clone the project, go to projects root dir and type 'make run' in the terminal.<br>
+Also make sure you are on macOS. Else it may or may not work :)
 
 <b> Features </b><br>
 <ul>
