@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/18 01:47:17 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/28 18:21:44 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/28 18:32:16 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void		ft_put1(const char *str, void *s1)
 {
 	ft_fput(str, s1, NULL, 1);
 }
-
 
 void		ft_put2(const char *str, void *s1, void *s2)
 {

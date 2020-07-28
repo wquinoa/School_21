@@ -6,7 +6,7 @@
 #    By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/07 23:33:20 by wquinoa           #+#    #+#              #
-#    Updated: 2020/07/28 18:16:59 by wquinoa          ###   ########.fr        #
+#    Updated: 2020/07/28 18:31:45 by wquinoa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,7 @@ MADE_MSG = \n   $(WHT1)Created $(GRN1)#										#
 DEL_MSG = \r   $(WHT1)Removed $(DRK)$(RED1)#								#
 ERROR_MSG = "\n   $(WHT1)$(DRK)Nothing to $@$(WHT)\n"#						#
 REPLACE =  2>&1| awk '{sub(/.\//,"  $(WHT) $(DRK)removed $(RED)")}1'
-NORME = norminette *.c *.h | awk '{sub(/Norme/,"$(GRN)Norme$(WHT)")}1' | awk '{sub(/Error/,"$(RED)Error$(WHT)")}1'
+NORME = norminette $(SRCS) $(BSRCS) *.h | awk '{sub(/Norme/,"$(GRN)Norme$(WHT)")}1' | awk '{sub(/Error/,"$(RED)Error$(WHT)")}1'
 
 #+----------------------------------------------------------------------------------------------------------------------+#
 #|    Good stuff                                                                                                        |#

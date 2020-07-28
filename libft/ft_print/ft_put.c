@@ -6,11 +6,11 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/28 18:10:17 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/28 18:18:11 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/28 18:33:18 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../libft.h"
+#include "../libft.h"
 
 int		ft_putchar(char c)
 {
