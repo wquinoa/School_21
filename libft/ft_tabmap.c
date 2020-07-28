@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tabmap.c                                        :+:      :+:    :+:   */
+/*   ft_tabmap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: wquinoa <wquinoa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 08:25:33 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/06/29 16:46:33 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/20 17:16:30 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ char		**ft_tabmap(char **tab, char *(*f)(const char *))
 {
 	char	**res;
 	int		len;
-	int		l;
 	int		i;
 
 	if (!tab || !f)
@@ -27,14 +26,9 @@ char		**ft_tabmap(char **tab, char *(*f)(const char *))
 	i = -1;
 	while (++i < len)
 	{
-		l = ft_strlen(tab[i]);
-		res[i] = (char *)ft_calloc(l + 1, sizeof(char));
+		res[i] = f(tab[i]);
 		if (!(res[i]))
-		{
-			ft_tabclear(res);
-			return (NULL);
-		}
-		res[i] = ft_strdup(tab[i]);
+			return (ft_tabclear(res));
 	}
 	res[i] = NULL;
 	return (res);

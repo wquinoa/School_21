@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_join_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wquinoa <wquinoa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 23:05:20 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/13 21:59:46 by wquinoa          ###   ########.fr       */
+/*   Created: 2020/05/07 20:11:16 by wquinoa           #+#    #+#             */
+/*   Updated: 2020/07/20 17:23:28 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list		*ft_lstnew(void *content)
+char		*ft_join(char **tab, char *dlm)
 {
-	t_list *new_list;
+	char	*tmp;
+	char	*res;
+	int		i;
 
-	if (!(new_list = (t_list *)malloc(sizeof(t_list))))
+	if (!tab || !dlm || !(res = ft_strdup(*tab)))
 		return (NULL);
-	new_list->content = content;
-	new_list->next = NULL;
-	return (new_list);
+	i = 0;
+	tmp = NULL;
+	while (++i && tab[i])
+	{
+		if (!(tmp = ft_strjoin_dlm(res, dlm, tab[i])))
+			return (ft_del(res));
+		if (!(res = ft_strdup(tmp)))
+			return (ft_del(tmp));
+		free(tmp);
+	}
+	return (res);
 }

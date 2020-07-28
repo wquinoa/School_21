@@ -1,18 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_max_bonus.c                                     :+:      :+:    :+:   */
+/*   ft_tabclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/07 21:53:47 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/01 01:15:01 by wquinoa          ###   ########.fr       */
+/*   Created: 2020/05/07 08:05:53 by wquinoa           #+#    #+#             */
+/*   Updated: 2020/07/16 23:38:14 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int				ft_max(int a, int b)
+char		**ft_tabclear(char **tab)
 {
-	return (b > a ? b : a);
+	int		i;
+
+	if (!tab)
+		return (NULL);
+	i = -1;
+	while (tab[++i])
+	{
+		if (tab[i])
+		{
+			free(tab[i]);
+			tab[i] = NULL;
+		}
+	}
+	free(tab);
+	return (NULL);
 }

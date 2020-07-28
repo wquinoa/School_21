@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs_bonus.c                                     :+:      :+:    :+:   */
+/*   ft_del_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/07 21:49:14 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/13 07:15:03 by wquinoa          ###   ########.fr       */
+/*   Created: 2020/05/12 05:32:02 by wquinoa           #+#    #+#             */
+/*   Updated: 2020/07/21 23:20:02 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t			ft_abs(int n)
+void	*ft_del(void *content)
 {
-	if (n == -2147483648)
-		return (2147483647);
-	return ((n < 0) ? -n : n);
+	content ? free(content) : 0;
+	content = NULL;
+	return (NULL);
 }

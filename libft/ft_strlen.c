@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 20:34:23 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/04 20:18:29 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/28 14:05:15 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 size_t		ft_strlen(char const *s)
 {
-	int i;
+	const char *start = s;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	while (*s)
+		s++;
+	return (s - start);
 }

@@ -3,91 +3,79 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: jalvaro <jalvaro@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 15:13:34 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/05/15 11:57:27 by wquinoa          ###   ########.fr       */
+/*   Created: 2020/04/25 22:46:47 by jalvaro           #+#    #+#             */
+/*   Updated: 2020/07/24 21:15:03 by jalvaro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_countw(char const *s, char c, int words)
+static char		**ft_free_array(char **arr, size_t index)
 {
-	while (*s)
-	{
-		while (*s != c && *s)
-			s++;
-		while (*s == c && *s)
-			s++;
-		words++;
-	}
-	return (words);
-}
-
-static int		ft_len(char const *s, char c)
-{
-	int		i;
+	size_t i;
 
 	i = 0;
-	while (s[i] != c && s[i])
-		i++;
-	return (i);
+	while (i < index)
+		free(arr[i++]);
+	free(arr);
+	return (0);
 }
 
-static void		*ft_deltab(char **tab, int l)
+static size_t	ft_counter(char const *s, char c)
 {
-	if (!*tab)
-		return (NULL);
-	while (l >= 0)
+	size_t	i;
+	size_t	size;
+
+	i = 0;
+	size = 0;
+	while (s[i] != '\0')
 	{
-		free(tab[l]);
-		tab[l--] = NULL;
+		while (s[i] == c)
+			i++;
+		while (s[i] != c && s[i] != '\0')
+			i++;
+		if ((s[i] == c) || (s[i] == '\0' && s[i - 1] != c))
+			size++;
 	}
-	free(tab);
-	tab = NULL;
-	return (NULL);
+	return (size);
 }
 
-static char		**ft_realsplit(char *s, char c, char **dst, int words)
+static char		**ft_str_filler(char const *s, char **str, char c, size_t size)
 {
-	int		i;
-	int		j;
-	int		l;
+	size_t	k;
+	size_t	i;
+	size_t	start;
 
-	j = 0;
-	while (j < words)
+	i = 0;
+	k = 0;
+	start = 0;
+	while (s[i] != '\0')
 	{
-		i = 0;
-		while (*s == c && *s)
-			s++;
-		if (*s != c && *s)
+		while (s[i] == c)
+			start = ++i;
+		while (s[i] != c && s[i] != '\0')
+			i++;
+		if ((s[i] == c) || (s[i] == '\0' && s[i - 1] != c))
 		{
-			l = ft_len(s, c);
-			if (!(dst[j] = (char *)malloc((l + 1) * sizeof(char))))
-				return (ft_deltab(dst, j));
-			while (*s != c && *s)
-				dst[j][i++] = *(s++);
-			dst[j][i] = '\0';
+			if (!(str[k++] = ft_substr(s, start, (i - start))))
+				return (ft_free_array(str, size));
 		}
-		j++;
 	}
-	return (dst);
+	return (str);
 }
 
 char			**ft_split(char const *s, char c)
 {
-	int		wrds;
-	char	*str;
-	char	**dst;
+	char	**str;
+	size_t	size;
 
-	if (!s || !(str = ft_strtrim(s, &c)))
-		return (NULL);
-	wrds = ft_countw(str, c, 0);
-	if (!(dst = (char **)malloc((wrds + 1) * sizeof(char *))))
-		return (NULL);
-	dst[wrds] = NULL;
-	dst = ft_realsplit(str, c, dst, wrds);
-	free(str);
-	return (dst);
+	if (!s)
+		return (0);
+	size = ft_counter(s, c);
+	if (!(str = (char **)malloc(sizeof(char *) * (size + 1))))
+		return (0);
+	str[size] = 0;
+	return (ft_str_filler(s, str, c, size));
 }

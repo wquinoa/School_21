@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 21:05:26 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/01 17:43:18 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/22 02:37:01 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 # include <unistd.h>
 # include <stdlib.h>
 # define FD_LIMIT 1024
-# define BUFFER_SIZE 1024
+# define BUFFER_SIZE 1
 
 /*
+** # include "ft_printf/includes/libftprintf.h"
 ** Part 1 - Libc functions
 */
 
@@ -43,6 +44,7 @@ char				*ft_strrchr(const char *s, int c);
 char				*ft_strnstr(const char *haystack,
 							const char *needle, size_t len);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
+int					ft_strcmp(const char *s1, const char *s2);
 int					ft_atoi(const char *str);
 void				*ft_calloc(size_t count, size_t size);
 char				*ft_strdup(char const *s);
@@ -51,17 +53,16 @@ char				*ft_strdup(char const *s);
 ** Part 2 - Additional functions
 */
 
-char				*ft_substr(char const *s,
-						unsigned int start, size_t len);
+char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s1, char const *set);
 char				**ft_split(char const *s, char c);
 char				*ft_itoa(int n);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
-void				ft_putchar_fd(char c, int fd);
-void				ft_putstr_fd(char const *s, int fd);
-void				ft_putendl_fd(char const *s, int fd);
-void				ft_putnbr_fd(int n, int fd);
+int					ft_putchar_fd(char c, int fd);
+int					ft_putstr_fd(char const *s, int fd);
+int					ft_putendl_fd(char const *s, int fd);
+int					ft_putnbr_fd(int n, int fd);
 int					get_next_line(int fd, char **line);
 
 /*
@@ -82,28 +83,26 @@ void				ft_lstadd_back(t_list **lst, t_list *new);
 void				ft_lstdelone(t_list *lst, void (*del)(void *));
 void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
-t_list				*ft_lstmap(t_list *lst, void *(*f)(void*),
-									void (*del)(void*));
+t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
+					void (*del)(void *));
 
 /*
-**	Math & Utility
+** Math & Utility
 */
 
-size_t				ft_abs(int n);
-size_t				ft_nlen(int n);
 size_t				ft_sqrt(size_t n);
-int					ft_pow(int n, int pow);
 int					ft_max(int a, int b);
-size_t				ft_min(size_t a, size_t b);
 int					ft_isspace(int c);
 void				*ft_del(void *content);
+int					ft_fput(const char *str, void *s1, void *s2, int fd);
+void				ft_swap(void **ptr1, void **ptr2);
 
 /*
-**	char ** manipulation
+** char ** manipulation
 */
 
 size_t				ft_tablen(char **tab);
-void				ft_tabclear(char **tab);
+char				**ft_tabclear(char **tab);
 char				**ft_tabmap(char **tab, char *(*f)(const char *));
 char				*ft_strjoin_dlm(char *s1, char *s2, char *s3);
 char				*ft_join(char **tab, char *dlm);

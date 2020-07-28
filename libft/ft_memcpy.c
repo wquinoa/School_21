@@ -3,30 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: wquinoa <wquinoa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 20:18:08 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/01 17:34:53 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/20 17:47:01 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /*
-**	Reworked memcpy to copy in blocks of up to 8 bytes per cycle
+**	Reworked memcpy to copy in blocks of up to a long per cycle
 **	The memory has to be aligned into a suitable block
-**	byte by byte first. uint_8t is unsigned char.
+**	byte by byte first.
 */
 
 void	*ft_memcpy(void *dst, void const *src, size_t n)
 {
-	const uint8_t	size = sizeof(unsigned long);
-	const uint8_t	*c2 = (uint8_t *)(src);
-	uint8_t			*c1;
-	unsigned long	*a1;
-	unsigned long	*a2;
+	const unsigned char	size = sizeof(unsigned long);
+	const unsigned char	*c2 = (unsigned char *)(src);
+	unsigned char		*c1;
+	unsigned long		*a1;
+	unsigned long		*a2;
 
-	c1 = (uint8_t *)dst;
+	c1 = (unsigned char *)dst;
 	while (n % size)
 	{
 		*(c1++) = *(c2++);

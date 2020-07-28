@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_min_bonus.c                                     :+:      :+:    :+:   */
+/*   ft_tablen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/07 21:51:27 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/01 17:22:38 by wquinoa          ###   ########.fr       */
+/*   Created: 2020/05/07 07:58:43 by wquinoa           #+#    #+#             */
+/*   Updated: 2020/07/28 14:10:21 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_min(int a, int b)
+size_t		ft_tablen(char **tab)
 {
-	return ((a < b) ? a : b);
+	int		i;
+
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
 }
