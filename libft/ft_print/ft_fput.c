@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fput.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wquinoa <wquinoa@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/18 01:47:17 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/27 17:41:00 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/28 18:21:44 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,15 @@ int			ft_fput(const char *str, void *s1, void *s2, int fd)
 			str += write(fd, str, ft_strlen(str));
 	}
 	return (fd == 2 ? -1 : 1);
+}
+
+void		ft_put1(const char *str, void *s1)
+{
+	ft_fput(str, s1, NULL, 1);
+}
+
+
+void		ft_put2(const char *str, void *s1, void *s2)
+{
+	ft_fput(str, s1, s2, 1);
 }

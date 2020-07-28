@@ -6,7 +6,7 @@
 #    By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/07 23:33:20 by wquinoa           #+#    #+#              #
-#    Updated: 2020/07/28 14:08:47 by wquinoa          ###   ########.fr        #
+#    Updated: 2020/07/28 18:16:59 by wquinoa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,19 +14,28 @@
 #|    Source files                                                                                                      |#
 #+----------------------------------------------------------------------------------------------------------------------+#
 
-SRCS :=			ft_atoi.c			ft_bzero.c			ft_calloc.c			ft_isalnum.c		ft_isalpha.c			\
-				ft_isascii.c		ft_isdigit.c		ft_isprint.c		ft_itoa.c			ft_memccpy.c			\
-				ft_memchr.c			ft_memcmp.c			ft_memcpy.c			ft_memmove.c		ft_memset.c				\
-				ft_split.c			ft_strchr.c			ft_strdup.c			ft_strjoin.c		ft_strlcat.c			\
-				ft_strlcpy.c		ft_strlen.c			ft_strmapi.c		ft_strncmp.c		ft_strnstr.c			\
-				ft_strrchr.c		ft_strtrim.c		ft_substr.c			ft_tolower.c		ft_toupper.c			\
-				ft_putchar_fd.c		ft_putendl_fd.c		ft_putnbr_fd.c		ft_putstr_fd.c		ft_strcmp.c				\
-				ft_lstadd_back.c	ft_lstadd_front.c	ft_lstclear.c		ft_lstdelone.c		ft_lstiter.c			\
-				ft_lstlast.c		ft_lstmap.c			ft_lstnew.c			ft_lstsize.c		ft_fput.c				\
-				ft_del.c			ft_isspace.c		ft_join.c			ft_strjoin_dlm.c	ft_swap.c				\
-				ft_tabclear.c		ft_tablen.c			ft_tabmap.c			get_next_line.c
+EXTR :=			ft_atoi.c			ft_calloc.c			ft_itoa.c			ft_swap.c			get_next_line.c
 
-BSRCS :=		ft_math.c			ft_print.c			ft_printf.c			ft_putnbr_basep.c		\
+TO_IS :=		ft_isalnum.c		ft_isalpha.c		ft_isascii.c		ft_isdigit.c		ft_isprint.c			\
+				ft_isspace.c		ft_tolower.c		ft_toupper.c
+
+MEM :=			ft_bzero.c			ft_memccpy.c		ft_memchr.c			ft_memcmp.c			ft_memcpy.c				\
+				ft_memmove.c		ft_memset.c
+
+STRING :=		ft_split.c			ft_strchr.c			ft_strdup.c			ft_strjoin.c		ft_strlcat.c			\
+				ft_strlcpy.c		ft_strlen.c			ft_strmapi.c		ft_strncmp.c		ft_strnstr.c			\
+				ft_strrchr.c		ft_strtrim.c		ft_substr.c			ft_strcmp.c			ft_strjoin_3.c			\
+				ft_del.c
+
+PRINT :=		ft_fput.c			ft_putchar_fd.c		ft_putendl_fd.c		ft_putnbr_fd.c		ft_putstr_fd.c			\
+				ft_put.c
+
+LISTS :=		ft_lstadd_back.c	ft_lstadd_front.c	ft_lstclear.c		ft_lstdelone.c		ft_lstiter.c			\
+				ft_lstlast.c		ft_lstmap.c			ft_lstnew.c			ft_lstsize.c
+
+TAB :=			ft_tabclear.c		ft_tablen.c			ft_tabmap.c
+
+BSRCS :=		ft_math.c			ft_print.c			ft_printf.c			ft_putnbr_basep.c
 
 
 #+----------------------------------------------------------------------------------------------------------------------+#
@@ -52,14 +61,19 @@ NORME = norminette *.c *.h | awk '{sub(/Norme/,"$(GRN)Norme$(WHT)")}1' | awk '{s
 
 NAME = libft.a
 BIN = ./obj
-BDIR = ft_printf/src
 
-B_FILES = $(addprefix $(BDIR)/, $(BSRCS))
-HEAD = $(NAME:a=h)
-OBJ = $(SRCS:c=o)
-BOBJ = $(B_FILES:c=o)
-CC = gcc
-CF = -Wall -Wextra -Werror
+SRCS =	$(addprefix ft_to_is/, $(TO_IS))	$(addprefix extr/, $(EXTR)) \
+		$(addprefix ft_lists/, $(LISTS))	$(addprefix ft_print/, $(PRINT)) \
+		$(addprefix ft_tab/, $(TAB))		$(addprefix ft_mem/, $(mem)) \
+		$(addprefix ft_string/, $(STRING))
+B_FILES = $(addprefix ft_printf/src/, $(BSRCS))
+HEAD =	$(NAME:a=h)
+OBJ =	$(SRC:c=o) $(TO_IS:c=o) $(MEM:c=o) \
+		$(STRING:c=o) $(LISTS:c=o) $(PRINT:c=o) \
+		$(TAB:c=o) $(EXTR:c=o)
+BOBJ =	$(B_FILES:c=o)
+CC =	gcc
+CF =	-Wall -Wextra -Werror
 .PHONY: all bonus clean fclean re
 
 #+----------------------------------------------------------------------------------------------------------------------+#
@@ -102,7 +116,7 @@ $(BIN):
 	@mkdir $(BIN)
 	@printf "$(MADE_MSG) %-42s$(WHT)\r" $@
 
-$(BIN)/%.o: %.c $(HEAD) | $(BIN)
+$(BIN)/%.o: */%.c $(HEAD) | $(BIN)
 	@$(CC) -I./ $< -c $(CF) -o $@
 	@printf "   Adding $(DRK)$(GRN) %-42s$(WHT)\r" "$@..."
 

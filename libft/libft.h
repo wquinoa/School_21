@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 21:05:26 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/22 02:37:01 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/28 18:23:54 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 # include <stdlib.h>
 # define FD_LIMIT 1024
 # define BUFFER_SIZE 1
+# include "ft_printf/includes/libftprintf.h"
 
 /*
-** # include "ft_printf/includes/libftprintf.h"
 ** Part 1 - Libc functions
 */
 
@@ -27,6 +27,7 @@ int					ft_isdigit(int c);
 int					ft_isalnum(int c);
 int					ft_isascii(int c);
 int					ft_isprint(int c);
+int					ft_isspace(int c);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
 void				*ft_memset(void *b, int c, size_t len);
@@ -63,6 +64,10 @@ int					ft_putchar_fd(char c, int fd);
 int					ft_putstr_fd(char const *s, int fd);
 int					ft_putendl_fd(char const *s, int fd);
 int					ft_putnbr_fd(int n, int fd);
+int					ft_putchar(char c);
+int					ft_putstr(char const *s);
+int					ft_putendl(char const *s);
+int					ft_putnbr(int n);
 int					get_next_line(int fd, char **line);
 
 /*
@@ -92,9 +97,10 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 
 size_t				ft_sqrt(size_t n);
 int					ft_max(int a, int b);
-int					ft_isspace(int c);
 void				*ft_del(void *content);
 int					ft_fput(const char *str, void *s1, void *s2, int fd);
+void				ft_put1(const char *str, void *s1);
+void				ft_put2(const char *str, void *s1, void *s2);
 void				ft_swap(void **ptr1, void **ptr2);
 
 /*
