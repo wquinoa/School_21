@@ -10,13 +10,15 @@ _ft_strcmp:
 			mov		rax, 0				;	initialize registers-
 			mov		rcx, 0				;	to 0 before using
 
-while		inc		r8					;	++i;
-			mov		al, [rdi+r8]		;	char a = s1[i];
-			mov		cl, [rsi+r8]		;	char c = s2[i];
+_loop:									;while (1)
+			inc		r8					;	++i;
+			mov		al, [rdi + r8]		;	char a = s1[i];
+			mov		cl, [rsi + r8]		;	char c = s2[i];
 			cmp		al, byte 0			;	if (a == '\0')
-			je		end					;		return
+			je		_end				;		return
 			cmp		al, cl				;	if (a == c)
-			je		while				;		loop again
+			je		_loop				;		loop again
 
-end			sub		rax, rcx			;	return (a - c);
+_end:
+			sub		rax, rcx			;	return (a - c);
 			ret

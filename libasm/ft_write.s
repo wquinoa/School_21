@@ -10,9 +10,9 @@ section .text
 _ft_write:
 			mov			rax, 0x2000004	; call write
 			syscall
-			jc			_wrerr			; if (syscall != 0)
-			ret							; else return
-_wrerr:
+			jb			_error
+			ret							; 	return
+_error:
 			push		rax				; save value returned by syscall
 			call		___error		; call error. rax = &errno
 			pop			r8				; retrieve error value

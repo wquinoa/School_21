@@ -3,17 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+         #
+#    By: wquinoa <wquinoa@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/04 15:27:49 by wquinoa           #+#    #+#              #
-#    Updated: 2020/07/06 11:10:48 by wquinoa          ###   ########.fr        #
+#    Updated: 2020/07/12 15:51:58 by wquinoa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #	Source files																#
-SRCS	:= ft_strlen.s	ft_strcpy.s	ft_strcmp.s	ft_write.s	ft_strdup.s	ft_read.s
-
-BSRCS	:= ft_list_push_front_bonus.s	ft_list_size_bonus.s	ft_list_sort_bonus.s
+SRCS	:=	ft_strlen.s			ft_strcpy.s			ft_write.s					\
+			ft_strcmp.s			ft_strdup.s			ft_read.s		
+BSRCS	:=	ft_list_size_bonus.s			ft_list_push_front_bonus.s			\
+			ft_list_sort_bonus.s
 
 #	Utilities																	#
 WHT		= \033[0m#																#
@@ -42,26 +43,33 @@ else
 OBJ_FILES = $(addprefix $(BIN)/, $(OBJ))
 endif
 #	Rules																		#
-#.PHONY: all bonus clean fclean re
+.PHONY: all bonus clean fclean re main main_b nasm64
 
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES)
 	@ar rcs $(NAME) $^
+	@$(MAKE) -C lsrc
+	@cp ./lsrc/libtest.a .
 	@echo "$(MADE_MSG)$(NAME)$(WHT)\n"
 
 bonus:
-	$(MAKE) 'WITH_BONUS = true' all
+	@$(MAKE) 'WITH_BONUS = true' all
 
 main: $(NAME)
-	@gcc main.c $(NAME) && ./a.out
+	@gcc main.c libtest.a $(NAME) && ./a.out
 
 main_b: bonus
-	@gcc main_bonus.c $(NAME) && ./a.out
+	@gcc main.c libtest.a $(NAME) -D BONUS=1 && ./a.out
 
+nasm64:
+	@echo "\n	$(WHT1)Installing $(GRN1)$@...$(WHT)\n"
+	curl -fsSL https://rawgit.com/kube/42homebrew/master/install.sh | zsh
+	brew install nasm
+	
 #	Creating bindir and objects													#
 $(BIN):
-	@mkdir $@
+	@mkdir $(BIN)
 	@echo "$(MADE_MSG) $@$(WHT)\n"
 
 $(BIN)/%.o: %.s | $(BIN)
@@ -71,7 +79,7 @@ $(BIN)/%.o: %.s | $(BIN)
 #	Trash removal rules															#
 clean:
 	@if test -d $(BIN); \
-	then rm -Rfv $(BIN) $(REPLACE); \
+	then rm -Rfv $(BIN) $(REPLACE) && $(MAKE) -C lsrc fclean && rm -rf libtest.a; \
 	echo "$(DEL_MSG).o files$(WHT)\n"; \
 	else echo $(ERROR_MSG); \
 	fi

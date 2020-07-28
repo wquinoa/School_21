@@ -1,4 +1,4 @@
-;ssize_t read(int fildes, void *buf, size_t nbyte);
+;ssize_t read(int fd, const void *buf, size_t nbyte)
 ;int rdi = fd;
 ;char* rsi = buf;
 ;int rdx = nbyte;
@@ -10,9 +10,9 @@ section .text
 _ft_read:
 			mov			rax, 0x2000003	; call read
 			syscall
-			jc			_read_err		; if (syscall != 0) goto read_err
+			jb			_error			; if (syscall < 0)
 			ret							; else return
-_read_err:
+_error:
 			push		rax				; save value returned by syscall
 			call		___error		; call error. rax = &errno
 			pop			r8				; retrieve error value

@@ -1,13 +1,4 @@
-;int		ft_lstsize(t_list *lst)
-;{
-	;int		i;
-
-	;i = 0;
-	;tmp = lst;
-	;while (tmp && ++i)
-		;tmp = tmp->next;
-	;return (i);
-;}
+;int	*ft_list_size(t_list *begin);
 
 section .text
 	global _ft_list_size
@@ -15,12 +6,12 @@ section .text
 _ft_list_size:
 			mov		rax, 0			;int i = 0;
 
-_while_lst:							;while (1)
-			cmp		rdi, 0			;	if (lst == NULL)
-			jz		_return_size	;		return (i);
-			mov		rdi, [rdi+8]	;	lst = lst->next;
-			inc		rax				;	i++;
-			jmp		_while_lst
+_list_loop:
+			cmp		rdi, 0			;if (begin == NULL)
+			je		_ret_size		;	return (i);
+			inc		rax				;i++;
+			mov		rdi, [rdi + 8]	;begin = begin->next;
+			jmp		_list_loop
 
-_return_size:
+_ret_size:
 			ret
