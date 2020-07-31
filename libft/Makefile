@@ -6,14 +6,11 @@
 #    By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/07 23:33:20 by wquinoa           #+#    #+#              #
-#    Updated: 2020/07/28 18:31:45 by wquinoa          ###   ########.fr        #
+#    Updated: 2020/07/31 13:51:19 by wquinoa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-#+----------------------------------------------------------------------------------------------------------------------+#
-#|    Source files                                                                                                      |#
-#+----------------------------------------------------------------------------------------------------------------------+#
-
+#|    Source files
 EXTR :=			ft_atoi.c			ft_calloc.c			ft_itoa.c			ft_swap.c			get_next_line.c
 
 TO_IS :=		ft_isalnum.c		ft_isalpha.c		ft_isascii.c		ft_isdigit.c		ft_isprint.c			\
@@ -33,15 +30,14 @@ PRINT :=		ft_fput.c			ft_putchar_fd.c		ft_putendl_fd.c		ft_putnbr_fd.c		ft_putst
 LISTS :=		ft_lstadd_back.c	ft_lstadd_front.c	ft_lstclear.c		ft_lstdelone.c		ft_lstiter.c			\
 				ft_lstlast.c		ft_lstmap.c			ft_lstnew.c			ft_lstsize.c
 
+BTREE :=		prefix_infix_suffix.c tree_create_node.c tree_insert_data.c tree_search.c
+
 TAB :=			ft_tabclear.c		ft_tablen.c			ft_tabmap.c
 
 BSRCS :=		ft_math.c			ft_print.c			ft_printf.c			ft_putnbr_basep.c
 
 
-#+----------------------------------------------------------------------------------------------------------------------+#
-#|    Utilities                                                                                                         |#
-#+----------------------------------------------------------------------------------------------------------------------+#
-
+#|    Utilities
 WHT = \033[0m#																#
 GRN = \033[32m#																#
 RED = \033[31m#																#
@@ -55,31 +51,27 @@ ERROR_MSG = "\n   $(WHT1)$(DRK)Nothing to $@$(WHT)\n"#						#
 REPLACE =  2>&1| awk '{sub(/.\//,"  $(WHT) $(DRK)removed $(RED)")}1'
 NORME = norminette $(SRCS) $(BSRCS) *.h | awk '{sub(/Norme/,"$(GRN)Norme$(WHT)")}1' | awk '{sub(/Error/,"$(RED)Error$(WHT)")}1'
 
-#+----------------------------------------------------------------------------------------------------------------------+#
-#|    Good stuff                                                                                                        |#
-#+----------------------------------------------------------------------------------------------------------------------+#
-
+#|    Good stuff
 NAME = libft.a
 BIN = ./obj
 
 SRCS =	$(addprefix ft_to_is/, $(TO_IS))	$(addprefix extr/, $(EXTR)) \
 		$(addprefix ft_lists/, $(LISTS))	$(addprefix ft_print/, $(PRINT)) \
-		$(addprefix ft_tab/, $(TAB))		$(addprefix ft_mem/, $(mem)) \
-		$(addprefix ft_string/, $(STRING))
+		$(addprefix ft_tab/, $(TAB))		$(addprefix ft_mem/, $(MEM)) \
+		$(addprefix ft_string/, $(STRING))	$(addprefix ft_btree/, $(BTREE))
 B_FILES = $(addprefix ft_printf/src/, $(BSRCS))
 HEAD =	$(NAME:a=h)
 OBJ =	$(SRC:c=o) $(TO_IS:c=o) $(MEM:c=o) \
 		$(STRING:c=o) $(LISTS:c=o) $(PRINT:c=o) \
-		$(TAB:c=o) $(EXTR:c=o)
+		$(TAB:c=o) $(EXTR:c=o) $(BTREE:c=o)
 BOBJ =	$(B_FILES:c=o)
+DEP =	$(OBJ_FILES:o=d)
 CC =	gcc
 CF =	-Wall -Wextra -Werror
 .PHONY: all bonus clean fclean re
+vpath %c extr  ft_btree  ft_lists  ft_mem  ft_print  ft_printf/src  ft_string  ft_tab  ft_to_is
 
-#+----------------------------------------------------------------------------------------------------------------------+#
-#|    Conditionals                                                                                                      |#
-#+----------------------------------------------------------------------------------------------------------------------+#
-
+#|    Conditionals
 #$(VERBOSE).SILENT:
 #.ONESHELL:
 ifdef WITH_BONUS
@@ -88,10 +80,7 @@ else
 OBJ_FILES = $(addprefix $(BIN)/, $(OBJ))
 endif
 
-#+----------------------------------------------------------------------------------------------------------------------+#
-#|    Rules                                                                                                             |#
-#+----------------------------------------------------------------------------------------------------------------------+#
-
+#|    Targets / rules
 all: $(NAME)
 
 bonus:
@@ -108,22 +97,17 @@ norme:
 	@echo "$(DRK)$(BLU1)\n\t$(NAME)$(WHT)\n"
 	@$(NORME)
 
-#+----------------------------------------------------------------------------------------------------------------------+#
-#|    Creating bindir and objects                                                                                       |#
-#+----------------------------------------------------------------------------------------------------------------------+#
-
+#|    Creating bindir and objects
 $(BIN):
 	@mkdir $(BIN)
 	@printf "$(MADE_MSG) %-42s$(WHT)\r" $@
 
-$(BIN)/%.o: */%.c $(HEAD) | $(BIN)
+-include $(DEP)
+$(BIN)/%.o: %.c | $(BIN)
 	@$(CC) -I./ $< -c $(CF) -o $@
 	@printf "   Adding $(DRK)$(GRN) %-42s$(WHT)\r" "$@..."
 
-#+----------------------------------------------------------------------------------------------------------------------+#
-#|    Trash removal rules                                                                                               |#
-#+----------------------------------------------------------------------------------------------------------------------+#
-
+#|    Trash removal rules
 clean:
 	@if test -d $(BIN); \
 	then rm -rfvd $(BIN) $(REPLACE); \

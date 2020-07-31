@@ -6,7 +6,7 @@
 /*   By: wquinoa <wquinoa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 21:05:26 by wquinoa           #+#    #+#             */
-/*   Updated: 2020/07/28 18:23:54 by wquinoa          ###   ########.fr       */
+/*   Updated: 2020/07/31 13:29:20 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,24 @@ void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 					void (*del)(void *));
+
+/*
+** Binary tree
+*/
+
+typedef struct		s_btree
+{
+	void			*item;
+	struct s_btree	*right;
+	struct s_btree	*left;
+}					t_btree;
+
+t_btree				*tree_create_node(void *item);
+void	    		tree_apply_prefix(t_btree *root, void (*af)(void *));
+void	    		tree_apply_infix(t_btree *root, void (*af)(void *));
+void				tree_apply_suffix(t_btree *root, void (*af)(void *));
+void				tree_insert_data(t_btree **root, void *item, int (*cmp)(void *, void *));
+t_btree				*tree_search(t_btree *root, void *item, int (*cmp)(void *, void *));
 
 /*
 ** Math & Utility
